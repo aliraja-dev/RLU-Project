@@ -8,8 +8,6 @@ public class CoarseSet<T> implements Set<T>{
         head.next = new Node<>(Integer.MAX_VALUE);
     }
 
-    // The iteration code is repeated, but no simple way
-    // to combine it all efficiently.
     @Override
     public boolean add(T item) {
         int key = item.hashCode();
