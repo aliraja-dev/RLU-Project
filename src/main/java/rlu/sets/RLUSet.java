@@ -19,34 +19,23 @@ public class RluSet<T> implements Set<T> {
     @Override
     public boolean add(T item) {
         int key = item.hashCode();
-        head.lock();
+
         RluNode<T> pred = head;
+        RluNode<T> curr = pred.next;
 
-        try {
-            RluNode<T> curr = pred.next;
-            curr.lock();
-
-            try {
-                while (curr.key < key) {
-                    pred.unlock();
-                    pred = curr;
-                    curr = curr.next;
-                    curr.lock();
-                }
-
-                if (curr.key == key) {
-                    return false;
-                }
-                // this is where we add the rLU Logic
-                RluNode<T> node = new RluNode<>(item, curr);
-                pred.next = node;
-                return true;
-            } finally {
-                curr.unlock();
-            }
-        } finally {
-            pred.unlock();
+        while (curr.key < key) {
+            pred = curr;
+            curr = curr.next;
         }
+
+        if (key == curr.key) {
+            return false;
+        }
+        // this is where we add the rLU Logic
+        RluNode<T> node = new RluNode<>(item, curr);
+        pred.next = node;
+        return true;
+
     }
 
     @Override
@@ -54,31 +43,19 @@ public class RluSet<T> implements Set<T> {
         int key = item.hashCode();
         head.lock();
         RluNode<T> pred = head;
+        RluNode<T> curr = pred.next;
 
-        try {
-            RluNode<T> curr = pred.next;
-            curr.lock();
-
-            try {
-                while (curr.key < key) {
-                    pred.unlock();
-                    pred = curr;
-                    curr = curr.next;
-                    curr.lock();
-                }
-
-                if (curr.key == key) {
-                    pred.next = curr.next;
-                    return true;
-                }
-
-                return false;
-            } finally {
-                curr.unlock();
-            }
-        } finally {
-            pred.unlock();
+        while (curr.key < key) {
+            pred = curr;
+            curr = curr.next;
         }
+        // this is where we start the rLU logic
+        if (key == curr.key) {
+            pred.next = curr.next;
+            return true;
+        }
+
+        return false;
     }
 
     @Override
@@ -87,25 +64,14 @@ public class RluSet<T> implements Set<T> {
         head.lock();
         RluNode<T> pred = head;
 
-        try {
-            RluNode<T> curr = pred.next;
-            curr.lock();
+        RluNode<T> curr = pred.next;
 
-            try {
-                while (curr.key < key) {
-                    pred.unlock();
-                    pred = curr;
-                    curr = curr.next;
-                    curr.lock();
-                }
-
-                return curr.key == key;
-            } finally {
-                curr.unlock();
-            }
-        } finally {
-            pred.unlock();
+        while (curr.key < key) {
+            pred = curr;
+            curr = curr.next;
         }
+        // this is where we start the rLU logic
+        return key == curr.key;
     }
 
 }
