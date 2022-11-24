@@ -5,6 +5,7 @@ public class RluThread<U> extends Thread {
     long id; // Thread id
     int wClock; // Write clock for each thread
     int runCounter; // To count the number of runs
+    boolean isWriter; // To indicate if the thread is a writer
 
     public RluThread(int id) {
         this.id = Thread.currentThread().getId();
@@ -15,4 +16,7 @@ public class RluThread<U> extends Thread {
 
     RluNode<U>[] log1;
     RluNode<U>[] log2;
+
+    //rlu thread should be created in the JMH ScopeThread Setup state method for every thread and then passed as value to every add /remove / contains call
+
 }
