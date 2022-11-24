@@ -59,7 +59,7 @@ public class RluSet<T> implements Set<T> {
             pred = curr;
             curr = curr.next;
         }
-        // this is where we start the rLU logic
+        // this is where we start the rLU logic, and similar to the add method
         if (key == curr.key) {
             pred.next = curr.next;
             return true;
@@ -80,7 +80,7 @@ public class RluSet<T> implements Set<T> {
             pred = curr;
             curr = curr.next;
         }
-        // this is where we start the rLU logic
+        // this is where we start the rLU logic, and we only go until dereference for contains in a lock free traversal
         return key == curr.key;
     }
 
@@ -149,3 +149,8 @@ public class RluSet<T> implements Set<T> {
 
 // add and remove will have same logic. and same order of methods for rLU
 // the contains will not call the rlu_try_lock after its done with dereference method in a lock free contains
+
+//! the RLU paper implementation allows multiple updates in a single write operation, which i am nt sure if i can do that in first attempt.
+// My first attempt is a single object update holding fine grained locks on just pred and curr. 
+
+// Then in second attempt we can implement the multiple updates per operation as well. As that would require a coarse grained locking on entire set or acquiring locks on multiple objects pred and curr and then updating them. later is the approach in the paper. 
