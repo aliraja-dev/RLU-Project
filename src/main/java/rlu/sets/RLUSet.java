@@ -17,7 +17,7 @@ public class RluSet<T> implements Set<T> {
     }
 
     @Override
-    public boolean add(T item) {
+    public boolean add(T item, RluThread<T> rluThread) {
         int key = item.hashCode();
 
         RluNode<T> pred = head;
@@ -31,7 +31,10 @@ public class RluSet<T> implements Set<T> {
         if (key == curr.key) {
             return false;
         }
-        // this is where we add the rLU Logic
+        // this is where we add the rLU Logic, We need to add a Node
+        // lock the nodes pred and curr
+        rlu_reader_lock(rluThread);
+        rlu_dereference(rluThread, pred);
         RluNode<T> node = new RluNode<>(item, curr);
         pred.next = node;
         return true;
@@ -72,6 +75,33 @@ public class RluSet<T> implements Set<T> {
         }
         // this is where we start the rLU logic
         return key == curr.key;
+    }
+
+    private void rlu_reader_lock(RluThread<T> rluThread) {
+        rluThread.isWrite = false;
+        rluThread.runCounter++;
+        //do we need a memory fence here ?
+
+        rluThread.lClock = gClock.get();
+
+    }
+
+    private void rlu_dereference(RluThread thread, RluNode<T> pred){
+        //check if the node is a copy
+        if(pred.header.isCopy()){
+            //check if the copy is stale
+            if(pred.header.threadId != thread.id){
+                //check if the copy is stale
+                if(pred.header.actualNode.wClock > thread.wClock){
+                    //if the copy is stale, we need to create a new copy
+                    RluNode<T> newNode = new RluNode<>(pred.header.actualNode.key, pred.header.actualNode.next);
+                    //update the header
+                    pred.header = newNode.header;
+                    //update the pred.next
+                    pred.next = newNode;
+                }
+            }
+        }
     }
 
 }
