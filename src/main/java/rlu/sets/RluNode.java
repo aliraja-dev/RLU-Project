@@ -15,7 +15,8 @@ public class RluNode<U> {
         this.key = item.hashCode();
         this.next = next;
         // Initialize the header
-        header = new Header<>(Thread.currentThread().getId(), this);
+        header = null;
+        // the header with null means there is no copy of this in any writers log and only when a writer creates a copy it wil update this header to point to the copy
     }
 
     public RluNode(int key) {

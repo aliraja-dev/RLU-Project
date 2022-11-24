@@ -12,10 +12,14 @@ public class RluThread<U> extends Thread {
         lClock = 0;
         wClock = 0;
         runCounter = 0;
+        log1 = new LinkedList<RluNode<U>.Header<U>>();
+        log2 = new LinkedList<RluNode<U>.Header<U>>();
     }
 
-    RluNode<U>[] log1;
-    RluNode<U>[] log2;
+   
+
+    LinkedList<RluNode<U>> log1;
+    LinkedList<RluNode<U>> log2;
 
     //rlu thread should be created in the JMH ScopeThread Setup state method for every thread and then passed as value to every add /remove / contains call
 

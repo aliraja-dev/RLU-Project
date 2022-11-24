@@ -4,13 +4,14 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 public class RluSet<T> implements Set<T> {
     AtomicInteger gClock; // Global clock shared by all threads
-    Thread[] threads; // To identify Active threads
+    Thread[] globalThreads; // To identify Active threads
+//In the global setup of JMH state, make sure we add all the threads to this global threads array
 
     private final RluNode<T> head;
 
     public RluSet(int threads) {
         gClock = new AtomicInteger(0);
-        this.threads = new Thread[threads];
+        this.globalThreads = new Thread[threads];
         // Initialize the head RluNode
         head = new RluNode<>(Integer.MIN_VALUE);
         head.next = new RluNode<>(Integer.MAX_VALUE);
@@ -86,22 +87,29 @@ public class RluSet<T> implements Set<T> {
 
     }
 
-    private void rlu_dereference(RluThread thread, RluNode<T> pred){
-        //check if the node is a copy
-        if(pred.header.isCopy()){
-            //check if the copy is stale
-            if(pred.header.threadId != thread.id){
-                //check if the copy is stale
-                if(pred.header.actualNode.wClock > thread.wClock){
-                    //if the copy is stale, we need to create a new copy
-                    RluNode<T> newNode = new RluNode<>(pred.header.actualNode.key, pred.header.actualNode.next);
-                    //update the header
-                    pred.header = newNode.header;
-                    //update the pred.next
-                    pred.next = newNode;
-                }
-            }
+    private RluNode<T> rlu_dereference(RluThread thread, RluNode<T> pred){
+        if(!pred.isLocked()){return pred;}
+
+        if (pred.header== null){
+            return pred;
         }
+        //check if you 
+
+        if(pred.header.threadId == thread.id){
+            return pred.header.actualNode;
+        }
+
+    //read from globalThreads array to check if the thread w clock <= l clock
+   
+        if(globalThreads[(int)pred.header.threadId].wClock <= thread.lClock){
+            return pred.header.actualNode;
+        }
+
+        return pred;
     }
 
 }
+
+// if(globalThreads[(int)pred.header.threadId].getState() == Thread.State.TERMINATED){
+//     return pred.header.actualNode;
+// }
