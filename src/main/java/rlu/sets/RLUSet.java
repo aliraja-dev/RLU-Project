@@ -36,6 +36,12 @@ public class RluSet<T> implements Set<T> {
         // lock the nodes pred and curr
         rlu_reader_lock(rluThread);
         rlu_dereference(rluThread, pred);
+        Rlu_try_lock(rluThread, pred);
+        rlu_reader_unlock();
+        rlu_commit_write_log();
+
+        //TODO rlu_commit_write_log will call synchronize, writebackand unlock and in end the rlu swap write.
+
         RluNode<T> node = new RluNode<>(item, curr);
         pred.next = node;
         return true;
@@ -108,8 +114,38 @@ public class RluSet<T> implements Set<T> {
         return pred;
     }
 
+    private void rlu_writer_lock(RluThread<T> rluThread) {
+        rluThread.isWrite = true;
+        rluThread.runCounter++;
+        //do we need a memory fence here ?
+
+        rluThread.lClock = gClock.get();
+        rluThread.wClock = rluThread.lClock;
+    }
+
+    private void rlu_writer_unlock(RluThread<T> rluThread) {
+        rluThread.isWrite = false;
+        rluThread.runCounter++;
+        //do we need a memory fence here ?
+
+        rluThread.lClock = gClock.get();
+        rluThread.wClock = rluThread.lClock;
+    }
+
+    private void Rlu_try_lock(RluThread<T> thread, RluNode<T> pred){
+        thread.isWriter = true;
+        //read actual object and copy i.e. the header 
+        //TODO 
+
+     
+    }
+
 }
 
 // if(globalThreads[(int)pred.header.threadId].getState() == Thread.State.TERMINATED){
 //     return pred.header.actualNode;
 // }
+
+
+// add and remove will have same logic. and same order of methods for rLU
+// the contains will not call the rlu_try_lock after its done with dereference method in a lock free contains
