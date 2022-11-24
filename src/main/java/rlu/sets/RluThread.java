@@ -10,7 +10,7 @@ public class RluThread<U> extends Thread {
     public RluThread(int id) {
         this.id = Thread.currentThread().getId();
         lClock = 0;
-        wClock = 0;
+        wClock = Integer.MAX_VALUE;
         runCounter = 0;
         log1 = new LinkedList<RluNode<U>.Header<U>>();
         log2 = new LinkedList<RluNode<U>.Header<U>>();
