@@ -9,6 +9,7 @@ public class RluNode<U> {
     RluNode<U> next;
     // to store header information
     Header<U> header;
+    private boolean locked;
 
     public RluNode(U item, RluNode<U> next) {
         this.key = item.hashCode();
@@ -24,12 +25,17 @@ public class RluNode<U> {
 
     public void lock() {
         lock.lock();
+        locked = true;
     }
 
     public void unlock() {
         lock.unlock();
+        locked = false;
     }
 
+    public boolean isLocked() {
+        return locked;
+    }
     class Header<U> {
         long threadId;
         RluNode<U> actualNode;
@@ -38,6 +44,10 @@ public class RluNode<U> {
         public Header(long threadId, RluNode<U> actualNode) {
             this.threadId = threadId;
             this.actualNode = actualNode;
+        }
+
+        public boolean isCopy() {
+            return isCopy;
         }
     }
 }
