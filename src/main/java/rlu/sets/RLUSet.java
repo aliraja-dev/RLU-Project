@@ -19,62 +19,92 @@ public class RluSet<T> implements Set<T> {
     @Override
     public boolean add(T item) {
         int key = item.hashCode();
+        head.lock();
+        RluNode<T> pred = head;
 
-        synchronized (this) {
-            RluNode<T> pred = head;
+        try {
             RluNode<T> curr = pred.next;
+            curr.lock();
 
-            while (curr.key < key) {
-                pred = curr;
-                curr = curr.next;
-            }
+            try {
+                while (curr.key < key) {
+                    pred.unlock();
+                    pred = curr;
+                    curr = curr.next;
+                    curr.lock();
+                }
 
-            if (key == curr.key) {
-                return false;
+                if (curr.key == key) {
+                    return false;
+                }
+                // this is where we add the rLU Logic
+                RluNode<T> node = new RluNode<>(item, curr);
+                pred.next = node;
+                return true;
+            } finally {
+                curr.unlock();
             }
-            // todo this is where we need to add the RLU code,
-            RluNode<T> RluNode = new RluNode<>(item, curr);
-            pred.next = RluNode;
-            return true;
+        } finally {
+            pred.unlock();
         }
     }
 
     @Override
     public boolean remove(T item) {
         int key = item.hashCode();
+        head.lock();
+        RluNode<T> pred = head;
 
-        synchronized (this) {
-            RluNode<T> pred = head;
+        try {
             RluNode<T> curr = pred.next;
+            curr.lock();
 
-            while (curr.key < key) {
-                pred = curr;
-                curr = curr.next;
-            }
-            // this is where we need to add the rlu modify code
-            if (key == curr.key) {
-                pred.next = curr.next;
-                return true;
-            }
+            try {
+                while (curr.key < key) {
+                    pred.unlock();
+                    pred = curr;
+                    curr = curr.next;
+                    curr.lock();
+                }
 
-            return false;
+                if (curr.key == key) {
+                    pred.next = curr.next;
+                    return true;
+                }
+
+                return false;
+            } finally {
+                curr.unlock();
+            }
+        } finally {
+            pred.unlock();
         }
     }
 
     @Override
     public boolean contains(T item) {
         int key = item.hashCode();
-        // todo remove the lock and implement the rlu_dereference here
-        synchronized (this) {
-            RluNode<T> pred = head;
-            RluNode<T> curr = pred.next;
+        head.lock();
+        RluNode<T> pred = head;
 
-            while (curr.key < key) {
-                pred = curr;
-                curr = curr.next;
+        try {
+            RluNode<T> curr = pred.next;
+            curr.lock();
+
+            try {
+                while (curr.key < key) {
+                    pred.unlock();
+                    pred = curr;
+                    curr = curr.next;
+                    curr.lock();
+                }
+
+                return curr.key == key;
+            } finally {
+                curr.unlock();
             }
-            // this is where we need to add the rlu_dereference code
-            return key == curr.key;
+        } finally {
+            pred.unlock();
         }
     }
 
