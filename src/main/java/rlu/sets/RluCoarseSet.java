@@ -4,48 +4,55 @@ import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 import java.util.concurrent.atomic.AtomicInteger;
 
-
 public class RluCoarseSet<T> implements Set<T> {
-   
+
     AtomicInteger gClock; // Global clock shared by all threads
     Thread[] globalThreads; // To identify Active threads
-//In the global setup of JMH state, make sure we add all the threads to this global threads array
+    // In the global setup of JMH state, make sure we add all the threads to this
+    // global threads array
 
     private RluNode<T> head;
+    private ThreadLocal<RluThread<T>> ctx;
 
-    public RluSet(int threads) {
+    public void RluSet(int threads) {
         gClock = new AtomicInteger(0);
         this.globalThreads = new Thread[threads];
         head = new RluNode<>(Integer.MIN_VALUE);
         head.next = new RluNode<>(Integer.MAX_VALUE);
+        ctx = new ThreadLocal<RluThread<T>>() {
+            @Override
+            protected RluThread<T> initialValue() {
+                return new RluThread<T>(Thread.currentThread().getId());
+            }
+        };
     }
 
     @Override
-    public boolean add(T item, RluThread<T> rluThread) {
+    public boolean add(T item) {
         int key = item.hashCode();
-        synchronized(this){
+        synchronized (this) {
             RluNode<T> pred = head;
             RluNode<T> curr = pred.next;
-    
+
             while (curr.key < key) {
                 pred = curr;
                 curr = curr.next;
             }
-    
+
             if (key == curr.key) {
                 return false;
             }
             // this is where we add the rLU Logic, We need to add a Node
             // lock the nodes pred and curr
-       
-            //TODO rlu_commit_write_log will call synchronize, writebackand unlock and in end the rlu swap write.
-    
+
+            // TODO rlu_commit_write_log will call synchronize, writebackand unlock and in
+            // end the rlu swap write.
+
             RluNode<T> node = new RluNode<>(item, curr);
             pred.next = node;
             return true;
 
         }
-       
 
     }
 
@@ -70,7 +77,7 @@ public class RluCoarseSet<T> implements Set<T> {
     }
 
     @Override
-    public boolean contains(T item, RluThread<T> ctx) {
+    public boolean contains(T item) {
         int key = item.hashCode();
        ctx.lClock = gClock.get();
         // register yourself as an active thread
@@ -96,21 +103,23 @@ public class RluCoarseSet<T> implements Set<T> {
         return key == curr.key;
     }
 
-
-
-   
 }
 
-// if(globalThreads[(int)pred.header.threadId].getState() == Thread.State.TERMINATED){
-//     return pred.header.actualNode;
+// if(globalThreads[(int)pred.header.threadId].getState() ==
+// Thread.State.TERMINATED){
+// return pred.header.actualNode;
 // }
 
-
 // add and remove will have same logic. and same order of methods for rLU
-// the contains will not call the rlu_try_lock after its done with dereference method in a lock free contains
+// the contains will not call the rlu_try_lock after its done with dereference
+// method in a lock free contains
 
-//! the RLU paper implementation allows multiple updates in a single write operation, which i am nt sure if i can do that in first attempt.
-// My first attempt is a single object update holding fine grained locks on just pred and curr. 
+// ! the RLU paper implementation allows multiple updates in a single write
+// operation, which i am nt sure if i can do that in first attempt.
+// My first attempt is a single object update holding fine grained locks on just
+// pred and curr.
 
-// Then in second attempt we can implement the multiple updates per operation as well. As that would require a coarse grained locking on entire set or acquiring locks on multiple objects pred and curr and then updating them. later is the approach in the paper. 
-
+// Then in second attempt we can implement the multiple updates per operation as
+// well. As that would require a coarse grained locking on entire set or
+// acquiring locks on multiple objects pred and curr and then updating them.
+// later is the approach in the paper.

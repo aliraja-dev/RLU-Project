@@ -53,6 +53,14 @@ public class CoarseSetBenchmark {
             Random rand = ThreadLocalRandom.current();
             item = rand.nextInt(UPPER_BOUND);
         }
+
+        @Setup(Level.Iteration)
+        public void doThreadSetup() {
+            // Add all the threads to the global threads array
+       
+
+
+        }
     }
 
     /**

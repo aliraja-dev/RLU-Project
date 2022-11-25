@@ -35,7 +35,7 @@ public class RluNode<U> {
     }
 
     public boolean isLocked() {
-        return header == null;
+        return header != null;
     }
     class Header<U> {
         long threadId;
