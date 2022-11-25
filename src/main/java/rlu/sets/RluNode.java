@@ -9,7 +9,7 @@ public class RluNode<U> {
     RluNode<U> next;
     // to store header information
     Header<U> header;
-    private boolean locked;
+   // private boolean locked;
 
     public RluNode(U item, RluNode<U> next) {
         this.key = item.hashCode();
@@ -35,7 +35,7 @@ public class RluNode<U> {
     }
 
     public boolean isLocked() {
-        return locked;
+        return header == null;
     }
     class Header<U> {
         long threadId;

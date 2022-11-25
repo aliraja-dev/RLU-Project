@@ -132,14 +132,63 @@ public class RluSet<T> implements Set<T> {
         rluThread.wClock = rluThread.lClock;
     }
 
-    private void Rlu_try_lock(RluThread<T> thread, RluNode<T> pred){
+    private RluNode<T> Rlu_try_lock(RluThread<T> thread, RluNode<T> pred){
         thread.isWriter = true;
         //read actual object and copy i.e. the header 
         //TODO 
+        pred.lock();
+        RluNode<T> curr = pred.next;
+        try{
+            curr.lock();
+            // update the header in the object node-- do this with a CAS Instruction 
+            curr.header = new RluHeader(thread.id, curr);
 
+            log1.add(curr.header);
+            //go ahead and change the value of pred .next to the new node and here
+            
+            rlu_reader_unlock(thread);
+        }finally{
+            pred.unlock();
+        }
      
     }
 
+    private void rlu_reader_unlock(RluThread<T> rluThread) {
+        rluThread.runCounter++;
+      if(thread.isWriter){
+        rlu_commit_write_log(thread);
+      }
+    }
+
+    private void rlu_commit_write_log(RluThread<T> rluThread) {
+        //TODO
+        thread.wClock = gclock.get()+1;
+        gclock.getAndIncrement();
+        rlu_synchronize(thread);
+        rlu_writeback_write_log(thread);
+        rlu_unlock_write_log(thread);
+        thread.wclock = Integer.MAX_VALUE;
+        rlu_swap_write_logs(thread);
+    }
+
+    private void rlu_synchronize(RluThread<T> thread){
+        //TODO complete this method
+        //read from globalThreads array to check if the thread w clock <= l clock
+        for(int i=0; i<globalThreads.length; i++){
+            if(globalThreads[i].wClock <= thread.lClock){
+                //wait
+            }
+        }
+
+      
+    }
+
+    private void rlu_writeback_write_log(RluThread<T> thread){
+        //TODO complete this method
+        for(int i=0; i<log1.size(); i++){
+            log1.get(i).actualNode.key =
+        }
+    }
 }
 
 // if(globalThreads[(int)pred.header.threadId].getState() == Thread.State.TERMINATED){
