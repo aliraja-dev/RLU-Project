@@ -33,6 +33,7 @@ public class RluCoarseSet<T> implements RluSetInterface<T> {
         synchronized (this) {
             // Read the global clock
             ctx.lClock = gClock.get();
+            ctx.isWriter = true;
             // Add the thread to the global threads array
             globalThreads[(int) Thread.currentThread().getId()] = ctx;
 
@@ -60,15 +61,22 @@ public class RluCoarseSet<T> implements RluSetInterface<T> {
             curr.header = new Header<T>(Thread.currentThread().getId(), curr);
             // so now it will show as the curr being locked by readers
             // now we need to update the gclock with a fetchandAdd so that readers steal
-            // this new copy isntead of the object copy
+            // this new copy instead of the object copy
 
-            // and then go appply the quiescent state of RLU
+            // and then go apply the quiescent state of RLU
+            ctx.runCounter++;
             ctx.wClock = gClock.get() + 1;
             gClock.getAndIncrement();
 
             // now implement the quiescent state of RLU
-
+            commit_write();
+            // now safe to writeback and unlock
             pred.next = node;
+            ctx.wClock = Integer.MAX_VALUE;
+            ctx.isWriter = false;
+            // now we need to remove the thread from the global threads array
+            globalThreads[(int) Thread.currentThread().getId()] = null;
+            // do we need to implement the rlu swap write here?
             return true;
 
         }
@@ -124,6 +132,9 @@ public class RluCoarseSet<T> implements RluSetInterface<T> {
                 // we need to pick the curr from the log of the thread that locked the object
 
                 RluNode<T> stolenCurrNode = globalThreads[(int) curr.header.threadId].node;
+                ctx.runCounter++;
+                // put null in the globalArrays for your Id
+                globalThreads[(int) threadId] = null;
                 return stolenCurrNode.key == key;
             } else {
                 // if your lclock is less than the wclock then you need to wait
@@ -138,6 +149,22 @@ public class RluCoarseSet<T> implements RluSetInterface<T> {
         return key == curr.key;
     }
 
+    private void commit_write() {
+        boolean priorReader = false;
+        do {
+            priorReader = false;
+            for (int i = 0; i < globalThreads.length; i++) {
+                if (globalThreads[i] != null) {
+                    if (!globalThreads[i].isWriter) {
+                        if (globalThreads[i].lClock <= gClock.get()) {
+                            priorReader = true;
+                            break;
+                        }
+                    }
+                }
+            }
+        } while (priorReader);
+    }
 }
 
 // if(globalThreads[(int)pred.header.threadId].getState() ==
