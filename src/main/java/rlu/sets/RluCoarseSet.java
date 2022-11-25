@@ -31,6 +31,11 @@ public class RluCoarseSet<T> implements RluSetInterface<T> {
     public boolean add(T item, RluThread<T> ctx) {
         int key = item.hashCode();
         synchronized (this) {
+            // Read the global clock
+            ctx.lClock = gClock.get();
+            // Add the thread to the global threads array
+            globalThreads[(int) Thread.currentThread().getId()] = ctx;
+
             RluNode<T> pred = head;
             RluNode<T> curr = pred.next;
 
@@ -49,6 +54,20 @@ public class RluCoarseSet<T> implements RluSetInterface<T> {
             // end the rlu swap write.
 
             RluNode<T> node = new RluNode<>(item, curr);
+            // store this node in your own log
+            ctx.node = node;
+            // dont update the next pointer of pred yet apply quiescent state of RLU
+            curr.header = new Header<T>(Thread.currentThread().getId(), curr);
+            // so now it will show as the curr being locked by readers
+            // now we need to update the gclock with a fetchandAdd so that readers steal
+            // this new copy isntead of the object copy
+
+            // and then go appply the quiescent state of RLU
+            ctx.wClock = gClock.get() + 1;
+            gClock.getAndIncrement();
+
+            // now implement the quiescent state of RLU
+
             pred.next = node;
             return true;
 
