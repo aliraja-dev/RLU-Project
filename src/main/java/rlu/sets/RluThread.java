@@ -7,7 +7,7 @@ public class RluThread<T> {
     boolean isWriter; // To indicate if the thread is a writer
     RluNode<T> node; // To store the node that the thread is currently working on
 
-    public RluThread(long id) {
+    public RluThread() {
         lClock = 0;
         wClock = Integer.MAX_VALUE;
         runCounter = 0;

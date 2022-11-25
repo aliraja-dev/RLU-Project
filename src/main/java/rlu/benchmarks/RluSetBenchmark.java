@@ -41,7 +41,7 @@ public class RluSetBenchmark<T> {
 
         @Setup(Level.Iteration)
         public void doSetup() {
-            set = new RluCoarseSet<>();
+            set = new RluCoarseSet<Integer>(16);
         }
 
         @TearDown(Level.Iteration)
@@ -62,7 +62,7 @@ public class RluSetBenchmark<T> {
 
         @Setup(Level.Iteration)
         public void doSetup() {
-            thread = new RluThread<>(Thread.currentThread().getId());
+            thread = new RluThread<>();
         }
 
         @TearDown(Level.Iteration)

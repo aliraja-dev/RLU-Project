@@ -1,7 +1,5 @@
 package rlu.sets;
 
-import java.util.concurrent.locks.Lock;
-import java.util.concurrent.locks.ReentrantLock;
 import java.util.concurrent.atomic.AtomicInteger;
 
 public class RluCoarseSet<T> implements RluSetInterface<T> {
@@ -12,19 +10,12 @@ public class RluCoarseSet<T> implements RluSetInterface<T> {
     // global threads array
 
     private RluNode<T> head;
-    private ThreadLocal<RluThread<T>> ctx;
 
-    public void RluSet(int threads) {
+    public RluCoarseSet(int threads) {
         gClock = new AtomicInteger(0);
         this.globalThreads = new RluThread[threads];
         head = new RluNode<>(Integer.MIN_VALUE);
         head.next = new RluNode<>(Integer.MAX_VALUE);
-        ctx = new ThreadLocal<RluThread<T>>() {
-            @Override
-            protected RluThread<T> initialValue() {
-                return new RluThread<T>(Thread.currentThread().getId());
-            }
-        };
     }
 
     @Override

@@ -26,5 +26,3 @@ public interface RluSetInterface<T> {
      */
     boolean contains(T item, RluThread<T> thread);
 }
-
-}
