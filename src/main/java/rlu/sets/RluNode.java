@@ -9,14 +9,16 @@ public class RluNode<U> {
     RluNode<U> next;
     // to store header information
     Header<U> header;
-   // private boolean locked;
+    // private boolean locked;
 
     public RluNode(U item, RluNode<U> next) {
         this.key = item.hashCode();
         this.next = next;
         // Initialize the header
         header = null;
-        // the header with null means there is no copy of this in any writers log and only when a writer creates a copy it wil update this header to point to the copy
+        // the header with null means there is no copy of this in any writers log and
+        // only when a writer creates a copy it wil update this header to point to the
+        // copy
     }
 
     public RluNode(int key) {
@@ -26,17 +28,16 @@ public class RluNode<U> {
 
     public void lock() {
         lock.lock();
-        locked = true;
     }
 
     public void unlock() {
         lock.unlock();
-        locked = false;
     }
 
     public boolean isLocked() {
         return header != null;
     }
+
     class Header<U> {
         long threadId;
         RluNode<U> actualNode;

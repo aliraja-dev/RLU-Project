@@ -22,7 +22,8 @@ import java.util.Random;
 import java.util.concurrent.ThreadLocalRandom;
 import java.util.concurrent.TimeUnit;
 
-import rlu.sets.RluSet;
+import rlu.sets.RluCoarseSet;
+import rlu.sets.RluThread;
 
 @State(Scope.Group)
 @BenchmarkMode(Mode.Throughput)
@@ -30,17 +31,17 @@ import rlu.sets.RluSet;
 @Warmup(iterations = 2, time = 100, timeUnit = TimeUnit.MILLISECONDS)
 @Measurement(iterations = 1, time = 100, timeUnit = TimeUnit.MILLISECONDS)
 @Fork(1)
-public class RluSetBenchmark {
+public class RluSetBenchmark<T> {
 
     @State(Scope.Group)
-    public static class MyState {
-        public RluSet<Integer> set;
+    public static class GlobalState {
+        public RluCoarseSet<Integer> set;
         public int UPPER_BOUND = 100;
         public int item;
 
         @Setup(Level.Iteration)
         public void doSetup() {
-            set = new RluSet<>();
+            set = new RluCoarseSet<>();
         }
 
         @TearDown(Level.Iteration)
@@ -55,6 +56,26 @@ public class RluSetBenchmark {
         }
     }
 
+    @State(Scope.Thread)
+    public static class ThreadState<T> {
+        public RluThread<Integer> thread;
+
+        @Setup(Level.Iteration)
+        public void doSetup() {
+            thread = new RluThread<>(Thread.currentThread().getId());
+        }
+
+        @TearDown(Level.Iteration)
+        public void doTearDown() {
+            thread = null;
+        }
+
+        @Setup(Level.Invocation)
+        public void forEveryInvocation() {
+            // nothing yet
+        }
+    }
+
     /**
      * For 16 threads - Throughput
      * 
@@ -63,22 +84,22 @@ public class RluSetBenchmark {
     @Benchmark
     @Group("g16For20")
     @GroupThreads(4)
-    public void read16With20PercentContains(MyState state) {
-        state.set.contains(state.item);
+    public void read16With20PercentContains(GlobalState gState, ThreadState<T> tState) {
+        gState.set.contains(gState.item, tState.thread);
     }
 
     @Benchmark
     @Group("g16For20")
     @GroupThreads(6)
-    public void write16With20PercentContains(MyState state) {
-        state.set.add(state.item);
+    public void write16With20PercentContains(GlobalState gState, ThreadState<T> tState) {
+        gState.set.add(gState.item, tState.thread);
     }
 
     @Benchmark
     @Group("g16For20")
     @GroupThreads(6)
-    public void remove16With20PercentContains(MyState state) {
-        state.set.remove(state.item);
+    public void remove16With20PercentContains(GlobalState gState, ThreadState<T> tState) {
+        gState.set.remove(gState.item, tState.thread);
     }
 
     public static void main(String[] args) throws RunnerException {

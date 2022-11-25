@@ -4,7 +4,7 @@ import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 import java.util.concurrent.atomic.AtomicInteger;
 
-public class RluCoarseSet<T> implements Set<T> {
+public class RluCoarseSet<T> implements RluSetInterface<T> {
 
     AtomicInteger gClock; // Global clock shared by all threads
     Thread[] globalThreads; // To identify Active threads
@@ -28,7 +28,7 @@ public class RluCoarseSet<T> implements Set<T> {
     }
 
     @Override
-    public boolean add(T item) {
+    public boolean add(T item, Thread rluThread) {
         int key = item.hashCode();
         synchronized (this) {
             RluNode<T> pred = head;
@@ -57,7 +57,7 @@ public class RluCoarseSet<T> implements Set<T> {
     }
 
     @Override
-    public boolean remove(T item) {
+    public boolean remove(T item, Thread rluThread) {
         int key = item.hashCode();
         head.lock();
         RluNode<T> pred = head;
@@ -77,14 +77,14 @@ public class RluCoarseSet<T> implements Set<T> {
     }
 
     @Override
-    public boolean contains(T item) {
+    public boolean contains(T item, Thread rluThread) {
         int key = item.hashCode();
-       ctx.lClock = gClock.get();
+       ctx.get().lClock = gClock.get();
+
         // register yourself as an active thread
         long threadId = Thread.currentThread().getId();
-        ctx.runCounter++;
-        globalThreads[threadId] = Thread.currentThread();
-
+        ctx.get().runCounter++;
+        globalThreads[(int) threadId] = Thread.currentThread();
         RluNode<T> pred = head;
         RluNode<T> curr = pred.next;
         while (curr.key < key) {
@@ -95,9 +95,20 @@ public class RluCoarseSet<T> implements Set<T> {
         // check if the object is locked 
         if (curr.isLocked()) {
             //find the id of the thread that locked the object
-            // then compare your lclock wth that thrreads wclock
+            // then compare your lclock wth that threads wclock
             // if your lclock is greater than or equal to the wclock then you can steal copy from the thread's log
-
+            if(ctx.get().lClock >= globalThreads[(int) curr.header.threadId].ctx.get().wClock){
+                // steal the copy from the thread's log
+                // then unlock the object
+                // then return true or false
+            }
+            else {
+                // if your lclock is less than the wclock then you need to wait
+                // wait until the wclock is greater than or equal to your lclock
+                // then steal the copy from the thread's log
+                // then unlock the object
+                // then return true or false
+            }
             else return key == curr.key;
         }
         return key == curr.key;

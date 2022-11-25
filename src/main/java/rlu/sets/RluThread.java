@@ -2,7 +2,7 @@ package rlu.sets;
 
 import java.util.LinkedList;
 
-public class RluThread<T> {
+public class RluThread<T> extends Thread {
     int lClock; // Local clock for each thread
     int wClock; // Write clock for each thread
     int runCounter; // To count the number of runs

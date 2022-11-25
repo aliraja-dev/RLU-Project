@@ -5,7 +5,8 @@ import java.util.concurrent.atomic.AtomicInteger;
 public class RluSet<T> implements Set<T> {
     AtomicInteger gClock; // Global clock shared by all threads
     Thread[] globalThreads; // To identify Active threads
-//In the global setup of JMH state, make sure we add all the threads to this global threads array
+    // In the global setup of JMH state, make sure we add all the threads to this
+    // global threads array
 
     private final RluNode<T> head;
 
@@ -40,7 +41,8 @@ public class RluSet<T> implements Set<T> {
         rlu_reader_unlock();
         rlu_commit_write_log();
 
-        //TODO rlu_commit_write_log will call synchronize, writebackand unlock and in end the rlu swap write.
+        // TODO rlu_commit_write_log will call synchronize, writebackand unlock and in
+        // end the rlu swap write.
 
         RluNode<T> node = new RluNode<>(item, curr);
         pred.next = node;
@@ -80,34 +82,37 @@ public class RluSet<T> implements Set<T> {
             pred = curr;
             curr = curr.next;
         }
-        // this is where we start the rLU logic, and we only go until dereference for contains in a lock free traversal
+        // this is where we start the rLU logic, and we only go until dereference for
+        // contains in a lock free traversal
         return key == curr.key;
     }
 
     private void rlu_reader_lock(RluThread<T> rluThread) {
         rluThread.isWrite = false;
         rluThread.runCounter++;
-        //do we need a memory fence here ?
+        // do we need a memory fence here ?
 
         rluThread.lClock = gClock.get();
 
     }
 
-    private RluNode<T> rlu_dereference(RluThread thread, RluNode<T> pred){
-        if(!pred.isLocked()){return pred;}
-
-        if (pred.header== null){
+    private RluNode<T> rlu_dereference(RluThread thread, RluNode<T> pred) {
+        if (!pred.isLocked()) {
             return pred;
         }
-        //check if you 
 
-        if(pred.header.threadId == thread.id){
+        if (pred.header == null) {
+            return pred;
+        }
+        // check if you
+
+        if (pred.header.threadId == thread.id) {
             return pred.header.actualNode;
         }
 
-    //read from globalThreads array to check if the thread w clock <= l clock
-   
-        if(globalThreads[(int)pred.header.threadId].wClock <= thread.lClock){
+        // read from globalThreads array to check if the thread w clock <= l clock
+
+        if (globalThreads[(int) pred.header.threadId].wClock <= thread.lClock) {
             return pred.header.actualNode;
         }
 
@@ -117,7 +122,7 @@ public class RluSet<T> implements Set<T> {
     private void rlu_writer_lock(RluThread<T> rluThread) {
         rluThread.isWrite = true;
         rluThread.runCounter++;
-        //do we need a memory fence here ?
+        // do we need a memory fence here ?
 
         rluThread.lClock = gClock.get();
         rluThread.wClock = rluThread.lClock;
@@ -126,43 +131,43 @@ public class RluSet<T> implements Set<T> {
     private void rlu_writer_unlock(RluThread<T> rluThread) {
         rluThread.isWrite = false;
         rluThread.runCounter++;
-        //do we need a memory fence here ?
+        // do we need a memory fence here ?
 
         rluThread.lClock = gClock.get();
         rluThread.wClock = rluThread.lClock;
     }
 
-    private RluNode<T> Rlu_try_lock(RluThread<T> thread, RluNode<T> pred){
+    private RluNode<T> Rlu_try_lock(RluThread<T> thread, RluNode<T> pred) {
         thread.isWriter = true;
-        //read actual object and copy i.e. the header 
-        //TODO 
+        // read actual object and copy i.e. the header
+        // TODO
         pred.lock();
         RluNode<T> curr = pred.next;
-        try{
+        try {
             curr.lock();
-            // update the header in the object node-- do this with a CAS Instruction 
+            // update the header in the object node-- do this with a CAS Instruction
             curr.header = new RluHeader(thread.id, curr);
 
             log1.add(curr.header);
-            //go ahead and change the value of pred .next to the new node and here
-            
+            // go ahead and change the value of pred .next to the new node and here
+
             rlu_reader_unlock(thread);
-        }finally{
+        } finally {
             pred.unlock();
         }
-     
+
     }
 
     private void rlu_reader_unlock(RluThread<T> rluThread) {
         rluThread.runCounter++;
-      if(thread.isWriter){
-        rlu_commit_write_log(thread);
-      }
+        if (thread.isWriter) {
+            rlu_commit_write_log(thread);
+        }
     }
 
     private void rlu_commit_write_log(RluThread<T> rluThread) {
-        //TODO
-        thread.wClock = gclock.get()+1;
+        // TODO
+        thread.wClock = gclock.get() + 1;
         gclock.getAndIncrement();
         rlu_synchronize(thread);
         rlu_writeback_write_log(thread);
@@ -171,16 +176,15 @@ public class RluSet<T> implements Set<T> {
         rlu_swap_write_logs(thread);
     }
 
-    private void rlu_synchronize(RluThread<T> thread){
-        //TODO complete this method
-        //read from globalThreads array to check if the thread w clock <= l clock
-        for(int i=0; i<globalThreads.length; i++){
-            if(globalThreads[i].wClock <= thread.lClock){
-                //wait
+    private void rlu_synchronize(RluThread<T> thread) {
+        // TODO complete this method
+        // read from globalThreads array to check if the thread w clock <= l clock
+        for (int i = 0; i < globalThreads.length; i++) {
+            if (globalThreads[i].wClock <= thread.lClock) {
+                // wait
             }
         }
 
-      
     }
 
     private void rlu_writeback_write_log(RluThread<T> thread){
@@ -191,15 +195,21 @@ public class RluSet<T> implements Set<T> {
     }
 }
 
-// if(globalThreads[(int)pred.header.threadId].getState() == Thread.State.TERMINATED){
-//     return pred.header.actualNode;
+// if(globalThreads[(int)pred.header.threadId].getState() ==
+// Thread.State.TERMINATED){
+// return pred.header.actualNode;
 // }
 
-
 // add and remove will have same logic. and same order of methods for rLU
-// the contains will not call the rlu_try_lock after its done with dereference method in a lock free contains
+// the contains will not call the rlu_try_lock after its done with dereference
+// method in a lock free contains
 
-//! the RLU paper implementation allows multiple updates in a single write operation, which i am nt sure if i can do that in first attempt.
-// My first attempt is a single object update holding fine grained locks on just pred and curr. 
+// ! the RLU paper implementation allows multiple updates in a single write
+// operation, which i am nt sure if i can do that in first attempt.
+// My first attempt is a single object update holding fine grained locks on just
+// pred and curr.
 
-// Then in second attempt we can implement the multiple updates per operation as well. As that would require a coarse grained locking on entire set or acquiring locks on multiple objects pred and curr and then updating them. later is the approach in the paper. 
+// Then in second attempt we can implement the multiple updates per operation as
+// well. As that would require a coarse grained locking on entire set or
+// acquiring locks on multiple objects pred and curr and then updating them.
+// later is the approach in the paper.
