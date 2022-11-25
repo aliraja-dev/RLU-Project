@@ -1,0 +1,14 @@
+dontinline,*.*_all_jmhStub
+dontinline,*.*_avgt_jmhStub
+dontinline,*.*_sample_jmhStub
+dontinline,*.*_ss_jmhStub
+dontinline,*.*_thrpt_jmhStub
+inline,rlu/benchmarks/RluSetBenchmark$GlobalState.doSetup
+inline,rlu/benchmarks/RluSetBenchmark$GlobalState.doTearDown
+inline,rlu/benchmarks/RluSetBenchmark$GlobalState.generateItem
+inline,rlu/benchmarks/RluSetBenchmark$ThreadState.doSetup
+inline,rlu/benchmarks/RluSetBenchmark$ThreadState.doTearDown
+inline,rlu/benchmarks/RluSetBenchmark$ThreadState.forEveryInvocation
+inline,rlu/benchmarks/RluSetBenchmark.read16With20PercentContains
+inline,rlu/benchmarks/RluSetBenchmark.remove16With20PercentContains
+inline,rlu/benchmarks/RluSetBenchmark.write16With20PercentContains

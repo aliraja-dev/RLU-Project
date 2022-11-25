@@ -7,7 +7,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 public class RluCoarseSet<T> implements RluSetInterface<T> {
 
     AtomicInteger gClock; // Global clock shared by all threads
-    Thread[] globalThreads; // To identify Active threads
+    RluThread<T>[] globalThreads; // To identify Active threads
     // In the global setup of JMH state, make sure we add all the threads to this
     // global threads array
 
@@ -16,7 +16,7 @@ public class RluCoarseSet<T> implements RluSetInterface<T> {
 
     public void RluSet(int threads) {
         gClock = new AtomicInteger(0);
-        this.globalThreads = new Thread[threads];
+        this.globalThreads = new RluThread[threads];
         head = new RluNode<>(Integer.MIN_VALUE);
         head.next = new RluNode<>(Integer.MAX_VALUE);
         ctx = new ThreadLocal<RluThread<T>>() {
@@ -28,7 +28,7 @@ public class RluCoarseSet<T> implements RluSetInterface<T> {
     }
 
     @Override
-    public boolean add(T item, Thread rluThread) {
+    public boolean add(T item, RluThread<T> ctx) {
         int key = item.hashCode();
         synchronized (this) {
             RluNode<T> pred = head;
@@ -57,7 +57,7 @@ public class RluCoarseSet<T> implements RluSetInterface<T> {
     }
 
     @Override
-    public boolean remove(T item, Thread rluThread) {
+    public boolean remove(T item, RluThread<T> ctx) {
         int key = item.hashCode();
         head.lock();
         RluNode<T> pred = head;
@@ -77,39 +77,44 @@ public class RluCoarseSet<T> implements RluSetInterface<T> {
     }
 
     @Override
-    public boolean contains(T item, Thread rluThread) {
+    public boolean contains(T item, RluThread<T> ctx) {
         int key = item.hashCode();
-       ctx.get().lClock = gClock.get();
-
+        ctx.lClock = gClock.get();
+        ctx.runCounter++;
         // register yourself as an active thread
         long threadId = Thread.currentThread().getId();
-        ctx.get().runCounter++;
-        globalThreads[(int) threadId] = Thread.currentThread();
+        globalThreads[(int) threadId] = ctx;
         RluNode<T> pred = head;
         RluNode<T> curr = pred.next;
         while (curr.key < key) {
             pred = curr;
             curr = curr.next;
         }
-        // this is where we start the rLU logic, and we only go until dereference for contains in a lock free traversal
-        // check if the object is locked 
+        // this is where we start the rLU logic, and we only go until dereference for
+        // contains in a lock free traversal
+        // check if the object is locked
         if (curr.isLocked()) {
-            //find the id of the thread that locked the object
+            // find the id of the thread that locked the object
             // then compare your lclock wth that threads wclock
-            // if your lclock is greater than or equal to the wclock then you can steal copy from the thread's log
-            if(ctx.get().lClock >= globalThreads[(int) curr.header.threadId].ctx.get().wClock){
+            // if your lclock is greater than or equal to the wclock then you can steal copy
+            // from the thread's log
+            if (ctx.lClock >= globalThreads[(int) curr.header.threadId].wClock) {
                 // steal the copy from the thread's log
                 // then unlock the object
                 // then return true or false
-            }
-            else {
+                // we need to pick the curr from the log of the thread that locked the object
+
+                RluNode<T> stolenCurrNode = globalThreads[(int) curr.header.threadId].node;
+                return stolenCurrNode.key == key;
+            } else {
                 // if your lclock is less than the wclock then you need to wait
                 // wait until the wclock is greater than or equal to your lclock
                 // then steal the copy from the thread's log
                 // then unlock the object
                 // then return true or false
+                return key == curr.key;
             }
-            else return key == curr.key;
+
         }
         return key == curr.key;
     }

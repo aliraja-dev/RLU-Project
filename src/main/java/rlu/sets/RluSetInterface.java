@@ -8,7 +8,7 @@ public interface RluSetInterface<T> {
      * @param item
      * @return {@code true} if added, {@code false} otherwise
      */
-    boolean add(T item, Thread thread);
+    boolean add(T item, RluThread<T> thread);
 
     /**
      * Removes item from set (if present)
@@ -16,7 +16,7 @@ public interface RluSetInterface<T> {
      * @param item
      * @return {@code true} if item removed, {@code false} otherwise
      */
-    boolean remove(T item, Thread thread);
+    boolean remove(T item, RluThread<T> thread);
 
     /**
      * Checks if item is in the set
@@ -24,7 +24,7 @@ public interface RluSetInterface<T> {
      * @param item
      * @return {@code true} if item in set, {@code false} otherwise
      */
-    boolean contains(T item, Thread thread);
+    boolean contains(T item, RluThread<T> thread);
 }
 
 }
