@@ -11,6 +11,13 @@ public class RluCoarseSet<T> implements RluSetInterface<T> {
 
     private RluNode<T> head;
 
+    public RluCoarseSet() {
+        gClock = new AtomicInteger(0);
+        globalThreads = new RluThread[1000];
+        head = new RluNode<T>(Integer.MIN_VALUE);
+        head.next = new RluNode<T>(Integer.MAX_VALUE);
+    }
+
     public RluCoarseSet(int threads) {
         gClock = new AtomicInteger(0);
         this.globalThreads = new RluThread[100];
@@ -67,7 +74,7 @@ public class RluCoarseSet<T> implements RluSetInterface<T> {
             ctx.wClock = Integer.MAX_VALUE;
             ctx.isWriter = false;
             // now we need to remove the thread from the global threads array
-            globalThreads[(int) Thread.currentThread().getId()] = null;
+            // globalThreads[(int) Thread.currentThread().getId()] = null;
             // do we need to implement the rlu swap write here?
             return true;
 

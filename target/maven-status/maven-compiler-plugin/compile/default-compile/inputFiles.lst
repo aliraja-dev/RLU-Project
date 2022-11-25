@@ -4,7 +4,10 @@
 /Users/ali/cs5510/Group-Project-5510/RLU-Project/src/main/java/rlu/sets/RluThread.java
 /Users/ali/cs5510/Group-Project-5510/RLU-Project/src/main/java/rlu/sets/RluCoarseSet.java
 /Users/ali/cs5510/Group-Project-5510/RLU-Project/src/main/java/rlu/sets/FineSet.java
+/Users/ali/cs5510/Group-Project-5510/RLU-Project/src/main/java/rlu/Runner.java
 /Users/ali/cs5510/Group-Project-5510/RLU-Project/src/main/java/rlu/sets/RluSetInterface.java
+/Users/ali/cs5510/Group-Project-5510/RLU-Project/src/main/java/rlu/WriterThread.java
+/Users/ali/cs5510/Group-Project-5510/RLU-Project/src/main/java/rlu/ReaderThread.java
 /Users/ali/cs5510/Group-Project-5510/RLU-Project/src/main/java/rlu/benchmarks/CoarseSetBenchmark.java
 /Users/ali/cs5510/Group-Project-5510/RLU-Project/src/main/java/rlu/sets/Set.java
 /Users/ali/cs5510/Group-Project-5510/RLU-Project/src/main/java/rlu/benchmarks/LockFreeSetBenchmark.java
