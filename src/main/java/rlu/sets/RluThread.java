@@ -1,14 +1,11 @@
 package rlu.sets;
 
-import java.util.LinkedList;
-
 public class RluThread<T> {
     int lClock; // Local clock for each thread
     int wClock; // Write clock for each thread
     int runCounter; // To count the number of runs
     boolean isWriter; // To indicate if the thread is a writer
     RluNode<T> node; // To store the node that the thread is currently working on
-    LinkedList<RluNode<T>.Header<T>> log2;
 
     public RluThread(long id) {
         lClock = 0;
