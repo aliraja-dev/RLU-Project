@@ -13,7 +13,7 @@ public class RluCoarseSet<T> implements RluSetInterface<T> {
 
     public RluCoarseSet(int threads) {
         gClock = new AtomicInteger(0);
-        this.globalThreads = new RluThread[threads];
+        this.globalThreads = new RluThread[100];
         head = new RluNode<>(Integer.MIN_VALUE);
         head.next = new RluNode<>(Integer.MAX_VALUE);
     }
@@ -49,7 +49,8 @@ public class RluCoarseSet<T> implements RluSetInterface<T> {
             // store this node in your own log
             ctx.node = node;
             // dont update the next pointer of pred yet apply quiescent state of RLU
-            curr.header = new Header<T>(Thread.currentThread().getId(), curr);
+            // ! curr.header = new Header<T>(Thread.currentThread().getId(), curr);
+            curr.header = new Header<T>(Thread.currentThread().getId());
             // so now it will show as the curr being locked by readers
             // now we need to update the gclock with a fetchandAdd so that readers steal
             // this new copy instead of the object copy
@@ -62,7 +63,7 @@ public class RluCoarseSet<T> implements RluSetInterface<T> {
             // now implement the quiescent state of RLU
             commit_write();
             // now safe to writeback and unlock
-            pred.next = node;
+            pred.next = ctx.node;
             ctx.wClock = Integer.MAX_VALUE;
             ctx.isWriter = false;
             // now we need to remove the thread from the global threads array
@@ -155,6 +156,7 @@ public class RluCoarseSet<T> implements RluSetInterface<T> {
                 }
             }
         } while (priorReader);
+        // ! maybe this is the deadlock point
     }
 }
 

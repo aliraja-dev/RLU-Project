@@ -95,12 +95,13 @@ public class RluSetBenchmark<T> {
         gState.set.add(gState.item, tState.thread);
     }
 
-    @Benchmark
-    @Group("g16For20")
-    @GroupThreads(6)
-    public void remove16With20PercentContains(GlobalState gState, ThreadState<T> tState) {
-        gState.set.remove(gState.item, tState.thread);
-    }
+    // @Benchmark
+    // @Group("g16For20")
+    // @GroupThreads(6)
+    // public void remove16With20PercentContains(GlobalState gState, ThreadState<T>
+    // tState) {
+    // gState.set.remove(gState.item, tState.thread);
+    // }
 
     public static void main(String[] args) throws RunnerException {
         Options opt = new OptionsBuilder()

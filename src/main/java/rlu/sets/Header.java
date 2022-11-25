@@ -10,6 +10,10 @@ class Header<U> {
         this.actualNode = actualNode;
     }
 
+    public Header(long threadId) {
+        this.threadId = threadId;
+    }
+
     public boolean isCopy() {
         return isCopy;
     }

@@ -36,7 +36,6 @@ import rlu.benchmarks.jmh_generated.RluSetBenchmark_GlobalState_jmhType;
 import rlu.benchmarks.jmh_generated.RluSetBenchmark_jmhType;
 import rlu.benchmarks.jmh_generated.RluSetBenchmark_ThreadState_jmhType;
 import rlu.benchmarks.jmh_generated.RluSetBenchmark_ThreadState_jmhType;
-import rlu.benchmarks.jmh_generated.RluSetBenchmark_ThreadState_jmhType;
 public final class RluSetBenchmark_g16For20_jmhTest {
 
     byte p000, p001, p002, p003, p004, p005, p006, p007, p008, p009, p010, p011, p012, p013, p014, p015;
@@ -288,7 +287,7 @@ public final class RluSetBenchmark_g16For20_jmhTest {
                         if (Thread.interrupted()) throw new InterruptedException();
                     }
                 }
-                l_rlusetbenchmark0_G.remove16With20PercentContains(l_globalstate1_G, l_threadstate2_1);
+                l_rlusetbenchmark0_G.write16With20PercentContains(l_globalstate1_G, l_threadstate2_1);
                 if (RluSetBenchmark_GlobalState_jmhType.tearInvocationMutexUpdater.compareAndSet(l_globalstate1_G, 0, 1)) {
                     try {
                         if (control.isFailing) throw new FailureAssistException();
@@ -311,7 +310,7 @@ public final class RluSetBenchmark_g16For20_jmhTest {
             }
 
             notifyControl.startMeasurement = true;
-            remove16With20PercentContains_thrpt_jmhStub(control, res, benchmarkParams, iterationParams, threadParams, blackhole, notifyControl, startRndMask, l_globalstate1_G, l_threadstate2_1, l_rlusetbenchmark0_G);
+            write16With20PercentContains_thrpt_jmhStub(control, res, benchmarkParams, iterationParams, threadParams, blackhole, notifyControl, startRndMask, l_globalstate1_G, l_threadstate2_1, l_rlusetbenchmark0_G);
             notifyControl.stopMeasurement = true;
             control.announceWarmdownReady();
             try {
@@ -336,7 +335,7 @@ public final class RluSetBenchmark_g16For20_jmhTest {
                             if (Thread.interrupted()) throw new InterruptedException();
                         }
                     }
-                    l_rlusetbenchmark0_G.remove16With20PercentContains(l_globalstate1_G, l_threadstate2_1);
+                    l_rlusetbenchmark0_G.write16With20PercentContains(l_globalstate1_G, l_threadstate2_1);
                     if (RluSetBenchmark_GlobalState_jmhType.tearInvocationMutexUpdater.compareAndSet(l_globalstate1_G, 0, 1)) {
                         try {
                             if (control.isFailing) throw new FailureAssistException();
@@ -384,173 +383,6 @@ public final class RluSetBenchmark_g16For20_jmhTest {
 
             if (control.isLastIteration()) {
                 f_threadstate2_1 = null;
-                synchronized(this.getClass()) {
-                    f_globalstate1_G_map.remove(threadParams.getGroupIndex());
-                }
-                synchronized(this.getClass()) {
-                    f_rlusetbenchmark0_G_map.remove(threadParams.getGroupIndex());
-                }
-            }
-            res.allOps += res.measuredOps;
-            int batchSize = iterationParams.getBatchSize();
-            int opsPerInv = benchmarkParams.getOpsPerInvocation();
-            res.allOps *= opsPerInv;
-            res.allOps /= batchSize;
-            res.measuredOps *= opsPerInv;
-            res.measuredOps /= batchSize;
-            BenchmarkTaskResult results = new BenchmarkTaskResult((long)res.allOps, (long)res.measuredOps);
-            results.add(new ThroughputResult(ResultRole.PRIMARY, "g16For20", res.measuredOps, res.getTime(), benchmarkParams.getTimeUnit()));
-            results.add(new ThroughputResult(ResultRole.SECONDARY, "remove16With20PercentContains", res.measuredOps, res.getTime(), benchmarkParams.getTimeUnit()));
-            this.blackhole.evaporate("Yes, I am Stephen Hawking, and know a thing or two about black holes.");
-            return results;
-        } else
-        if (threadParams.getSubgroupIndex() == 2) {
-            RawResults res = new RawResults();
-            RluSetBenchmark_jmhType l_rlusetbenchmark0_G = _jmh_tryInit_f_rlusetbenchmark0_G(control);
-            RluSetBenchmark_ThreadState_jmhType l_threadstate2_2 = _jmh_tryInit_f_threadstate2_2(control);
-            RluSetBenchmark_GlobalState_jmhType l_globalstate1_G = _jmh_tryInit_f_globalstate1_G(control);
-
-            control.preSetup();
-            l_threadstate2_2.doSetup();
-            if (RluSetBenchmark_GlobalState_jmhType.setupIterationMutexUpdater.compareAndSet(l_globalstate1_G, 0, 1)) {
-                try {
-                    if (control.isFailing) throw new FailureAssistException();
-                    if (!l_globalstate1_G.readyIteration) {
-                        l_globalstate1_G.doSetup();
-                        l_globalstate1_G.readyIteration = true;
-                    }
-                } catch (Throwable t) {
-                    control.isFailing = true;
-                    throw t;
-                } finally {
-                    RluSetBenchmark_GlobalState_jmhType.setupIterationMutexUpdater.set(l_globalstate1_G, 0);
-                }
-            } else {
-                while (RluSetBenchmark_GlobalState_jmhType.setupIterationMutexUpdater.get(l_globalstate1_G) == 1) {
-                    if (control.isFailing) throw new FailureAssistException();
-                    if (Thread.interrupted()) throw new InterruptedException();
-                }
-            }
-
-
-            control.announceWarmupReady();
-            while (control.warmupShouldWait) {
-                l_threadstate2_2.forEveryInvocation();
-                if (RluSetBenchmark_GlobalState_jmhType.setupInvocationMutexUpdater.compareAndSet(l_globalstate1_G, 0, 1)) {
-                    try {
-                        if (control.isFailing) throw new FailureAssistException();
-                        if (!l_globalstate1_G.readyInvocation) {
-                            l_globalstate1_G.generateItem();
-                            l_globalstate1_G.readyInvocation = true;
-                        }
-                    } catch (Throwable t) {
-                        control.isFailing = true;
-                        throw t;
-                    } finally {
-                        RluSetBenchmark_GlobalState_jmhType.setupInvocationMutexUpdater.set(l_globalstate1_G, 0);
-                    }
-                } else {
-                    while (RluSetBenchmark_GlobalState_jmhType.setupInvocationMutexUpdater.get(l_globalstate1_G) == 1) {
-                        if (control.isFailing) throw new FailureAssistException();
-                        if (Thread.interrupted()) throw new InterruptedException();
-                    }
-                }
-                l_rlusetbenchmark0_G.write16With20PercentContains(l_globalstate1_G, l_threadstate2_2);
-                if (RluSetBenchmark_GlobalState_jmhType.tearInvocationMutexUpdater.compareAndSet(l_globalstate1_G, 0, 1)) {
-                    try {
-                        if (control.isFailing) throw new FailureAssistException();
-                        if (l_globalstate1_G.readyInvocation) {
-                            l_globalstate1_G.readyInvocation = false;
-                        }
-                    } catch (Throwable t) {
-                        control.isFailing = true;
-                        throw t;
-                    } finally {
-                        RluSetBenchmark_GlobalState_jmhType.tearInvocationMutexUpdater.set(l_globalstate1_G, 0);
-                    }
-                } else {
-                    while (RluSetBenchmark_GlobalState_jmhType.tearInvocationMutexUpdater.get(l_globalstate1_G) == 1) {
-                        if (control.isFailing) throw new FailureAssistException();
-                        if (Thread.interrupted()) throw new InterruptedException();
-                    }
-                }
-                res.allOps++;
-            }
-
-            notifyControl.startMeasurement = true;
-            write16With20PercentContains_thrpt_jmhStub(control, res, benchmarkParams, iterationParams, threadParams, blackhole, notifyControl, startRndMask, l_globalstate1_G, l_threadstate2_2, l_rlusetbenchmark0_G);
-            notifyControl.stopMeasurement = true;
-            control.announceWarmdownReady();
-            try {
-                while (control.warmdownShouldWait) {
-                    l_threadstate2_2.forEveryInvocation();
-                    if (RluSetBenchmark_GlobalState_jmhType.setupInvocationMutexUpdater.compareAndSet(l_globalstate1_G, 0, 1)) {
-                        try {
-                            if (control.isFailing) throw new FailureAssistException();
-                            if (!l_globalstate1_G.readyInvocation) {
-                                l_globalstate1_G.generateItem();
-                                l_globalstate1_G.readyInvocation = true;
-                            }
-                        } catch (Throwable t) {
-                            control.isFailing = true;
-                            throw t;
-                        } finally {
-                            RluSetBenchmark_GlobalState_jmhType.setupInvocationMutexUpdater.set(l_globalstate1_G, 0);
-                        }
-                    } else {
-                        while (RluSetBenchmark_GlobalState_jmhType.setupInvocationMutexUpdater.get(l_globalstate1_G) == 1) {
-                            if (control.isFailing) throw new FailureAssistException();
-                            if (Thread.interrupted()) throw new InterruptedException();
-                        }
-                    }
-                    l_rlusetbenchmark0_G.write16With20PercentContains(l_globalstate1_G, l_threadstate2_2);
-                    if (RluSetBenchmark_GlobalState_jmhType.tearInvocationMutexUpdater.compareAndSet(l_globalstate1_G, 0, 1)) {
-                        try {
-                            if (control.isFailing) throw new FailureAssistException();
-                            if (l_globalstate1_G.readyInvocation) {
-                                l_globalstate1_G.readyInvocation = false;
-                            }
-                        } catch (Throwable t) {
-                            control.isFailing = true;
-                            throw t;
-                        } finally {
-                            RluSetBenchmark_GlobalState_jmhType.tearInvocationMutexUpdater.set(l_globalstate1_G, 0);
-                        }
-                    } else {
-                        while (RluSetBenchmark_GlobalState_jmhType.tearInvocationMutexUpdater.get(l_globalstate1_G) == 1) {
-                            if (control.isFailing) throw new FailureAssistException();
-                            if (Thread.interrupted()) throw new InterruptedException();
-                        }
-                    }
-                    res.allOps++;
-                }
-            } catch (Throwable e) {
-                if (!(e instanceof InterruptedException)) throw e;
-            }
-            control.preTearDown();
-            if (RluSetBenchmark_GlobalState_jmhType.tearIterationMutexUpdater.compareAndSet(l_globalstate1_G, 0, 1)) {
-                try {
-                    if (control.isFailing) throw new FailureAssistException();
-                    if (l_globalstate1_G.readyIteration) {
-                        l_globalstate1_G.doTearDown();
-                        l_globalstate1_G.readyIteration = false;
-                    }
-                } catch (Throwable t) {
-                    control.isFailing = true;
-                    throw t;
-                } finally {
-                    RluSetBenchmark_GlobalState_jmhType.tearIterationMutexUpdater.set(l_globalstate1_G, 0);
-                }
-            } else {
-                while (RluSetBenchmark_GlobalState_jmhType.tearIterationMutexUpdater.get(l_globalstate1_G) == 1) {
-                    if (control.isFailing) throw new FailureAssistException();
-                    if (Thread.interrupted()) throw new InterruptedException();
-                }
-            }
-            l_threadstate2_2.doTearDown();
-
-            if (control.isLastIteration()) {
-                f_threadstate2_2 = null;
                 synchronized(this.getClass()) {
                     f_globalstate1_G_map.remove(threadParams.getGroupIndex());
                 }
@@ -627,7 +459,7 @@ public final class RluSetBenchmark_g16For20_jmhTest {
         result.measuredOps = operations;
     }
 
-    public static void remove16With20PercentContains_thrpt_jmhStub(InfraControl control, RawResults result, BenchmarkParams benchmarkParams, IterationParams iterationParams, ThreadParams threadParams, Blackhole blackhole, Control notifyControl, int startRndMask, RluSetBenchmark_GlobalState_jmhType l_globalstate1_G, RluSetBenchmark_ThreadState_jmhType l_threadstate2_1, RluSetBenchmark_jmhType l_rlusetbenchmark0_G) throws Throwable {
+    public static void write16With20PercentContains_thrpt_jmhStub(InfraControl control, RawResults result, BenchmarkParams benchmarkParams, IterationParams iterationParams, ThreadParams threadParams, Blackhole blackhole, Control notifyControl, int startRndMask, RluSetBenchmark_GlobalState_jmhType l_globalstate1_G, RluSetBenchmark_ThreadState_jmhType l_threadstate2_1, RluSetBenchmark_jmhType l_rlusetbenchmark0_G) throws Throwable {
         long operations = 0;
         long realTime = 0;
         result.startTime = System.nanoTime();
@@ -653,60 +485,7 @@ public final class RluSetBenchmark_g16For20_jmhTest {
                 }
             }
             long rt = System.nanoTime();
-            l_rlusetbenchmark0_G.remove16With20PercentContains(l_globalstate1_G, l_threadstate2_1);
-            realTime += (System.nanoTime() - rt);
-            if (RluSetBenchmark_GlobalState_jmhType.tearInvocationMutexUpdater.compareAndSet(l_globalstate1_G, 0, 1)) {
-                try {
-                    if (control.isFailing) throw new FailureAssistException();
-                    if (l_globalstate1_G.readyInvocation) {
-                        l_globalstate1_G.readyInvocation = false;
-                    }
-                } catch (Throwable t) {
-                    control.isFailing = true;
-                    throw t;
-                } finally {
-                    RluSetBenchmark_GlobalState_jmhType.tearInvocationMutexUpdater.set(l_globalstate1_G, 0);
-                }
-            } else {
-                while (RluSetBenchmark_GlobalState_jmhType.tearInvocationMutexUpdater.get(l_globalstate1_G) == 1) {
-                    if (control.isFailing) throw new FailureAssistException();
-                    if (Thread.interrupted()) throw new InterruptedException();
-                }
-            }
-            operations++;
-        } while(!control.isDone);
-        result.stopTime = System.nanoTime();
-        result.realTime = realTime;
-        result.measuredOps = operations;
-    }
-
-    public static void write16With20PercentContains_thrpt_jmhStub(InfraControl control, RawResults result, BenchmarkParams benchmarkParams, IterationParams iterationParams, ThreadParams threadParams, Blackhole blackhole, Control notifyControl, int startRndMask, RluSetBenchmark_GlobalState_jmhType l_globalstate1_G, RluSetBenchmark_ThreadState_jmhType l_threadstate2_2, RluSetBenchmark_jmhType l_rlusetbenchmark0_G) throws Throwable {
-        long operations = 0;
-        long realTime = 0;
-        result.startTime = System.nanoTime();
-        do {
-            l_threadstate2_2.forEveryInvocation();
-            if (RluSetBenchmark_GlobalState_jmhType.setupInvocationMutexUpdater.compareAndSet(l_globalstate1_G, 0, 1)) {
-                try {
-                    if (control.isFailing) throw new FailureAssistException();
-                    if (!l_globalstate1_G.readyInvocation) {
-                        l_globalstate1_G.generateItem();
-                        l_globalstate1_G.readyInvocation = true;
-                    }
-                } catch (Throwable t) {
-                    control.isFailing = true;
-                    throw t;
-                } finally {
-                    RluSetBenchmark_GlobalState_jmhType.setupInvocationMutexUpdater.set(l_globalstate1_G, 0);
-                }
-            } else {
-                while (RluSetBenchmark_GlobalState_jmhType.setupInvocationMutexUpdater.get(l_globalstate1_G) == 1) {
-                    if (control.isFailing) throw new FailureAssistException();
-                    if (Thread.interrupted()) throw new InterruptedException();
-                }
-            }
-            long rt = System.nanoTime();
-            l_rlusetbenchmark0_G.write16With20PercentContains(l_globalstate1_G, l_threadstate2_2);
+            l_rlusetbenchmark0_G.write16With20PercentContains(l_globalstate1_G, l_threadstate2_1);
             realTime += (System.nanoTime() - rt);
             if (RluSetBenchmark_GlobalState_jmhType.tearInvocationMutexUpdater.compareAndSet(l_globalstate1_G, 0, 1)) {
                 try {
@@ -960,7 +739,7 @@ public final class RluSetBenchmark_g16For20_jmhTest {
                         if (Thread.interrupted()) throw new InterruptedException();
                     }
                 }
-                l_rlusetbenchmark0_G.remove16With20PercentContains(l_globalstate1_G, l_threadstate2_1);
+                l_rlusetbenchmark0_G.write16With20PercentContains(l_globalstate1_G, l_threadstate2_1);
                 if (RluSetBenchmark_GlobalState_jmhType.tearInvocationMutexUpdater.compareAndSet(l_globalstate1_G, 0, 1)) {
                     try {
                         if (control.isFailing) throw new FailureAssistException();
@@ -983,7 +762,7 @@ public final class RluSetBenchmark_g16For20_jmhTest {
             }
 
             notifyControl.startMeasurement = true;
-            remove16With20PercentContains_avgt_jmhStub(control, res, benchmarkParams, iterationParams, threadParams, blackhole, notifyControl, startRndMask, l_globalstate1_G, l_threadstate2_1, l_rlusetbenchmark0_G);
+            write16With20PercentContains_avgt_jmhStub(control, res, benchmarkParams, iterationParams, threadParams, blackhole, notifyControl, startRndMask, l_globalstate1_G, l_threadstate2_1, l_rlusetbenchmark0_G);
             notifyControl.stopMeasurement = true;
             control.announceWarmdownReady();
             try {
@@ -1008,7 +787,7 @@ public final class RluSetBenchmark_g16For20_jmhTest {
                             if (Thread.interrupted()) throw new InterruptedException();
                         }
                     }
-                    l_rlusetbenchmark0_G.remove16With20PercentContains(l_globalstate1_G, l_threadstate2_1);
+                    l_rlusetbenchmark0_G.write16With20PercentContains(l_globalstate1_G, l_threadstate2_1);
                     if (RluSetBenchmark_GlobalState_jmhType.tearInvocationMutexUpdater.compareAndSet(l_globalstate1_G, 0, 1)) {
                         try {
                             if (control.isFailing) throw new FailureAssistException();
@@ -1056,173 +835,6 @@ public final class RluSetBenchmark_g16For20_jmhTest {
 
             if (control.isLastIteration()) {
                 f_threadstate2_1 = null;
-                synchronized(this.getClass()) {
-                    f_globalstate1_G_map.remove(threadParams.getGroupIndex());
-                }
-                synchronized(this.getClass()) {
-                    f_rlusetbenchmark0_G_map.remove(threadParams.getGroupIndex());
-                }
-            }
-            res.allOps += res.measuredOps;
-            int batchSize = iterationParams.getBatchSize();
-            int opsPerInv = benchmarkParams.getOpsPerInvocation();
-            res.allOps *= opsPerInv;
-            res.allOps /= batchSize;
-            res.measuredOps *= opsPerInv;
-            res.measuredOps /= batchSize;
-            BenchmarkTaskResult results = new BenchmarkTaskResult((long)res.allOps, (long)res.measuredOps);
-            results.add(new AverageTimeResult(ResultRole.PRIMARY, "g16For20", res.measuredOps, res.getTime(), benchmarkParams.getTimeUnit()));
-            results.add(new AverageTimeResult(ResultRole.SECONDARY, "remove16With20PercentContains", res.measuredOps, res.getTime(), benchmarkParams.getTimeUnit()));
-            this.blackhole.evaporate("Yes, I am Stephen Hawking, and know a thing or two about black holes.");
-            return results;
-        } else
-        if (threadParams.getSubgroupIndex() == 2) {
-            RawResults res = new RawResults();
-            RluSetBenchmark_jmhType l_rlusetbenchmark0_G = _jmh_tryInit_f_rlusetbenchmark0_G(control);
-            RluSetBenchmark_ThreadState_jmhType l_threadstate2_2 = _jmh_tryInit_f_threadstate2_2(control);
-            RluSetBenchmark_GlobalState_jmhType l_globalstate1_G = _jmh_tryInit_f_globalstate1_G(control);
-
-            control.preSetup();
-            l_threadstate2_2.doSetup();
-            if (RluSetBenchmark_GlobalState_jmhType.setupIterationMutexUpdater.compareAndSet(l_globalstate1_G, 0, 1)) {
-                try {
-                    if (control.isFailing) throw new FailureAssistException();
-                    if (!l_globalstate1_G.readyIteration) {
-                        l_globalstate1_G.doSetup();
-                        l_globalstate1_G.readyIteration = true;
-                    }
-                } catch (Throwable t) {
-                    control.isFailing = true;
-                    throw t;
-                } finally {
-                    RluSetBenchmark_GlobalState_jmhType.setupIterationMutexUpdater.set(l_globalstate1_G, 0);
-                }
-            } else {
-                while (RluSetBenchmark_GlobalState_jmhType.setupIterationMutexUpdater.get(l_globalstate1_G) == 1) {
-                    if (control.isFailing) throw new FailureAssistException();
-                    if (Thread.interrupted()) throw new InterruptedException();
-                }
-            }
-
-
-            control.announceWarmupReady();
-            while (control.warmupShouldWait) {
-                l_threadstate2_2.forEveryInvocation();
-                if (RluSetBenchmark_GlobalState_jmhType.setupInvocationMutexUpdater.compareAndSet(l_globalstate1_G, 0, 1)) {
-                    try {
-                        if (control.isFailing) throw new FailureAssistException();
-                        if (!l_globalstate1_G.readyInvocation) {
-                            l_globalstate1_G.generateItem();
-                            l_globalstate1_G.readyInvocation = true;
-                        }
-                    } catch (Throwable t) {
-                        control.isFailing = true;
-                        throw t;
-                    } finally {
-                        RluSetBenchmark_GlobalState_jmhType.setupInvocationMutexUpdater.set(l_globalstate1_G, 0);
-                    }
-                } else {
-                    while (RluSetBenchmark_GlobalState_jmhType.setupInvocationMutexUpdater.get(l_globalstate1_G) == 1) {
-                        if (control.isFailing) throw new FailureAssistException();
-                        if (Thread.interrupted()) throw new InterruptedException();
-                    }
-                }
-                l_rlusetbenchmark0_G.write16With20PercentContains(l_globalstate1_G, l_threadstate2_2);
-                if (RluSetBenchmark_GlobalState_jmhType.tearInvocationMutexUpdater.compareAndSet(l_globalstate1_G, 0, 1)) {
-                    try {
-                        if (control.isFailing) throw new FailureAssistException();
-                        if (l_globalstate1_G.readyInvocation) {
-                            l_globalstate1_G.readyInvocation = false;
-                        }
-                    } catch (Throwable t) {
-                        control.isFailing = true;
-                        throw t;
-                    } finally {
-                        RluSetBenchmark_GlobalState_jmhType.tearInvocationMutexUpdater.set(l_globalstate1_G, 0);
-                    }
-                } else {
-                    while (RluSetBenchmark_GlobalState_jmhType.tearInvocationMutexUpdater.get(l_globalstate1_G) == 1) {
-                        if (control.isFailing) throw new FailureAssistException();
-                        if (Thread.interrupted()) throw new InterruptedException();
-                    }
-                }
-                res.allOps++;
-            }
-
-            notifyControl.startMeasurement = true;
-            write16With20PercentContains_avgt_jmhStub(control, res, benchmarkParams, iterationParams, threadParams, blackhole, notifyControl, startRndMask, l_globalstate1_G, l_threadstate2_2, l_rlusetbenchmark0_G);
-            notifyControl.stopMeasurement = true;
-            control.announceWarmdownReady();
-            try {
-                while (control.warmdownShouldWait) {
-                    l_threadstate2_2.forEveryInvocation();
-                    if (RluSetBenchmark_GlobalState_jmhType.setupInvocationMutexUpdater.compareAndSet(l_globalstate1_G, 0, 1)) {
-                        try {
-                            if (control.isFailing) throw new FailureAssistException();
-                            if (!l_globalstate1_G.readyInvocation) {
-                                l_globalstate1_G.generateItem();
-                                l_globalstate1_G.readyInvocation = true;
-                            }
-                        } catch (Throwable t) {
-                            control.isFailing = true;
-                            throw t;
-                        } finally {
-                            RluSetBenchmark_GlobalState_jmhType.setupInvocationMutexUpdater.set(l_globalstate1_G, 0);
-                        }
-                    } else {
-                        while (RluSetBenchmark_GlobalState_jmhType.setupInvocationMutexUpdater.get(l_globalstate1_G) == 1) {
-                            if (control.isFailing) throw new FailureAssistException();
-                            if (Thread.interrupted()) throw new InterruptedException();
-                        }
-                    }
-                    l_rlusetbenchmark0_G.write16With20PercentContains(l_globalstate1_G, l_threadstate2_2);
-                    if (RluSetBenchmark_GlobalState_jmhType.tearInvocationMutexUpdater.compareAndSet(l_globalstate1_G, 0, 1)) {
-                        try {
-                            if (control.isFailing) throw new FailureAssistException();
-                            if (l_globalstate1_G.readyInvocation) {
-                                l_globalstate1_G.readyInvocation = false;
-                            }
-                        } catch (Throwable t) {
-                            control.isFailing = true;
-                            throw t;
-                        } finally {
-                            RluSetBenchmark_GlobalState_jmhType.tearInvocationMutexUpdater.set(l_globalstate1_G, 0);
-                        }
-                    } else {
-                        while (RluSetBenchmark_GlobalState_jmhType.tearInvocationMutexUpdater.get(l_globalstate1_G) == 1) {
-                            if (control.isFailing) throw new FailureAssistException();
-                            if (Thread.interrupted()) throw new InterruptedException();
-                        }
-                    }
-                    res.allOps++;
-                }
-            } catch (Throwable e) {
-                if (!(e instanceof InterruptedException)) throw e;
-            }
-            control.preTearDown();
-            if (RluSetBenchmark_GlobalState_jmhType.tearIterationMutexUpdater.compareAndSet(l_globalstate1_G, 0, 1)) {
-                try {
-                    if (control.isFailing) throw new FailureAssistException();
-                    if (l_globalstate1_G.readyIteration) {
-                        l_globalstate1_G.doTearDown();
-                        l_globalstate1_G.readyIteration = false;
-                    }
-                } catch (Throwable t) {
-                    control.isFailing = true;
-                    throw t;
-                } finally {
-                    RluSetBenchmark_GlobalState_jmhType.tearIterationMutexUpdater.set(l_globalstate1_G, 0);
-                }
-            } else {
-                while (RluSetBenchmark_GlobalState_jmhType.tearIterationMutexUpdater.get(l_globalstate1_G) == 1) {
-                    if (control.isFailing) throw new FailureAssistException();
-                    if (Thread.interrupted()) throw new InterruptedException();
-                }
-            }
-            l_threadstate2_2.doTearDown();
-
-            if (control.isLastIteration()) {
-                f_threadstate2_2 = null;
                 synchronized(this.getClass()) {
                     f_globalstate1_G_map.remove(threadParams.getGroupIndex());
                 }
@@ -1299,7 +911,7 @@ public final class RluSetBenchmark_g16For20_jmhTest {
         result.measuredOps = operations;
     }
 
-    public static void remove16With20PercentContains_avgt_jmhStub(InfraControl control, RawResults result, BenchmarkParams benchmarkParams, IterationParams iterationParams, ThreadParams threadParams, Blackhole blackhole, Control notifyControl, int startRndMask, RluSetBenchmark_GlobalState_jmhType l_globalstate1_G, RluSetBenchmark_ThreadState_jmhType l_threadstate2_1, RluSetBenchmark_jmhType l_rlusetbenchmark0_G) throws Throwable {
+    public static void write16With20PercentContains_avgt_jmhStub(InfraControl control, RawResults result, BenchmarkParams benchmarkParams, IterationParams iterationParams, ThreadParams threadParams, Blackhole blackhole, Control notifyControl, int startRndMask, RluSetBenchmark_GlobalState_jmhType l_globalstate1_G, RluSetBenchmark_ThreadState_jmhType l_threadstate2_1, RluSetBenchmark_jmhType l_rlusetbenchmark0_G) throws Throwable {
         long operations = 0;
         long realTime = 0;
         result.startTime = System.nanoTime();
@@ -1325,60 +937,7 @@ public final class RluSetBenchmark_g16For20_jmhTest {
                 }
             }
             long rt = System.nanoTime();
-            l_rlusetbenchmark0_G.remove16With20PercentContains(l_globalstate1_G, l_threadstate2_1);
-            realTime += (System.nanoTime() - rt);
-            if (RluSetBenchmark_GlobalState_jmhType.tearInvocationMutexUpdater.compareAndSet(l_globalstate1_G, 0, 1)) {
-                try {
-                    if (control.isFailing) throw new FailureAssistException();
-                    if (l_globalstate1_G.readyInvocation) {
-                        l_globalstate1_G.readyInvocation = false;
-                    }
-                } catch (Throwable t) {
-                    control.isFailing = true;
-                    throw t;
-                } finally {
-                    RluSetBenchmark_GlobalState_jmhType.tearInvocationMutexUpdater.set(l_globalstate1_G, 0);
-                }
-            } else {
-                while (RluSetBenchmark_GlobalState_jmhType.tearInvocationMutexUpdater.get(l_globalstate1_G) == 1) {
-                    if (control.isFailing) throw new FailureAssistException();
-                    if (Thread.interrupted()) throw new InterruptedException();
-                }
-            }
-            operations++;
-        } while(!control.isDone);
-        result.stopTime = System.nanoTime();
-        result.realTime = realTime;
-        result.measuredOps = operations;
-    }
-
-    public static void write16With20PercentContains_avgt_jmhStub(InfraControl control, RawResults result, BenchmarkParams benchmarkParams, IterationParams iterationParams, ThreadParams threadParams, Blackhole blackhole, Control notifyControl, int startRndMask, RluSetBenchmark_GlobalState_jmhType l_globalstate1_G, RluSetBenchmark_ThreadState_jmhType l_threadstate2_2, RluSetBenchmark_jmhType l_rlusetbenchmark0_G) throws Throwable {
-        long operations = 0;
-        long realTime = 0;
-        result.startTime = System.nanoTime();
-        do {
-            l_threadstate2_2.forEveryInvocation();
-            if (RluSetBenchmark_GlobalState_jmhType.setupInvocationMutexUpdater.compareAndSet(l_globalstate1_G, 0, 1)) {
-                try {
-                    if (control.isFailing) throw new FailureAssistException();
-                    if (!l_globalstate1_G.readyInvocation) {
-                        l_globalstate1_G.generateItem();
-                        l_globalstate1_G.readyInvocation = true;
-                    }
-                } catch (Throwable t) {
-                    control.isFailing = true;
-                    throw t;
-                } finally {
-                    RluSetBenchmark_GlobalState_jmhType.setupInvocationMutexUpdater.set(l_globalstate1_G, 0);
-                }
-            } else {
-                while (RluSetBenchmark_GlobalState_jmhType.setupInvocationMutexUpdater.get(l_globalstate1_G) == 1) {
-                    if (control.isFailing) throw new FailureAssistException();
-                    if (Thread.interrupted()) throw new InterruptedException();
-                }
-            }
-            long rt = System.nanoTime();
-            l_rlusetbenchmark0_G.write16With20PercentContains(l_globalstate1_G, l_threadstate2_2);
+            l_rlusetbenchmark0_G.write16With20PercentContains(l_globalstate1_G, l_threadstate2_1);
             realTime += (System.nanoTime() - rt);
             if (RluSetBenchmark_GlobalState_jmhType.tearInvocationMutexUpdater.compareAndSet(l_globalstate1_G, 0, 1)) {
                 try {
@@ -1633,7 +1192,7 @@ public final class RluSetBenchmark_g16For20_jmhTest {
                         if (Thread.interrupted()) throw new InterruptedException();
                     }
                 }
-                l_rlusetbenchmark0_G.remove16With20PercentContains(l_globalstate1_G, l_threadstate2_1);
+                l_rlusetbenchmark0_G.write16With20PercentContains(l_globalstate1_G, l_threadstate2_1);
                 if (RluSetBenchmark_GlobalState_jmhType.tearInvocationMutexUpdater.compareAndSet(l_globalstate1_G, 0, 1)) {
                     try {
                         if (control.isFailing) throw new FailureAssistException();
@@ -1660,7 +1219,7 @@ public final class RluSetBenchmark_g16For20_jmhTest {
             int batchSize = iterationParams.getBatchSize();
             int opsPerInv = benchmarkParams.getOpsPerInvocation();
             SampleBuffer buffer = new SampleBuffer();
-            remove16With20PercentContains_sample_jmhStub(control, res, benchmarkParams, iterationParams, threadParams, blackhole, notifyControl, startRndMask, buffer, targetSamples, opsPerInv, batchSize, l_globalstate1_G, l_threadstate2_1, l_rlusetbenchmark0_G);
+            write16With20PercentContains_sample_jmhStub(control, res, benchmarkParams, iterationParams, threadParams, blackhole, notifyControl, startRndMask, buffer, targetSamples, opsPerInv, batchSize, l_globalstate1_G, l_threadstate2_1, l_rlusetbenchmark0_G);
             notifyControl.stopMeasurement = true;
             control.announceWarmdownReady();
             try {
@@ -1685,7 +1244,7 @@ public final class RluSetBenchmark_g16For20_jmhTest {
                             if (Thread.interrupted()) throw new InterruptedException();
                         }
                     }
-                    l_rlusetbenchmark0_G.remove16With20PercentContains(l_globalstate1_G, l_threadstate2_1);
+                    l_rlusetbenchmark0_G.write16With20PercentContains(l_globalstate1_G, l_threadstate2_1);
                     if (RluSetBenchmark_GlobalState_jmhType.tearInvocationMutexUpdater.compareAndSet(l_globalstate1_G, 0, 1)) {
                         try {
                             if (control.isFailing) throw new FailureAssistException();
@@ -1733,174 +1292,6 @@ public final class RluSetBenchmark_g16For20_jmhTest {
 
             if (control.isLastIteration()) {
                 f_threadstate2_1 = null;
-                synchronized(this.getClass()) {
-                    f_globalstate1_G_map.remove(threadParams.getGroupIndex());
-                }
-                synchronized(this.getClass()) {
-                    f_rlusetbenchmark0_G_map.remove(threadParams.getGroupIndex());
-                }
-            }
-            res.allOps += res.measuredOps * batchSize;
-            res.allOps *= opsPerInv;
-            res.allOps /= batchSize;
-            res.measuredOps *= opsPerInv;
-            BenchmarkTaskResult results = new BenchmarkTaskResult((long)res.allOps, (long)res.measuredOps);
-            results.add(new SampleTimeResult(ResultRole.PRIMARY, "g16For20", buffer, benchmarkParams.getTimeUnit()));
-            results.add(new SampleTimeResult(ResultRole.SECONDARY, "remove16With20PercentContains", buffer, benchmarkParams.getTimeUnit()));
-            this.blackhole.evaporate("Yes, I am Stephen Hawking, and know a thing or two about black holes.");
-            return results;
-        } else
-        if (threadParams.getSubgroupIndex() == 2) {
-            RawResults res = new RawResults();
-            RluSetBenchmark_jmhType l_rlusetbenchmark0_G = _jmh_tryInit_f_rlusetbenchmark0_G(control);
-            RluSetBenchmark_ThreadState_jmhType l_threadstate2_2 = _jmh_tryInit_f_threadstate2_2(control);
-            RluSetBenchmark_GlobalState_jmhType l_globalstate1_G = _jmh_tryInit_f_globalstate1_G(control);
-
-            control.preSetup();
-            l_threadstate2_2.doSetup();
-            if (RluSetBenchmark_GlobalState_jmhType.setupIterationMutexUpdater.compareAndSet(l_globalstate1_G, 0, 1)) {
-                try {
-                    if (control.isFailing) throw new FailureAssistException();
-                    if (!l_globalstate1_G.readyIteration) {
-                        l_globalstate1_G.doSetup();
-                        l_globalstate1_G.readyIteration = true;
-                    }
-                } catch (Throwable t) {
-                    control.isFailing = true;
-                    throw t;
-                } finally {
-                    RluSetBenchmark_GlobalState_jmhType.setupIterationMutexUpdater.set(l_globalstate1_G, 0);
-                }
-            } else {
-                while (RluSetBenchmark_GlobalState_jmhType.setupIterationMutexUpdater.get(l_globalstate1_G) == 1) {
-                    if (control.isFailing) throw new FailureAssistException();
-                    if (Thread.interrupted()) throw new InterruptedException();
-                }
-            }
-
-
-            control.announceWarmupReady();
-            while (control.warmupShouldWait) {
-                l_threadstate2_2.forEveryInvocation();
-                if (RluSetBenchmark_GlobalState_jmhType.setupInvocationMutexUpdater.compareAndSet(l_globalstate1_G, 0, 1)) {
-                    try {
-                        if (control.isFailing) throw new FailureAssistException();
-                        if (!l_globalstate1_G.readyInvocation) {
-                            l_globalstate1_G.generateItem();
-                            l_globalstate1_G.readyInvocation = true;
-                        }
-                    } catch (Throwable t) {
-                        control.isFailing = true;
-                        throw t;
-                    } finally {
-                        RluSetBenchmark_GlobalState_jmhType.setupInvocationMutexUpdater.set(l_globalstate1_G, 0);
-                    }
-                } else {
-                    while (RluSetBenchmark_GlobalState_jmhType.setupInvocationMutexUpdater.get(l_globalstate1_G) == 1) {
-                        if (control.isFailing) throw new FailureAssistException();
-                        if (Thread.interrupted()) throw new InterruptedException();
-                    }
-                }
-                l_rlusetbenchmark0_G.write16With20PercentContains(l_globalstate1_G, l_threadstate2_2);
-                if (RluSetBenchmark_GlobalState_jmhType.tearInvocationMutexUpdater.compareAndSet(l_globalstate1_G, 0, 1)) {
-                    try {
-                        if (control.isFailing) throw new FailureAssistException();
-                        if (l_globalstate1_G.readyInvocation) {
-                            l_globalstate1_G.readyInvocation = false;
-                        }
-                    } catch (Throwable t) {
-                        control.isFailing = true;
-                        throw t;
-                    } finally {
-                        RluSetBenchmark_GlobalState_jmhType.tearInvocationMutexUpdater.set(l_globalstate1_G, 0);
-                    }
-                } else {
-                    while (RluSetBenchmark_GlobalState_jmhType.tearInvocationMutexUpdater.get(l_globalstate1_G) == 1) {
-                        if (control.isFailing) throw new FailureAssistException();
-                        if (Thread.interrupted()) throw new InterruptedException();
-                    }
-                }
-                res.allOps++;
-            }
-
-            notifyControl.startMeasurement = true;
-            int targetSamples = (int) (control.getDuration(TimeUnit.MILLISECONDS) * 20); // at max, 20 timestamps per millisecond
-            int batchSize = iterationParams.getBatchSize();
-            int opsPerInv = benchmarkParams.getOpsPerInvocation();
-            SampleBuffer buffer = new SampleBuffer();
-            write16With20PercentContains_sample_jmhStub(control, res, benchmarkParams, iterationParams, threadParams, blackhole, notifyControl, startRndMask, buffer, targetSamples, opsPerInv, batchSize, l_globalstate1_G, l_threadstate2_2, l_rlusetbenchmark0_G);
-            notifyControl.stopMeasurement = true;
-            control.announceWarmdownReady();
-            try {
-                while (control.warmdownShouldWait) {
-                    l_threadstate2_2.forEveryInvocation();
-                    if (RluSetBenchmark_GlobalState_jmhType.setupInvocationMutexUpdater.compareAndSet(l_globalstate1_G, 0, 1)) {
-                        try {
-                            if (control.isFailing) throw new FailureAssistException();
-                            if (!l_globalstate1_G.readyInvocation) {
-                                l_globalstate1_G.generateItem();
-                                l_globalstate1_G.readyInvocation = true;
-                            }
-                        } catch (Throwable t) {
-                            control.isFailing = true;
-                            throw t;
-                        } finally {
-                            RluSetBenchmark_GlobalState_jmhType.setupInvocationMutexUpdater.set(l_globalstate1_G, 0);
-                        }
-                    } else {
-                        while (RluSetBenchmark_GlobalState_jmhType.setupInvocationMutexUpdater.get(l_globalstate1_G) == 1) {
-                            if (control.isFailing) throw new FailureAssistException();
-                            if (Thread.interrupted()) throw new InterruptedException();
-                        }
-                    }
-                    l_rlusetbenchmark0_G.write16With20PercentContains(l_globalstate1_G, l_threadstate2_2);
-                    if (RluSetBenchmark_GlobalState_jmhType.tearInvocationMutexUpdater.compareAndSet(l_globalstate1_G, 0, 1)) {
-                        try {
-                            if (control.isFailing) throw new FailureAssistException();
-                            if (l_globalstate1_G.readyInvocation) {
-                                l_globalstate1_G.readyInvocation = false;
-                            }
-                        } catch (Throwable t) {
-                            control.isFailing = true;
-                            throw t;
-                        } finally {
-                            RluSetBenchmark_GlobalState_jmhType.tearInvocationMutexUpdater.set(l_globalstate1_G, 0);
-                        }
-                    } else {
-                        while (RluSetBenchmark_GlobalState_jmhType.tearInvocationMutexUpdater.get(l_globalstate1_G) == 1) {
-                            if (control.isFailing) throw new FailureAssistException();
-                            if (Thread.interrupted()) throw new InterruptedException();
-                        }
-                    }
-                    res.allOps++;
-                }
-            } catch (Throwable e) {
-                if (!(e instanceof InterruptedException)) throw e;
-            }
-            control.preTearDown();
-            if (RluSetBenchmark_GlobalState_jmhType.tearIterationMutexUpdater.compareAndSet(l_globalstate1_G, 0, 1)) {
-                try {
-                    if (control.isFailing) throw new FailureAssistException();
-                    if (l_globalstate1_G.readyIteration) {
-                        l_globalstate1_G.doTearDown();
-                        l_globalstate1_G.readyIteration = false;
-                    }
-                } catch (Throwable t) {
-                    control.isFailing = true;
-                    throw t;
-                } finally {
-                    RluSetBenchmark_GlobalState_jmhType.tearIterationMutexUpdater.set(l_globalstate1_G, 0);
-                }
-            } else {
-                while (RluSetBenchmark_GlobalState_jmhType.tearIterationMutexUpdater.get(l_globalstate1_G) == 1) {
-                    if (control.isFailing) throw new FailureAssistException();
-                    if (Thread.interrupted()) throw new InterruptedException();
-                }
-            }
-            l_threadstate2_2.doTearDown();
-
-            if (control.isLastIteration()) {
-                f_threadstate2_2 = null;
                 synchronized(this.getClass()) {
                     f_globalstate1_G_map.remove(threadParams.getGroupIndex());
                 }
@@ -1993,7 +1384,7 @@ public final class RluSetBenchmark_g16For20_jmhTest {
         result.measuredOps = operations;
     }
 
-    public static void remove16With20PercentContains_sample_jmhStub(InfraControl control, RawResults result, BenchmarkParams benchmarkParams, IterationParams iterationParams, ThreadParams threadParams, Blackhole blackhole, Control notifyControl, int startRndMask, SampleBuffer buffer, int targetSamples, long opsPerInv, int batchSize, RluSetBenchmark_GlobalState_jmhType l_globalstate1_G, RluSetBenchmark_ThreadState_jmhType l_threadstate2_1, RluSetBenchmark_jmhType l_rlusetbenchmark0_G) throws Throwable {
+    public static void write16With20PercentContains_sample_jmhStub(InfraControl control, RawResults result, BenchmarkParams benchmarkParams, IterationParams iterationParams, ThreadParams threadParams, Blackhole blackhole, Control notifyControl, int startRndMask, SampleBuffer buffer, int targetSamples, long opsPerInv, int batchSize, RluSetBenchmark_GlobalState_jmhType l_globalstate1_G, RluSetBenchmark_ThreadState_jmhType l_threadstate2_1, RluSetBenchmark_jmhType l_rlusetbenchmark0_G) throws Throwable {
         long realTime = 0;
         long operations = 0;
         int rnd = (int)System.nanoTime();
@@ -2029,79 +1420,7 @@ public final class RluSetBenchmark_g16For20_jmhTest {
             }
             for (int b = 0; b < batchSize; b++) {
                 if (control.volatileSpoiler) return;
-                l_rlusetbenchmark0_G.remove16With20PercentContains(l_globalstate1_G, l_threadstate2_1);
-            }
-            if (sample) {
-                buffer.add((System.nanoTime() - time) / opsPerInv);
-                if (currentStride++ > targetSamples) {
-                    buffer.half();
-                    currentStride = 0;
-                    rndMask = (rndMask << 1) + 1;
-                }
-            }
-            realTime += (System.nanoTime() - rt);
-            if (RluSetBenchmark_GlobalState_jmhType.tearInvocationMutexUpdater.compareAndSet(l_globalstate1_G, 0, 1)) {
-                try {
-                    if (control.isFailing) throw new FailureAssistException();
-                    if (l_globalstate1_G.readyInvocation) {
-                        l_globalstate1_G.readyInvocation = false;
-                    }
-                } catch (Throwable t) {
-                    control.isFailing = true;
-                    throw t;
-                } finally {
-                    RluSetBenchmark_GlobalState_jmhType.tearInvocationMutexUpdater.set(l_globalstate1_G, 0);
-                }
-            } else {
-                while (RluSetBenchmark_GlobalState_jmhType.tearInvocationMutexUpdater.get(l_globalstate1_G) == 1) {
-                    if (control.isFailing) throw new FailureAssistException();
-                    if (Thread.interrupted()) throw new InterruptedException();
-                }
-            }
-            operations++;
-        } while(!control.isDone);
-        startRndMask = Math.max(startRndMask, rndMask);
-        result.realTime = realTime;
-        result.measuredOps = operations;
-    }
-
-    public static void write16With20PercentContains_sample_jmhStub(InfraControl control, RawResults result, BenchmarkParams benchmarkParams, IterationParams iterationParams, ThreadParams threadParams, Blackhole blackhole, Control notifyControl, int startRndMask, SampleBuffer buffer, int targetSamples, long opsPerInv, int batchSize, RluSetBenchmark_GlobalState_jmhType l_globalstate1_G, RluSetBenchmark_ThreadState_jmhType l_threadstate2_2, RluSetBenchmark_jmhType l_rlusetbenchmark0_G) throws Throwable {
-        long realTime = 0;
-        long operations = 0;
-        int rnd = (int)System.nanoTime();
-        int rndMask = startRndMask;
-        long time = 0;
-        int currentStride = 0;
-        do {
-            l_threadstate2_2.forEveryInvocation();
-            if (RluSetBenchmark_GlobalState_jmhType.setupInvocationMutexUpdater.compareAndSet(l_globalstate1_G, 0, 1)) {
-                try {
-                    if (control.isFailing) throw new FailureAssistException();
-                    if (!l_globalstate1_G.readyInvocation) {
-                        l_globalstate1_G.generateItem();
-                        l_globalstate1_G.readyInvocation = true;
-                    }
-                } catch (Throwable t) {
-                    control.isFailing = true;
-                    throw t;
-                } finally {
-                    RluSetBenchmark_GlobalState_jmhType.setupInvocationMutexUpdater.set(l_globalstate1_G, 0);
-                }
-            } else {
-                while (RluSetBenchmark_GlobalState_jmhType.setupInvocationMutexUpdater.get(l_globalstate1_G) == 1) {
-                    if (control.isFailing) throw new FailureAssistException();
-                    if (Thread.interrupted()) throw new InterruptedException();
-                }
-            }
-            long rt = System.nanoTime();
-            rnd = (rnd * 1664525 + 1013904223);
-            boolean sample = (rnd & rndMask) == 0;
-            if (sample) {
-                time = System.nanoTime();
-            }
-            for (int b = 0; b < batchSize; b++) {
-                if (control.volatileSpoiler) return;
-                l_rlusetbenchmark0_G.write16With20PercentContains(l_globalstate1_G, l_threadstate2_2);
+                l_rlusetbenchmark0_G.write16With20PercentContains(l_globalstate1_G, l_threadstate2_1);
             }
             if (sample) {
                 buffer.add((System.nanoTime() - time) / opsPerInv);
@@ -2248,7 +1567,7 @@ public final class RluSetBenchmark_g16For20_jmhTest {
             notifyControl.startMeasurement = true;
             RawResults res = new RawResults();
             int batchSize = iterationParams.getBatchSize();
-            remove16With20PercentContains_ss_jmhStub(control, res, benchmarkParams, iterationParams, threadParams, blackhole, notifyControl, startRndMask, batchSize, l_globalstate1_G, l_threadstate2_1, l_rlusetbenchmark0_G);
+            write16With20PercentContains_ss_jmhStub(control, res, benchmarkParams, iterationParams, threadParams, blackhole, notifyControl, startRndMask, batchSize, l_globalstate1_G, l_threadstate2_1, l_rlusetbenchmark0_G);
             control.preTearDown();
             if (RluSetBenchmark_GlobalState_jmhType.tearIterationMutexUpdater.compareAndSet(l_globalstate1_G, 0, 1)) {
                 try {
@@ -2273,77 +1592,6 @@ public final class RluSetBenchmark_g16For20_jmhTest {
 
             if (control.isLastIteration()) {
                 f_threadstate2_1 = null;
-                synchronized(this.getClass()) {
-                    f_globalstate1_G_map.remove(threadParams.getGroupIndex());
-                }
-                synchronized(this.getClass()) {
-                    f_rlusetbenchmark0_G_map.remove(threadParams.getGroupIndex());
-                }
-            }
-            int opsPerInv = control.benchmarkParams.getOpsPerInvocation();
-            long totalOps = opsPerInv;
-            BenchmarkTaskResult results = new BenchmarkTaskResult(totalOps, totalOps);
-            results.add(new SingleShotResult(ResultRole.PRIMARY, "g16For20", res.getTime(), totalOps, benchmarkParams.getTimeUnit()));
-            results.add(new SingleShotResult(ResultRole.SECONDARY, "remove16With20PercentContains", res.getTime(), totalOps, benchmarkParams.getTimeUnit()));
-            this.blackhole.evaporate("Yes, I am Stephen Hawking, and know a thing or two about black holes.");
-            return results;
-        } else
-        if (threadParams.getSubgroupIndex() == 2) {
-            RluSetBenchmark_jmhType l_rlusetbenchmark0_G = _jmh_tryInit_f_rlusetbenchmark0_G(control);
-            RluSetBenchmark_ThreadState_jmhType l_threadstate2_2 = _jmh_tryInit_f_threadstate2_2(control);
-            RluSetBenchmark_GlobalState_jmhType l_globalstate1_G = _jmh_tryInit_f_globalstate1_G(control);
-
-            control.preSetup();
-            l_threadstate2_2.doSetup();
-            if (RluSetBenchmark_GlobalState_jmhType.setupIterationMutexUpdater.compareAndSet(l_globalstate1_G, 0, 1)) {
-                try {
-                    if (control.isFailing) throw new FailureAssistException();
-                    if (!l_globalstate1_G.readyIteration) {
-                        l_globalstate1_G.doSetup();
-                        l_globalstate1_G.readyIteration = true;
-                    }
-                } catch (Throwable t) {
-                    control.isFailing = true;
-                    throw t;
-                } finally {
-                    RluSetBenchmark_GlobalState_jmhType.setupIterationMutexUpdater.set(l_globalstate1_G, 0);
-                }
-            } else {
-                while (RluSetBenchmark_GlobalState_jmhType.setupIterationMutexUpdater.get(l_globalstate1_G) == 1) {
-                    if (control.isFailing) throw new FailureAssistException();
-                    if (Thread.interrupted()) throw new InterruptedException();
-                }
-            }
-
-
-            notifyControl.startMeasurement = true;
-            RawResults res = new RawResults();
-            int batchSize = iterationParams.getBatchSize();
-            write16With20PercentContains_ss_jmhStub(control, res, benchmarkParams, iterationParams, threadParams, blackhole, notifyControl, startRndMask, batchSize, l_globalstate1_G, l_threadstate2_2, l_rlusetbenchmark0_G);
-            control.preTearDown();
-            if (RluSetBenchmark_GlobalState_jmhType.tearIterationMutexUpdater.compareAndSet(l_globalstate1_G, 0, 1)) {
-                try {
-                    if (control.isFailing) throw new FailureAssistException();
-                    if (l_globalstate1_G.readyIteration) {
-                        l_globalstate1_G.doTearDown();
-                        l_globalstate1_G.readyIteration = false;
-                    }
-                } catch (Throwable t) {
-                    control.isFailing = true;
-                    throw t;
-                } finally {
-                    RluSetBenchmark_GlobalState_jmhType.tearIterationMutexUpdater.set(l_globalstate1_G, 0);
-                }
-            } else {
-                while (RluSetBenchmark_GlobalState_jmhType.tearIterationMutexUpdater.get(l_globalstate1_G) == 1) {
-                    if (control.isFailing) throw new FailureAssistException();
-                    if (Thread.interrupted()) throw new InterruptedException();
-                }
-            }
-            l_threadstate2_2.doTearDown();
-
-            if (control.isLastIteration()) {
-                f_threadstate2_2 = null;
                 synchronized(this.getClass()) {
                     f_globalstate1_G_map.remove(threadParams.getGroupIndex());
                 }
@@ -2413,7 +1661,7 @@ public final class RluSetBenchmark_g16For20_jmhTest {
         result.realTime = realTime;
     }
 
-    public static void remove16With20PercentContains_ss_jmhStub(InfraControl control, RawResults result, BenchmarkParams benchmarkParams, IterationParams iterationParams, ThreadParams threadParams, Blackhole blackhole, Control notifyControl, int startRndMask, int batchSize, RluSetBenchmark_GlobalState_jmhType l_globalstate1_G, RluSetBenchmark_ThreadState_jmhType l_threadstate2_1, RluSetBenchmark_jmhType l_rlusetbenchmark0_G) throws Throwable {
+    public static void write16With20PercentContains_ss_jmhStub(InfraControl control, RawResults result, BenchmarkParams benchmarkParams, IterationParams iterationParams, ThreadParams threadParams, Blackhole blackhole, Control notifyControl, int startRndMask, int batchSize, RluSetBenchmark_GlobalState_jmhType l_globalstate1_G, RluSetBenchmark_ThreadState_jmhType l_threadstate2_1, RluSetBenchmark_jmhType l_rlusetbenchmark0_G) throws Throwable {
         long realTime = 0;
         result.startTime = System.nanoTime();
         for (int b = 0; b < batchSize; b++) {
@@ -2439,58 +1687,7 @@ public final class RluSetBenchmark_g16For20_jmhTest {
                 }
             }
             long rt = System.nanoTime();
-            l_rlusetbenchmark0_G.remove16With20PercentContains(l_globalstate1_G, l_threadstate2_1);
-            realTime += (System.nanoTime() - rt);
-            if (RluSetBenchmark_GlobalState_jmhType.tearInvocationMutexUpdater.compareAndSet(l_globalstate1_G, 0, 1)) {
-                try {
-                    if (control.isFailing) throw new FailureAssistException();
-                    if (l_globalstate1_G.readyInvocation) {
-                        l_globalstate1_G.readyInvocation = false;
-                    }
-                } catch (Throwable t) {
-                    control.isFailing = true;
-                    throw t;
-                } finally {
-                    RluSetBenchmark_GlobalState_jmhType.tearInvocationMutexUpdater.set(l_globalstate1_G, 0);
-                }
-            } else {
-                while (RluSetBenchmark_GlobalState_jmhType.tearInvocationMutexUpdater.get(l_globalstate1_G) == 1) {
-                    if (control.isFailing) throw new FailureAssistException();
-                    if (Thread.interrupted()) throw new InterruptedException();
-                }
-            }
-        }
-        result.stopTime = System.nanoTime();
-        result.realTime = realTime;
-    }
-
-    public static void write16With20PercentContains_ss_jmhStub(InfraControl control, RawResults result, BenchmarkParams benchmarkParams, IterationParams iterationParams, ThreadParams threadParams, Blackhole blackhole, Control notifyControl, int startRndMask, int batchSize, RluSetBenchmark_GlobalState_jmhType l_globalstate1_G, RluSetBenchmark_ThreadState_jmhType l_threadstate2_2, RluSetBenchmark_jmhType l_rlusetbenchmark0_G) throws Throwable {
-        long realTime = 0;
-        result.startTime = System.nanoTime();
-        for (int b = 0; b < batchSize; b++) {
-            if (control.volatileSpoiler) return;
-            l_threadstate2_2.forEveryInvocation();
-            if (RluSetBenchmark_GlobalState_jmhType.setupInvocationMutexUpdater.compareAndSet(l_globalstate1_G, 0, 1)) {
-                try {
-                    if (control.isFailing) throw new FailureAssistException();
-                    if (!l_globalstate1_G.readyInvocation) {
-                        l_globalstate1_G.generateItem();
-                        l_globalstate1_G.readyInvocation = true;
-                    }
-                } catch (Throwable t) {
-                    control.isFailing = true;
-                    throw t;
-                } finally {
-                    RluSetBenchmark_GlobalState_jmhType.setupInvocationMutexUpdater.set(l_globalstate1_G, 0);
-                }
-            } else {
-                while (RluSetBenchmark_GlobalState_jmhType.setupInvocationMutexUpdater.get(l_globalstate1_G) == 1) {
-                    if (control.isFailing) throw new FailureAssistException();
-                    if (Thread.interrupted()) throw new InterruptedException();
-                }
-            }
-            long rt = System.nanoTime();
-            l_rlusetbenchmark0_G.write16With20PercentContains(l_globalstate1_G, l_threadstate2_2);
+            l_rlusetbenchmark0_G.write16With20PercentContains(l_globalstate1_G, l_threadstate2_1);
             realTime += (System.nanoTime() - rt);
             if (RluSetBenchmark_GlobalState_jmhType.tearInvocationMutexUpdater.compareAndSet(l_globalstate1_G, 0, 1)) {
                 try {
@@ -2536,18 +1733,6 @@ public final class RluSetBenchmark_g16For20_jmhTest {
         if (val == null) {
             val = new RluSetBenchmark_ThreadState_jmhType();
             f_threadstate2_1 = val;
-        }
-        return val;
-    }
-    
-    RluSetBenchmark_ThreadState_jmhType f_threadstate2_2;
-    
-    RluSetBenchmark_ThreadState_jmhType _jmh_tryInit_f_threadstate2_2(InfraControl control) throws Throwable {
-        if (control.isFailing) throw new FailureAssistException();
-        RluSetBenchmark_ThreadState_jmhType val = f_threadstate2_2;
-        if (val == null) {
-            val = new RluSetBenchmark_ThreadState_jmhType();
-            f_threadstate2_2 = val;
         }
         return val;
     }

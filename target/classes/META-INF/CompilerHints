@@ -29,5 +29,4 @@ inline,rlu/benchmarks/RluSetBenchmark$ThreadState.doSetup
 inline,rlu/benchmarks/RluSetBenchmark$ThreadState.doTearDown
 inline,rlu/benchmarks/RluSetBenchmark$ThreadState.forEveryInvocation
 inline,rlu/benchmarks/RluSetBenchmark.read16With20PercentContains
-inline,rlu/benchmarks/RluSetBenchmark.remove16With20PercentContains
 inline,rlu/benchmarks/RluSetBenchmark.write16With20PercentContains
