@@ -51,8 +51,6 @@ public class RluCoarseSet<T> implements RluSetInterface<T> {
             // this is where we add the rLU Logic, We need to add a Node
             // lock the nodes pred and curr
 
-          
-
             RluNode<T> node = new RluNode<>(item, curr);
             // store this node in your own log
             ctx.node = node;
@@ -73,7 +71,7 @@ public class RluCoarseSet<T> implements RluSetInterface<T> {
             // now safe to writeback and unlock
             pred.next = ctx.node;
             ctx.wClock = Integer.MAX_VALUE;
-            // ctx.isWriter = false;
+            // ! ctx.isWriter = false;
             // ! globalThreads[(int) Thread.currentThread().getId()] = null;
             // now we need to remove the thread from the global threads array
             // globalThreads[(int) Thread.currentThread().getId()] = null;

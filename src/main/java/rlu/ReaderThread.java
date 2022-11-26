@@ -4,18 +4,19 @@ import java.util.Random;
 import java.util.concurrent.ThreadLocalRandom;
 
 import rlu.sets.RluSet.RluCoarseSet;
+import rlu.sets.RluSet.RluSetInterface;
 import rlu.sets.RluSet.RluThread;
 
 public class ReaderThread<T> extends Thread {
     private static int ID_GEN = 0;
 
     private RluThread<T> thread;
-    private RluCoarseSet<T> set;
+    private RluSetInterface<T> set;
     private int id;
     private long elapsed;
     private int iter;
 
-    public ReaderThread(RluCoarseSet<T> set, RluThread<T> thread, int iter) {
+    public ReaderThread(RluSetInterface<T> set, RluThread<T> thread, int iter) {
         id = ID_GEN++;
         this.thread = thread;
         this.iter = iter;

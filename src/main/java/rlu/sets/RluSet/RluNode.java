@@ -1,7 +1,10 @@
 package rlu.sets.RluSet;
 
-public class RluNode<T> {
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantLock;
 
+public class RluNode<T> {
+    Lock lock = new ReentrantLock();
     int key;
     RluNode<T> next;
     // to store header information
@@ -25,6 +28,14 @@ public class RluNode<T> {
 
     public boolean isLocked() {
         return header != null;
+    }
+
+    public void lock() {
+        lock.lock();
+    }
+
+    public void unlock() {
+        lock.unlock();
     }
 
 }
