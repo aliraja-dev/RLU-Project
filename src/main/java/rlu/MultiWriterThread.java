@@ -33,11 +33,13 @@ public class MultiWriterThread<T> extends Thread {
         long start = System.currentTimeMillis();
 
         for (int i = 0; i < iter; i++) {
-            int[] items = new int[10];
+            T[] items = (T[]) new Integer[2];
             for (int j = 0; j < 2; j++) {
-                items[j] = rand.nextInt(100);
+                items[j] = (T) Integer.valueOf(rand.nextInt(100));
+                // items[j] = rand.nextInt(5);
             }
-            System.out.println("Multi Writer: " + set.add((T) items, thread));
+            // T items[] = { 1, 5 };
+            System.out.println("Multi Writer:" + set.add((T[]) items, thread));
         }
 
         long end = System.currentTimeMillis();

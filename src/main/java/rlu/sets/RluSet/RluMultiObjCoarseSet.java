@@ -31,6 +31,7 @@ public class RluMultiObjCoarseSet<T> implements RluSetInterface<T> {
     @Override
     public boolean add(T item, RluThread<T> ctx) {
         int key = item.hashCode();
+
         synchronized (this) {
             ctx.lClock = gClock.get();
             ctx.isWriter = true;
@@ -60,6 +61,7 @@ public class RluMultiObjCoarseSet<T> implements RluSetInterface<T> {
     @Override
     public boolean add(T[] items, RluThread<T> ctx) {
         LinkedList<Header<T>> headers = new LinkedList<>();
+        // System.out.println("Adding " + items.length + " items");
         // int key = item.hashCode();
         synchronized (this) {
             ctx.lClock = gClock.get();
@@ -69,6 +71,7 @@ public class RluMultiObjCoarseSet<T> implements RluSetInterface<T> {
             RluNode<T> curr = pred.next;
             for (T item : items) {
                 int key = item.hashCode();
+                System.out.println("key: " + key);
                 while (curr.key < key) {
                     pred = curr;
                     curr = curr.next;
@@ -92,7 +95,9 @@ public class RluMultiObjCoarseSet<T> implements RluSetInterface<T> {
                     pred = curr;
                     curr = curr.next;
                 }
+
                 pred.next = headers.remove().copy;
+                // System.out.println("Pred.next: " + pred.next);
             }
             // pred.next = ctx.node;
             ctx.wClock = Integer.MAX_VALUE;

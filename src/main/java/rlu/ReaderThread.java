@@ -37,6 +37,9 @@ public class ReaderThread<T> extends Thread {
         for (int i = 0; i < iter; i++) {
             item = rand.nextInt(100);
             System.out.println("Reader Iteration: " + item + set.contains((T) Integer.valueOf(item), thread));
+            // System.out.println("Reader Iteration: " + 5 + set.contains((T)
+            // Integer.valueOf(5), thread));
+
         }
 
         long end = System.currentTimeMillis();
