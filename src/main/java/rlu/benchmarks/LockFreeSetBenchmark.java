@@ -20,7 +20,7 @@ import org.openjdk.jmh.runner.RunnerException;
 import org.openjdk.jmh.runner.options.Options;
 import org.openjdk.jmh.runner.options.OptionsBuilder;
 
-import rlu.sets.LockFreeSet;
+import rlu.sets.ComparisonSets.LockFreeSet;
 
 import java.util.Random;
 import java.util.concurrent.ThreadLocalRandom;

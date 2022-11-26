@@ -1,7 +1,7 @@
 package rlu;
 
-import rlu.sets.RluCoarseSet;
-import rlu.sets.RluThread;
+import rlu.sets.RluSet.RluCoarseSet;
+import rlu.sets.RluSet.RluThread;
 
 public class Runner<T> {
 
@@ -14,10 +14,10 @@ public class Runner<T> {
 
         // Thread writerThread1 = new WriterThread<>(set, new RluThread<Integer>(),
         // iters);
-        Thread writerThread2 = new WriterThread<>(set, new RluThread<Integer>(), iters);
+        Thread writerThread2 = new WriterThread<Integer>(set, new RluThread<Integer>(), iters);
 
-        Thread readerThread1 = new ReaderThread<>(set, new RluThread<Integer>(), iters);
-        Thread readerThread2 = new ReaderThread<>(set, new RluThread<Integer>(), iters);
+        Thread readerThread1 = new ReaderThread<Integer>(set, new RluThread<Integer>(), iters);
+        Thread readerThread2 = new ReaderThread<Integer>(set, new RluThread<Integer>(), iters);
 
         // writerThread1.start();
         writerThread2.start();

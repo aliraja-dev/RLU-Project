@@ -18,7 +18,8 @@ import org.openjdk.jmh.runner.Runner;
 import org.openjdk.jmh.runner.RunnerException;
 import org.openjdk.jmh.runner.options.Options;
 import org.openjdk.jmh.runner.options.OptionsBuilder;
-import rlu.sets.CoarseSet;
+
+import rlu.sets.ComparisonSets.CoarseSet;
 
 import java.util.Random;
 import java.util.concurrent.ThreadLocalRandom;
@@ -57,8 +58,6 @@ public class CoarseSetBenchmark {
         @Setup(Level.Iteration)
         public void doThreadSetup() {
             // Add all the threads to the global threads array
-       
-
 
         }
     }

@@ -18,12 +18,13 @@ import org.openjdk.jmh.runner.Runner;
 import org.openjdk.jmh.runner.RunnerException;
 import org.openjdk.jmh.runner.options.Options;
 import org.openjdk.jmh.runner.options.OptionsBuilder;
+
+import rlu.sets.RluSet.RluCoarseSet;
+import rlu.sets.RluSet.RluThread;
+
 import java.util.Random;
 import java.util.concurrent.ThreadLocalRandom;
 import java.util.concurrent.TimeUnit;
-
-import rlu.sets.RluCoarseSet;
-import rlu.sets.RluThread;
 
 @State(Scope.Group)
 @BenchmarkMode(Mode.Throughput)

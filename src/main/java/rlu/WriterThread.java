@@ -1,7 +1,10 @@
 package rlu;
 
-import rlu.sets.RluCoarseSet;
-import rlu.sets.RluThread;
+import java.util.Random;
+import java.util.concurrent.ThreadLocalRandom;
+
+import rlu.sets.RluSet.RluCoarseSet;
+import rlu.sets.RluSet.RluThread;
 
 public class WriterThread<T> extends Thread {
     private static int ID_GEN = 0;
@@ -24,11 +27,16 @@ public class WriterThread<T> extends Thread {
     }
 
     @Override
+    @SuppressWarnings("unchecked")
     public void run() {
+        Random rand = ThreadLocalRandom.current();
+        int item;
         long start = System.currentTimeMillis();
 
-        for (int i = 0; i < iter; i++)
-            System.out.println("Writer: " + i + set.add((T) Integer.valueOf(i), thread));
+        for (int i = 0; i < iter; i++) {
+            item = rand.nextInt(100);
+            System.out.println("Writer: " + item + set.add((T) Integer.valueOf(item), thread));
+        }
 
         long end = System.currentTimeMillis();
         elapsed = end - start;
