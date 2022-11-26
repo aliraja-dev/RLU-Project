@@ -87,16 +87,18 @@ public class RluMultiObjCoarseSet<T> implements RluSetInterface<T> {
             ctx.runCounter++;
             ctx.wClock = gClock.get() + 1;
             gClock.getAndIncrement();
-            commit_write();
+            waitForOlderReadersToFinishReading();
             // now write the header.copy to the respective actual nodes
             for (T item : items) {
                 int key = item.hashCode();
+                pred = head;
+                curr = pred.next;
                 while (curr.key < key) {
                     pred = curr;
                     curr = curr.next;
                 }
-
                 pred.next = headers.remove().copy;
+                // ! curr.header = null;
                 // System.out.println("Pred.next: " + pred.next);
             }
             // pred.next = ctx.node;
@@ -133,7 +135,7 @@ public class RluMultiObjCoarseSet<T> implements RluSetInterface<T> {
         return key == curr.key;
     }
 
-    private void commit_write() {
+    private void waitForOlderReadersToFinishReading() {
         boolean priorReader = false;
         do {
             priorReader = false;
