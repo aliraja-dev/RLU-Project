@@ -12,14 +12,14 @@ public class Runner<T> {
     private static void runThreads(int writers, int readers, int iters) throws Exception {
         RluCoarseSet<Integer> set = new RluCoarseSet<>();
 
-        // Thread writerThread1 = new WriterThread<>(set, new RluThread<Integer>(),
-        // iters);
+        Thread writerThread1 = new WriterThread<>(set, new RluThread<Integer>(),
+                iters);
         Thread writerThread2 = new WriterThread<Integer>(set, new RluThread<Integer>(), iters);
 
         Thread readerThread1 = new ReaderThread<Integer>(set, new RluThread<Integer>(), iters);
         Thread readerThread2 = new ReaderThread<Integer>(set, new RluThread<Integer>(), iters);
 
-        // writerThread1.start();
+        writerThread1.start();
         writerThread2.start();
         readerThread1.start();
         readerThread2.start();

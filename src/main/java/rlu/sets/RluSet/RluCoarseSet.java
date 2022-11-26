@@ -70,11 +70,12 @@ public class RluCoarseSet<T> implements RluSetInterface<T> {
             gClock.getAndIncrement();
 
             // now implement the quiescent state of RLU
-            // commit_write();
+            commit_write();
             // now safe to writeback and unlock
             pred.next = ctx.node;
             ctx.wClock = Integer.MAX_VALUE;
-            ctx.isWriter = false;
+            // ctx.isWriter = false;
+            // ! globalThreads[(int) Thread.currentThread().getId()] = null;
             // now we need to remove the thread from the global threads array
             // globalThreads[(int) Thread.currentThread().getId()] = null;
             // do we need to implement the rlu swap write here?
@@ -115,7 +116,7 @@ public class RluCoarseSet<T> implements RluSetInterface<T> {
                 RluNode<T> stolenCurrNode = globalThreads[(int) curr.header.threadId].node;
                 ctx.runCounter++;
                 // put null in the globalArrays for your Id
-                // globalThreads[(int) threadId] = null;
+                // ! globalThreads[(int) threadId] = null;
                 return stolenCurrNode.key == key;
             } else {
                 // if your lclock is less than the wclock then you need to wait
@@ -123,10 +124,12 @@ public class RluCoarseSet<T> implements RluSetInterface<T> {
                 // then steal the copy from the thread's log
                 // then unlock the object
                 // then return true or false
+                ctx.runCounter++;
                 return key == curr.key;
             }
 
         }
+        ctx.runCounter++;
         return key == curr.key;
     }
 
@@ -135,13 +138,12 @@ public class RluCoarseSet<T> implements RluSetInterface<T> {
         do {
             priorReader = false;
             for (int i = 0; i < globalThreads.length; i++) {
-                if (globalThreads[i] != null) {
-                    if (!globalThreads[i].isWriter) {
-                        if (globalThreads[i].lClock <= gClock.get()) {
-                            priorReader = true;
-                            break;
-                        }
-                    }
+                if (globalThreads[i] != null && globalThreads[i].runCounter % 2 != 0
+                        && globalThreads[i].isWriter == false
+                        && globalThreads[i].lClock <= gClock.get()) {
+                    priorReader = true;
+                    break;
+
                 }
             }
         } while (priorReader);
