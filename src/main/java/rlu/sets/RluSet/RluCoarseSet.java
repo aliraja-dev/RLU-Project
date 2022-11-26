@@ -70,7 +70,7 @@ public class RluCoarseSet<T> implements RluSetInterface<T> {
             gClock.getAndIncrement();
 
             // now implement the quiescent state of RLU
-            commit_write();
+            // commit_write();
             // now safe to writeback and unlock
             pred.next = ctx.node;
             ctx.wClock = Integer.MAX_VALUE;
@@ -115,7 +115,7 @@ public class RluCoarseSet<T> implements RluSetInterface<T> {
                 RluNode<T> stolenCurrNode = globalThreads[(int) curr.header.threadId].node;
                 ctx.runCounter++;
                 // put null in the globalArrays for your Id
-                globalThreads[(int) threadId] = null;
+                // globalThreads[(int) threadId] = null;
                 return stolenCurrNode.key == key;
             } else {
                 // if your lclock is less than the wclock then you need to wait
