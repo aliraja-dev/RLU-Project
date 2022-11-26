@@ -115,6 +115,7 @@ public class RluMultiObjCoarseSet<T> implements RluSetInterface<T> {
         }
         if (curr.isLocked()) {
             if (ctx.lClock >= globalThreads[(int) curr.header.threadId].wClock) {
+                // !RluNode<T> stolenCurrNode = globalThreads[(int) curr.header.threadId].node;
                 RluNode<T> stolenCurrNode = curr.header.copy;
                 ctx.runCounter++;
                 return stolenCurrNode.key == key;
