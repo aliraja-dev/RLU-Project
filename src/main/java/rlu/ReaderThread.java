@@ -28,7 +28,7 @@ public class ReaderThread<T> extends Thread {
         long start = System.currentTimeMillis();
 
         for (int i = 0; i < iter; i++)
-            set.contains((T) Integer.valueOf(i), thread);
+            System.out.println("Reader Iteration: " + i + set.contains((T) Integer.valueOf(i), thread));
 
         long end = System.currentTimeMillis();
         elapsed = end - start;
