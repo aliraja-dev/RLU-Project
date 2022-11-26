@@ -24,7 +24,7 @@ public class Runner<T> {
         readerThread1.start();
         readerThread2.start();
 
-        // writerThread1.join();
+        writerThread1.join();
         writerThread2.join();
         readerThread1.join();
         readerThread2.join();

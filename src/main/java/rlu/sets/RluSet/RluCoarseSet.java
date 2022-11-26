@@ -51,8 +51,7 @@ public class RluCoarseSet<T> implements RluSetInterface<T> {
             // this is where we add the rLU Logic, We need to add a Node
             // lock the nodes pred and curr
 
-            // TODO rlu_commit_write_log will call synchronize, writebackand unlock and in
-            // end the rlu swap write.
+          
 
             RluNode<T> node = new RluNode<>(item, curr);
             // store this node in your own log
