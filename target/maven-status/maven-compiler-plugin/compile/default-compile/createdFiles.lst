@@ -1,4 +1,5 @@
 rlu/benchmarks/RluFineSetBenchmark$GlobalState.class
+rlu/MultiWriterThread.class
 rlu/benchmarks/jmh_generated/RluFineSetBenchmark_ThreadState_jmhType_B1.class
 rlu/benchmarks/jmh_generated/RluFineSetBenchmark_jmhType_B2.class
 rlu/benchmarks/jmh_generated/LockFreeSetBenchmark_MyState_jmhType_B1.class
@@ -23,6 +24,7 @@ rlu/benchmarks/jmh_generated/FineSetBenchmark_MyState_jmhType.class
 rlu/benchmarks/jmh_generated/RluFineSetBenchmark_GlobalState_jmhType_B2.class
 rlu/benchmarks/jmh_generated/RluFineSetBenchmark_jmhType_B1.class
 rlu/benchmarks/jmh_generated/CoarseSetBenchmark_jmhType_B2.class
+rlu/RluMultiRunner.class
 rlu/sets/ComparisonSets/FineSet$Node.class
 rlu/benchmarks/jmh_generated/LockFreeSetBenchmark_MyState_jmhType_B2.class
 rlu/WriterThread.class
@@ -33,6 +35,7 @@ rlu/benchmarks/jmh_generated/LockFreeSetBenchmark_jmhType_B1.class
 rlu/benchmarks/jmh_generated/RluCoarseSetBenchmark_jmhType_B2.class
 rlu/benchmarks/jmh_generated/FineSetBenchmark_MyState_jmhType_B1.class
 rlu/benchmarks/jmh_generated/RluCoarseSetBenchmark_ThreadState_jmhType.class
+rlu/sets/RluSet/RluMultiObjCoarseSet.class
 rlu/benchmarks/jmh_generated/FineSetBenchmark_jmhType_B2.class
 rlu/benchmarks/jmh_generated/LockFreeSetBenchmark_g16For20_jmhTest.class
 rlu/benchmarks/jmh_generated/RluCoarseSetBenchmark_GlobalState_jmhType_B2.class

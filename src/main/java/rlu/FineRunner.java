@@ -6,7 +6,7 @@ import rlu.sets.RluSet.RluThread;
 public class FineRunner<T> {
 
     public static void main(String[] args) throws Exception {
-        runThreads(2, 2, 100);
+        runThreads(2, 2, 10);
     }
 
     private static void runThreads(int writers, int readers, int iters) throws Exception {

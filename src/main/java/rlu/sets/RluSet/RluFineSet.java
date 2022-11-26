@@ -112,4 +112,10 @@ public class RluFineSet<T> implements RluSetInterface<T> {
             }
         } while (priorReader);
     }
+
+    @Override
+    public boolean add(T[] item, RluThread<T> thread) {
+        // TODO Auto-generated method stub
+        return false;
+    }
 }

@@ -10,6 +10,8 @@ public interface RluSetInterface<T> {
      */
     boolean add(T item, RluThread<T> thread);
 
+    boolean add(T[] item, RluThread<T> thread);
+
     /**
      * Removes item from set (if present)
      * 

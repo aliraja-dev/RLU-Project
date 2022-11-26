@@ -6,7 +6,7 @@ import java.util.concurrent.ThreadLocalRandom;
 import rlu.sets.RluSet.RluSetInterface;
 import rlu.sets.RluSet.RluThread;
 
-public class WriterThread<T> extends Thread {
+public class MultiWriterThread<T> extends Thread {
     private static int ID_GEN = 0;
 
     private RluThread<T> thread;
@@ -15,7 +15,7 @@ public class WriterThread<T> extends Thread {
     private long elapsed;
     private int iter;
 
-    public WriterThread(RluSetInterface<T> set, RluThread<T> thread, int iter) {
+    public MultiWriterThread(RluSetInterface<T> set, RluThread<T> thread, int iter) {
         id = ID_GEN++;
         this.thread = thread;
         this.iter = iter;
@@ -30,12 +30,14 @@ public class WriterThread<T> extends Thread {
     @SuppressWarnings("unchecked")
     public void run() {
         Random rand = ThreadLocalRandom.current();
-        int item;
         long start = System.currentTimeMillis();
 
         for (int i = 0; i < iter; i++) {
-            item = rand.nextInt(100);
-            System.out.println("Writer: " + item + set.add((T) Integer.valueOf(item), thread));
+            int[] items = new int[10];
+            for (int j = 0; j < 2; j++) {
+                items[j] = rand.nextInt(100);
+            }
+            System.out.println("Multi Writer: " + set.add((T) items, thread));
         }
 
         long end = System.currentTimeMillis();
