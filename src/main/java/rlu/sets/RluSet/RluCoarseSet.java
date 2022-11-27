@@ -29,10 +29,8 @@ public class RluCoarseSet<T> implements RluSetInterface<T> {
     public boolean add(T item, RluThread<T> ctx) {
         int key = item.hashCode();
         synchronized (this) {
-
             ctx.lClock = gClock.get();
             ctx.isWriter = true;
-
             globalThreads[(int) Thread.currentThread().getId()] = ctx;
             RluNode<T> pred = head;
             RluNode<T> curr = pred.next;
@@ -47,22 +45,15 @@ public class RluCoarseSet<T> implements RluSetInterface<T> {
             }
 
             RluNode<T> node = new RluNode<>(item, curr);
-
             ctx.node = node;
-
             curr.header = new Header<T>(Thread.currentThread().getId());
-
             ctx.runCounter++;
             ctx.wClock = gClock.get() + 1;
             gClock.getAndIncrement();
-
-            commit_write();
-
+            waitForOldReadersToFinishReading();
             pred.next = ctx.node;
             ctx.wClock = Integer.MAX_VALUE;
-
             return true;
-
         }
 
     }
@@ -82,24 +73,20 @@ public class RluCoarseSet<T> implements RluSetInterface<T> {
         }
 
         if (curr.isLocked()) {
-
             if (ctx.lClock >= globalThreads[(int) curr.header.threadId].wClock) {
-
                 RluNode<T> stolenCurrNode = globalThreads[(int) curr.header.threadId].node;
                 ctx.runCounter++;
-
                 return stolenCurrNode.key == key;
             } else {
                 ctx.runCounter++;
                 return key == curr.key;
             }
-
         }
         ctx.runCounter++;
         return key == curr.key;
     }
 
-    private void commit_write() {
+    private void waitForOldReadersToFinishReading() {
         boolean priorReader = false;
         do {
             priorReader = false;

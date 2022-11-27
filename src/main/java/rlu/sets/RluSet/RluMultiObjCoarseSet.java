@@ -85,7 +85,7 @@ public class RluMultiObjCoarseSet<T> implements RluSetInterface<T> {
             ctx.runCounter++;
             ctx.wClock = gClock.get() + 1;
             gClock.getAndIncrement();
-            waitForOlderReadersToFinishReading();
+            waitForOldReadersToFinishReading();
             // now write the header.copy to the respective actual nodes
             for (T item : items) {
                 int key = item.hashCode();
@@ -133,7 +133,7 @@ public class RluMultiObjCoarseSet<T> implements RluSetInterface<T> {
         return key == curr.key;
     }
 
-    private void waitForOlderReadersToFinishReading() {
+    private void waitForOldReadersToFinishReading() {
         boolean priorReader = false;
         do {
             priorReader = false;

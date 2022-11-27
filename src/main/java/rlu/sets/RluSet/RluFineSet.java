@@ -38,28 +38,22 @@ public class RluFineSet<T> implements RluSetInterface<T> {
             RluNode<T> curr = pred.next;
             curr.lock();
             try {
-
                 while (curr.key < key) {
                     pred.unlock();
                     pred = curr;
                     curr = curr.next;
                     curr.lock();
                 }
-
                 if (key == curr.key) {
                     return false;
                 }
-                // this is where we add the rLU Logic, We need to add a Node
-                // lock the nodes pred and curr
-
                 RluNode<T> node = new RluNode<>(item, curr);
-
                 ctx.node = node;
                 curr.header = new Header<T>(Thread.currentThread().getId());
                 ctx.runCounter++;
                 ctx.wClock = gClock.get() + 1;
                 gClock.getAndIncrement();
-                commit_write();
+                waitForOldReadersToFinishReading();
                 pred.next = ctx.node;
                 ctx.wClock = Integer.MAX_VALUE;
                 return true;
@@ -98,7 +92,7 @@ public class RluFineSet<T> implements RluSetInterface<T> {
         return key == curr.key;
     }
 
-    private void commit_write() {
+    private void waitForOldReadersToFinishReading() {
         boolean priorReader = false;
         do {
             priorReader = false;
