@@ -58,34 +58,159 @@ public class CoarseSetBenchmark {
         @Setup(Level.Iteration)
         public void doThreadSetup() {
             // Add all the threads to the global threads array
-
         }
     }
 
     /**
-     * For 16 threads - Throughput
+     * For 4 threads -25% Updates- Throughput
      * 
      * @param state
      */
     @Benchmark
-    @Group("g16For20")
+    @Group("g4for25")
     @GroupThreads(4)
-    public void read16With20PercentContains(MyState state) {
+    public void read4With25PercentContains(MyState state) {
         state.set.contains(state.item);
     }
 
     @Benchmark
-    @Group("g16For20")
+    @Group("g4for25")
     @GroupThreads(6)
-    public void write16With20PercentContains(MyState state) {
+    public void write4With25PercentContains(MyState state) {
         state.set.add(state.item);
     }
 
+    /**
+     * For 8 threads - 25% Updates-Throughput
+     * 
+     * @param state
+     */
     @Benchmark
-    @Group("g16For20")
+    @Group("g8for25")
+    @GroupThreads(4)
+    public void read8With25PercentContains(MyState state) {
+        state.set.contains(state.item);
+    }
+
+    @Benchmark
+    @Group("g8for25")
     @GroupThreads(6)
-    public void remove16With20PercentContains(MyState state) {
-        state.set.remove(state.item);
+    public void write8With25PercentContains(MyState state) {
+        state.set.add(state.item);
+    }
+
+    /**
+     * For 12 threads -25% Updates- Throughput
+     * 
+     * @param state
+     */
+    @Benchmark
+    @Group("g12for25")
+    @GroupThreads(4)
+    public void read12With25PercentContains(MyState state) {
+        state.set.contains(state.item);
+    }
+
+    @Benchmark
+    @Group("g12for25")
+    @GroupThreads(6)
+    public void write12With25PercentContains(MyState state) {
+        state.set.add(state.item);
+    }
+
+    /**
+     * For 16 threads -25% Updates- Throughput
+     * 
+     * @param state
+     */
+    @Benchmark
+    @Group("g16for25")
+    @GroupThreads(4)
+    public void read16With25PercentContains(MyState state) {
+        state.set.contains(state.item);
+    }
+
+    @Benchmark
+    @Group("g16for25")
+    @GroupThreads(6)
+    public void write16With25PercentContains(MyState state) {
+        state.set.add(state.item);
+    }
+
+    /**
+     * For 4 threads - 50% Updates- Throughput
+     * 
+     * @param state
+     */
+    @Benchmark
+    @Group("g4for50")
+    @GroupThreads(4)
+    public void read4With50PercentContains(MyState state) {
+        state.set.contains(state.item);
+    }
+
+    @Benchmark
+    @Group("g4for50")
+    @GroupThreads(6)
+    public void write4With50PercentContains(MyState state) {
+        state.set.add(state.item);
+    }
+
+    /**
+     * For 8 threads -50% Updates- Throughput
+     * 
+     * @param state
+     */
+    @Benchmark
+    @Group("g8for50")
+    @GroupThreads(4)
+    public void read8With50PercentContains(MyState state) {
+        state.set.contains(state.item);
+    }
+
+    @Benchmark
+    @Group("g8for50")
+    @GroupThreads(6)
+    public void write8With50PercentContains(MyState state) {
+        state.set.add(state.item);
+    }
+
+    /**
+     * For 12 threads -50% Updates- Throughput
+     * 
+     * @param state
+     */
+    @Benchmark
+    @Group("g12for50")
+    @GroupThreads(4)
+    public void read12With50PercentContains(MyState state) {
+        state.set.contains(state.item);
+    }
+
+    @Benchmark
+    @Group("g12for50")
+    @GroupThreads(6)
+    public void write12With50PercentContains(MyState state) {
+        state.set.add(state.item);
+    }
+
+    /**
+     * For 16 threads -50% Updates- Throughput
+     * 
+     * @param state
+     */
+    @Benchmark
+    @Group("g16for50")
+    @GroupThreads(4)
+    public void read16With50PercentContains(MyState state) {
+        state.set.contains(state.item);
+    }
+
+    @Benchmark
+    @Group("g16for50")
+    @GroupThreads(6)
+    public void write16With50PercentContains(MyState state) {
+        state.set.add(state.item);
     }
 
     public static void main(String[] args) throws RunnerException {

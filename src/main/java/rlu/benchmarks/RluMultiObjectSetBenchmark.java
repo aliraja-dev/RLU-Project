@@ -78,31 +78,156 @@ public class RluMultiObjectSetBenchmark<T> {
     }
 
     /**
-     * For 10 threads - Throughput
+     * For 4 threads -25% Updates- Throughput
      * 
-     * @param state
+     * @param State
      */
     @Benchmark
-    @Group("g20for10")
-    @GroupThreads(8)
-    public void read16With20PercentContains(GlobalState gState, ThreadState<T> tState) {
+    @Group("g4for25")
+    @GroupThreads(4)
+    public void read4With25PercentContains(GlobalState gState, ThreadState<T> tState) {
         gState.set.contains(gState.item, tState.thread);
     }
 
     @Benchmark
-    @Group("g20for10")
-    @GroupThreads(2)
-    public void write16With20PercentContains(GlobalState gState, ThreadState<T> tState) {
+    @Group("g4for25")
+    @GroupThreads(6)
+    public void write4With25PercentContains(GlobalState gState, ThreadState<T> tState) {
         gState.set.add(gState.item, tState.thread);
     }
 
-    // @Benchmark
-    // @Group("g16For20")
-    // @GroupThreads(6)
-    // public void remove16With20PercentContains(GlobalState gState, ThreadState<T>
-    // tState) {
-    // gState.set.remove(gState.item, tState.thread);
-    // }
+    /**
+     * For 8 threads - 25% Updates-Throughput
+     * 
+     * @param State
+     */
+    @Benchmark
+    @Group("g8for25")
+    @GroupThreads(4)
+    public void read8With25PercentContains(GlobalState gState, ThreadState<T> tState) {
+        gState.set.contains(gState.item, tState.thread);
+    }
+
+    @Benchmark
+    @Group("g8for25")
+    @GroupThreads(6)
+    public void write8With25PercentContains(GlobalState gState, ThreadState<T> tState) {
+        gState.set.add(gState.item, tState.thread);
+    }
+
+    /**
+     * For 12 threads -25% Updates- Throughput
+     * 
+     * @param State
+     */
+    @Benchmark
+    @Group("g12for25")
+    @GroupThreads(4)
+    public void read12With25PercentContains(GlobalState gState, ThreadState<T> tState) {
+        gState.set.contains(gState.item, tState.thread);
+    }
+
+    @Benchmark
+    @Group("g12for25")
+    @GroupThreads(6)
+    public void write12With25PercentContains(GlobalState gState, ThreadState<T> tState) {
+        gState.set.add(gState.item, tState.thread);
+    }
+
+    /**
+     * For 16 threads -25% Updates- Throughput
+     * 
+     * @param State
+     */
+    @Benchmark
+    @Group("g16for25")
+    @GroupThreads(4)
+    public void read16With25PercentContains(GlobalState gState, ThreadState<T> tState) {
+        gState.set.contains(gState.item, tState.thread);
+    }
+
+    @Benchmark
+    @Group("g16for25")
+    @GroupThreads(6)
+    public void write16With25PercentContains(GlobalState gState, ThreadState<T> tState) {
+        gState.set.add(gState.item, tState.thread);
+    }
+
+    /**
+     * For 4 threads - 50% Updates- Throughput
+     * 
+     * @param State
+     */
+    @Benchmark
+    @Group("g4for50")
+    @GroupThreads(4)
+    public void read4With50PercentContains(GlobalState gState, ThreadState<T> tState) {
+        gState.set.contains(gState.item, tState.thread);
+    }
+
+    @Benchmark
+    @Group("g4for50")
+    @GroupThreads(6)
+    public void write4With50PercentContains(GlobalState gState, ThreadState<T> tState) {
+        gState.set.add(gState.item, tState.thread);
+    }
+
+    /**
+     * For 8 threads -50% Updates- Throughput
+     * 
+     * @param State
+     */
+    @Benchmark
+    @Group("g8for50")
+    @GroupThreads(4)
+    public void read8With50PercentContains(GlobalState gState, ThreadState<T> tState) {
+        gState.set.contains(gState.item, tState.thread);
+    }
+
+    @Benchmark
+    @Group("g8for50")
+    @GroupThreads(6)
+    public void write8With50PercentContains(GlobalState gState, ThreadState<T> tState) {
+        gState.set.add(gState.item, tState.thread);
+    }
+
+    /**
+     * For 12 threads -50% Updates- Throughput
+     * 
+     * @param State
+     */
+    @Benchmark
+    @Group("g12for50")
+    @GroupThreads(4)
+    public void read12With50PercentContains(GlobalState gState, ThreadState<T> tState) {
+        gState.set.contains(gState.item, tState.thread);
+    }
+
+    @Benchmark
+    @Group("g12for50")
+    @GroupThreads(6)
+    public void write12With50PercentContains(GlobalState gState, ThreadState<T> tState) {
+        gState.set.add(gState.item, tState.thread);
+    }
+
+    /**
+     * For 16 threads -50% Updates- Throughput
+     * 
+     * @param State
+     */
+    @Benchmark
+    @Group("g16for50")
+    @GroupThreads(4)
+    public void read16With50PercentContains(GlobalState gState, ThreadState<T> tState) {
+        gState.set.contains(gState.item, tState.thread);
+    }
+
+    @Benchmark
+    @Group("g16for50")
+    @GroupThreads(6)
+    public void write16With50PercentContains(GlobalState gState, ThreadState<T> tState) {
+        gState.set.add(gState.item, tState.thread);
+    }
 
     public static void main(String[] args) throws RunnerException {
         Options opt = new OptionsBuilder()
