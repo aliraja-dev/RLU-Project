@@ -1,9 +1,7 @@
 package rlu.sets.RluSet;
 
 import java.lang.reflect.Array;
-import java.util.ArrayList;
 import java.util.LinkedList;
-import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
 
 public class RluMultiObjCoarseSet<T> implements RluSetInterface<T> {
@@ -51,7 +49,7 @@ public class RluMultiObjCoarseSet<T> implements RluSetInterface<T> {
             ctx.runCounter++;
             ctx.wClock = gClock.get() + 1;
             gClock.getAndIncrement();
-            commit_write();
+            waitForOlderReadersToFinishReading();
             pred.next = ctx.node;
             ctx.wClock = Integer.MAX_VALUE;
             return true;

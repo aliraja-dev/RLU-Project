@@ -1,12 +1,13 @@
-package rlu;
+package rlu.threads;
 
 import java.util.Random;
 import java.util.concurrent.ThreadLocalRandom;
 
+import rlu.sets.RluSet.RluCoarseSet;
 import rlu.sets.RluSet.RluSetInterface;
 import rlu.sets.RluSet.RluThread;
 
-public class MultiWriterThread<T> extends Thread {
+public class ReaderThread<T> extends Thread {
     private static int ID_GEN = 0;
 
     private RluThread<T> thread;
@@ -15,7 +16,7 @@ public class MultiWriterThread<T> extends Thread {
     private long elapsed;
     private int iter;
 
-    public MultiWriterThread(RluSetInterface<T> set, RluThread<T> thread, int iter) {
+    public ReaderThread(RluSetInterface<T> set, RluThread<T> thread, int iter) {
         id = ID_GEN++;
         this.thread = thread;
         this.iter = iter;
@@ -30,16 +31,15 @@ public class MultiWriterThread<T> extends Thread {
     @SuppressWarnings("unchecked")
     public void run() {
         Random rand = ThreadLocalRandom.current();
+        int item;
         long start = System.currentTimeMillis();
 
         for (int i = 0; i < iter; i++) {
-            T[] items = (T[]) new Integer[2];
-            for (int j = 0; j < 2; j++) {
-                items[j] = (T) Integer.valueOf(rand.nextInt(100));
-                // items[j] = rand.nextInt(5);
-            }
-            // T items[] = { 1, 5 };
-            System.out.println("Multi Writer:" + set.add((T[]) items, thread));
+            item = rand.nextInt(100);
+            System.out.println("Reader Iteration: " + item + set.contains((T) Integer.valueOf(item), thread));
+            // System.out.println("Reader Iteration: " + 5 + set.contains((T)
+            // Integer.valueOf(5), thread));
+
         }
 
         long end = System.currentTimeMillis();

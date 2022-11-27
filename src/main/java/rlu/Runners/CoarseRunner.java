@@ -1,16 +1,18 @@
-package rlu;
+package rlu.Runners;
 
-import rlu.sets.RluSet.RluFineSet;
+import rlu.sets.RluSet.RluCoarseSet;
 import rlu.sets.RluSet.RluThread;
+import rlu.threads.ReaderThread;
+import rlu.threads.WriterThread;
 
-public class FineRunner<T> {
+public class CoarseRunner<T> {
 
     public static void main(String[] args) throws Exception {
         runThreads(2, 2, 10);
     }
 
     private static void runThreads(int writers, int readers, int iters) throws Exception {
-        RluFineSet<Integer> set = new RluFineSet<>();
+        RluCoarseSet<Integer> set = new RluCoarseSet<>();
 
         WriterThread<Integer> writerThread1 = new WriterThread<>(set, new RluThread<Integer>(),
                 iters);
