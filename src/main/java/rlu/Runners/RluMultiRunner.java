@@ -7,7 +7,7 @@ import rlu.threads.ReaderThread;
 
 public class RluMultiRunner {
     public static void main(String[] args) throws Exception {
-        runThreads(2, 2, 100);
+        runThreads(2, 2, 10000);
     }
 
     private static void runThreads(int writers, int readers, int iters) throws Exception {

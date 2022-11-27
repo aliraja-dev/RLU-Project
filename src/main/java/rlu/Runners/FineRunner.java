@@ -8,7 +8,7 @@ import rlu.threads.WriterThread;
 public class FineRunner<T> {
 
     public static void main(String[] args) throws Exception {
-        runThreads(2, 2, 10);
+        runThreads(2, 2, 10000);
     }
 
     private static void runThreads(int writers, int readers, int iters) throws Exception {

@@ -28,7 +28,9 @@ public class WriterThread<T> extends Thread {
 
         for (int i = 0; i < iter; i++) {
             item = rand.nextInt(100);
-            System.out.println("Writer: " + item + set.add((T) Integer.valueOf(item), thread));
+            // System.out.println("Writer: " + item + set.add((T) Integer.valueOf(item),
+            // thread));
+            set.add((T) Integer.valueOf(item), thread);
         }
 
         long end = System.currentTimeMillis();

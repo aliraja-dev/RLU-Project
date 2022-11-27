@@ -82,6 +82,8 @@ public class RluFineSet<T> implements RluSetInterface<T> {
             if (ctx.lClock >= globalThreads[(int) curr.header.threadId].wClock) {
                 RluNode<T> stolenCurrNode = globalThreads[(int) curr.header.threadId].node;
                 ctx.runCounter++;
+                System.out.println("\n***Stolen Key: " + stolenCurrNode.key + " from thread: "
+                        + curr.header.threadId + " by thread: " + threadId);
                 return stolenCurrNode.key == key;
             } else {
                 ctx.runCounter++;

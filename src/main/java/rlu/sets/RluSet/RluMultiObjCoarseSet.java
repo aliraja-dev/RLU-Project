@@ -69,7 +69,7 @@ public class RluMultiObjCoarseSet<T> implements RluSetInterface<T> {
             RluNode<T> curr = pred.next;
             for (T item : items) {
                 int key = item.hashCode();
-                System.out.println("key: " + key);
+                // System.out.println("key: " + key);
                 while (curr.key < key) {
                     pred = curr;
                     curr = curr.next;
@@ -123,6 +123,8 @@ public class RluMultiObjCoarseSet<T> implements RluSetInterface<T> {
                 // !RluNode<T> stolenCurrNode = globalThreads[(int) curr.header.threadId].node;
                 RluNode<T> stolenCurrNode = curr.header.copy;
                 ctx.runCounter++;
+                System.out.println("\n***Stolen Key: " + stolenCurrNode.key + " from thread: "
+                        + curr.header.threadId + " by thread: " + threadId);
                 return stolenCurrNode.key == key;
             } else {
                 ctx.runCounter++;

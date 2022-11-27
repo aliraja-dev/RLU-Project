@@ -1,18 +1,18 @@
 package rlu.Runners;
 
-import rlu.sets.RluSet.RluCoarseSet;
+import rlu.sets.RluSet.RluPaddedCoarseSet;
 import rlu.sets.RluSet.RluThread;
 import rlu.threads.ReaderThread;
 import rlu.threads.WriterThread;
 
-public class CoarseRunner<T> {
+public class CoarsePaddedRunner<T> {
 
     public static void main(String[] args) throws Exception {
         runThreads(2, 2, 10000);
     }
 
     private static void runThreads(int writers, int readers, int iters) throws Exception {
-        RluCoarseSet<Integer> set = new RluCoarseSet<>();
+        RluPaddedCoarseSet<Integer> set = new RluPaddedCoarseSet<>(4);
 
         WriterThread<Integer> writerThread1 = new WriterThread<>(set, new RluThread<Integer>(),
                 iters);

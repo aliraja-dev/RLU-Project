@@ -75,6 +75,8 @@ public class RluPaddedCoarseSet<T> implements RluSetInterface<T> {
             if (ctx.lClock >= globalThreads[(int) curr.header.threadId % padding].wClock) {
                 RluNode<T> stolenCurrNode = globalThreads[(int) curr.header.threadId % padding].node;
                 ctx.runCounter++;
+                System.out.println("\n***Stolen Key: " + stolenCurrNode.key + " from thread: "
+                        + curr.header.threadId + " by thread: " + threadId);
                 return stolenCurrNode.key == key;
             } else {
                 ctx.runCounter++;
