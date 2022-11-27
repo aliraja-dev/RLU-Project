@@ -1,7 +1,6 @@
 /Users/ali/cs5510/Group-Project-5510/RLU-Project/src/main/java/rlu/sets/ComparisonSets/FineSet.java
 /Users/ali/cs5510/Group-Project-5510/RLU-Project/src/main/java/rlu/threads/MultiWriterThread.java
 /Users/ali/cs5510/Group-Project-5510/RLU-Project/src/main/java/rlu/sets/ComparisonSets/CoarseSet.java
-/Users/ali/cs5510/Group-Project-5510/RLU-Project/src/main/java/rlu/benchmarks/RluFineSetBenchmark.java
 /Users/ali/cs5510/Group-Project-5510/RLU-Project/src/main/java/rlu/Runners/FineRunner.java
 /Users/ali/cs5510/Group-Project-5510/RLU-Project/src/main/java/rlu/sets/RluSet/RluSetInterface.java
 /Users/ali/cs5510/Group-Project-5510/RLU-Project/src/main/java/rlu/sets/RluSet/RluNode.java
@@ -10,6 +9,7 @@
 /Users/ali/cs5510/Group-Project-5510/RLU-Project/src/main/java/rlu/sets/ComparisonSets/LockFreeSet.java
 /Users/ali/cs5510/Group-Project-5510/RLU-Project/src/main/java/rlu/benchmarks/RluCGSetBenchmark.java
 /Users/ali/cs5510/Group-Project-5510/RLU-Project/src/main/java/rlu/threads/WriterThread.java
+/Users/ali/cs5510/Group-Project-5510/RLU-Project/src/main/java/rlu/benchmarks/RluFGSetBenchmark.java
 /Users/ali/cs5510/Group-Project-5510/RLU-Project/src/main/java/rlu/sets/RluSet/Header.java
 /Users/ali/cs5510/Group-Project-5510/RLU-Project/src/main/java/rlu/Runners/CoarseRunner.java
 /Users/ali/cs5510/Group-Project-5510/RLU-Project/src/main/java/rlu/Runners/RluMultiRunner.java

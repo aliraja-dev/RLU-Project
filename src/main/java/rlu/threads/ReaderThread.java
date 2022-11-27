@@ -3,12 +3,10 @@ package rlu.threads;
 import java.util.Random;
 import java.util.concurrent.ThreadLocalRandom;
 
-import rlu.sets.RluSet.RluCoarseSet;
 import rlu.sets.RluSet.RluSetInterface;
 import rlu.sets.RluSet.RluThread;
 
 public class ReaderThread<T> extends Thread {
-    private static int ID_GEN = 0;
 
     private RluThread<T> thread;
     private RluSetInterface<T> set;
@@ -17,14 +15,9 @@ public class ReaderThread<T> extends Thread {
     private int iter;
 
     public ReaderThread(RluSetInterface<T> set, RluThread<T> thread, int iter) {
-        id = ID_GEN++;
         this.thread = thread;
         this.iter = iter;
         this.set = set;
-    }
-
-    public static void reset() {
-        ID_GEN = 0;
     }
 
     @Override

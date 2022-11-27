@@ -7,8 +7,6 @@ import rlu.sets.RluSet.RluSetInterface;
 import rlu.sets.RluSet.RluThread;
 
 public class MultiWriterThread<T> extends Thread {
-    private static int ID_GEN = 0;
-
     private RluThread<T> thread;
     private RluSetInterface<T> set;
     private int id;
@@ -16,14 +14,10 @@ public class MultiWriterThread<T> extends Thread {
     private int iter;
 
     public MultiWriterThread(RluSetInterface<T> set, RluThread<T> thread, int iter) {
-        id = ID_GEN++;
+
         this.thread = thread;
         this.iter = iter;
         this.set = set;
-    }
-
-    public static void reset() {
-        ID_GEN = 0;
     }
 
     @Override
