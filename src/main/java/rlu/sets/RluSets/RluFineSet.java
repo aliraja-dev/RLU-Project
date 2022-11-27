@@ -1,4 +1,4 @@
-package rlu.sets.RluSet;
+package rlu.sets.RluSets;
 
 import java.lang.reflect.Array;
 import java.util.concurrent.atomic.AtomicInteger;

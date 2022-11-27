@@ -1,7 +1,7 @@
 package rlu.Runners;
 
-import rlu.sets.RluSet.RluCoarseSet;
-import rlu.sets.RluSet.RluThread;
+import rlu.sets.RluSets.RluCoarseSet;
+import rlu.sets.RluSets.RluThread;
 import rlu.threads.ReaderThread;
 import rlu.threads.WriterThread;
 

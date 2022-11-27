@@ -3,8 +3,8 @@ package rlu.threads;
 import java.util.Random;
 import java.util.concurrent.ThreadLocalRandom;
 
-import rlu.sets.RluSet.RluSetInterface;
-import rlu.sets.RluSet.RluThread;
+import rlu.sets.RluSets.RluSetInterface;
+import rlu.sets.RluSets.RluThread;
 
 public class ReaderThread<T> extends Thread {
 

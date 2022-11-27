@@ -1,4 +1,4 @@
-package rlu.sets.RluSet;
+package rlu.sets.RluSets;
 
 public interface RluSetInterface<T> {
 

@@ -19,8 +19,8 @@ import org.openjdk.jmh.runner.RunnerException;
 import org.openjdk.jmh.runner.options.Options;
 import org.openjdk.jmh.runner.options.OptionsBuilder;
 
-import rlu.sets.RluSet.RluMultiObjCoarseSet;
-import rlu.sets.RluSet.RluThread;
+import rlu.sets.RluSets.RluMultiObjCoarseSet;
+import rlu.sets.RluSets.RluThread;
 
 import java.util.Random;
 import java.util.concurrent.ThreadLocalRandom;
