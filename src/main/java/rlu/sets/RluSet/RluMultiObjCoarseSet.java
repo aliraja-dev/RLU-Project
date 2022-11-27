@@ -49,7 +49,7 @@ public class RluMultiObjCoarseSet<T> implements RluSetInterface<T> {
             ctx.runCounter++;
             ctx.wClock = gClock.get() + 1;
             gClock.getAndIncrement();
-            waitForOlderReadersToFinishReading();
+            waitForOldReadersToFinishReading();
             pred.next = ctx.node;
             ctx.wClock = Integer.MAX_VALUE;
             return true;
