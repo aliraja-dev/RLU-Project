@@ -1,4 +1,0 @@
-package rlu.benchmarks.jmh_generated;
-public class RluCGPaddedSetBenchmark_ThreadState_jmhType extends RluCGPaddedSetBenchmark_ThreadState_jmhType_B3 {
-}
-

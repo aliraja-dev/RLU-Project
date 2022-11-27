@@ -1,4 +1,0 @@
-package rlu.benchmarks.jmh_generated;
-public class RluCGPaddedSetBenchmark_GlobalState_jmhType extends RluCGPaddedSetBenchmark_GlobalState_jmhType_B3 {
-}
-
