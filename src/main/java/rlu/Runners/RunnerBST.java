@@ -21,13 +21,13 @@ public class RunnerBST<T>{
 
         writerThread1.start();
         readerThread1.start();
-        writerThread2.start();
-//        readerThread2.start();
+//        writerThread2.start();
+        readerThread2.start();
 
         writerThread1.join();
         readerThread1.join();
-        writerThread2.join();
-//        readerThread2.join();
+//        writerThread2.join();
+        readerThread2.join();
 
 //        System.out.println("Writer 1 elapsed: " + ((WriterBST<Integer>) writerThread1).getElapsedTime());
 //        System.out.println("Writer 2 elapsed: " + ((WriterBST<Integer>) writerThread2).getElapsedTime());

@@ -59,9 +59,9 @@ public class RLUCoarseSetBST<T extends Comparable<T>> implements Sorted<T> {
         if (addNode.compareTo(curr) < 0) {
             if (curr.getLeft() == null) {
                 RLUlogic(addNode, curr, ctx, 0);
+                commit_write();
                 curr.setLeft(ctx.nodeBSTLeft);
                 setParentNode(curr.getLeft(), curr);
-                commit_write();
                 ctx.wClock = Integer.MAX_VALUE;
                 return true;
             } else {
@@ -175,6 +175,8 @@ public class RLUCoarseSetBST<T extends Comparable<T>> implements Sorted<T> {
 
     private RLUBSTNode<T> checkLock(T item, RLUBSTNode<T> curr, RluThread<T> ctx, int left_right)
     {
+//        long threadId = Thread.currentThread().getId();
+
         if (curr.isLocked()) {
 
             if (ctx.lClock >= globalThreads[(int) curr.header.threadId].wClock) {
@@ -183,10 +185,14 @@ public class RLUCoarseSetBST<T extends Comparable<T>> implements Sorted<T> {
                 RLUBSTNode<T> stolenNodeRight = globalThreads[(int) curr.header.threadId].nodeBSTRight;
                 if(left_right == 0)
                 {
+//                    System.out.println("\n***Stolen left: " + stolenNodeLeft + " from thread: "
+//                            + curr.header.threadId + " by thread: " + threadId);
                     return stolenNodeLeft;
                 }
                 else
                 {
+//                    System.out.println("\n***Stolen right: " + stolenNodeRight + " from thread: "
+//                            + curr.header.threadId + " by thread: " + threadId);
                     return stolenNodeRight;
                 }
             }

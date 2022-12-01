@@ -5,7 +5,7 @@ import java.util.concurrent.locks.ReentrantLock;
 
 public class RLUBSTNode<T extends Comparable<T>> implements Comparable<RLUBSTNode<T>> {
 
-    private final Lock lock = new ReentrantLock();
+    public ReentrantLock lock;
     RLUBSTNode<T> node;
     // to store header information
      HeaderBST<T> header;
@@ -21,6 +21,8 @@ public class RLUBSTNode<T extends Comparable<T>> implements Comparable<RLUBSTNod
         this.parent = null;
         this.item = null;
         header = null;
+        lock = new ReentrantLock();
+
     }
     public RLUBSTNode(T item) {
         this.item = item;
@@ -28,6 +30,8 @@ public class RLUBSTNode<T extends Comparable<T>> implements Comparable<RLUBSTNod
         this.left = null;
         this.right = null;
         this.parent = null;
+        lock = new ReentrantLock();
+
     }
 
 

@@ -2,17 +2,29 @@ package rlu.threads;
 
 import rlu.sets.RLUBST.RLUCoarseSetBST;
 import rlu.sets.RLUBST.RluThread;
+import rlu.sets.interfaces.Sorted;
+
+import java.util.Random;
+import java.util.concurrent.ThreadLocalRandom;
 
 public class ReaderBST<T extends Comparable<T>> extends Thread {
     private static int ID_GEN = 0;
 
     private RluThread<T> thread;
-    private RLUCoarseSetBST<T> set;
+//    private RLUCoarseSetBST<T> set;
+
+    private Sorted<T> set;
     private int id;
     private long elapsed;
     private int iter;
 
-    public ReaderBST(RLUCoarseSetBST<T> set, RluThread<T> thread, int iter) {
+//    public ReaderBST(RLUCoarseSetBST<T> set, RluThread<T> thread, int iter) {
+//        id = ID_GEN++;
+//        this.thread = thread;
+//        this.iter = iter;
+//        this.set = set;
+//    }
+    public ReaderBST(Sorted<T> set, RluThread<T> thread, int iter) {
         id = ID_GEN++;
         this.thread = thread;
         this.iter = iter;
@@ -25,10 +37,16 @@ public class ReaderBST<T extends Comparable<T>> extends Thread {
 
     @Override
     public void run() {
+        Random rand = ThreadLocalRandom.current();
+        int item;
         long start = System.currentTimeMillis();
 
-        for (int i = 0; i < iter; i++)
-            System.out.println("Reader Iteration: " + i + set.contains((T) Integer.valueOf(i), thread));
+        for (int i = 0; i < iter; i++) {
+            item = rand.nextInt(20);
+            item = 5;
+            System.out.println("Reader Iteration: " + item + set.contains((T) Integer.valueOf(item), thread));
+
+        }
 
         long end = System.currentTimeMillis();
         elapsed = end - start;

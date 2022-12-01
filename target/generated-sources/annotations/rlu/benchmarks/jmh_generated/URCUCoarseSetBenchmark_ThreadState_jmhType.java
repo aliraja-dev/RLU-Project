@@ -1,0 +1,4 @@
+package rlu.benchmarks.jmh_generated;
+public class URCUCoarseSetBenchmark_ThreadState_jmhType extends URCUCoarseSetBenchmark_ThreadState_jmhType_B3 {
+}
+
