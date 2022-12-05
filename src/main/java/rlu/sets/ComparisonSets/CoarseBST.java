@@ -1,10 +1,12 @@
 package rlu.sets.ComparisonSets;
 
 import rlu.sets.interfaces.ComparableSet;
+import rlu.sets.interfaces.ComparisonSet;
+
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
-public class CoarseBST <T extends Comparable<T>> implements ComparableSet<T> {
+public class CoarseBST <T extends Comparable<T>> implements ComparisonSet<T> {
     private Lock lock;
     private Node<T> root;
 

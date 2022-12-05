@@ -1,23 +1,21 @@
 package rlu.Runners;
 
-import rlu.sets.RluSets.RluCoarseSet;
-import rlu.sets.RluSets.RluThread;
 import rlu.sets.URCU.CoarseSetURCU;
+import rlu.sets.URCU.FineSetURCU;
 import rlu.sets.URCU.RcuThread;
 import rlu.threads.RcuReader;
 import rlu.threads.RcuWriter;
-import rlu.threads.ReaderThread;
-import rlu.threads.WriterThread;
 
 public class RunnerURCU<T> {
 
-
     public static void main(String[] args) throws Exception {
-        runThreads(2, 2, 100);
+        runThreads(2, 2, 20);
     }
 
     private static void runThreads(int writers, int readers, int iters) throws Exception {
-        CoarseSetURCU<Integer> set = new CoarseSetURCU<>();
+//        CoarseSetURCU<Integer> set = new CoarseSetURCU<>();
+        FineSetURCU<Integer> set = new FineSetURCU<>();
+
 
         RcuWriter<Integer> writerThread1 = new RcuWriter<>(set, new RcuThread<Integer>(),
                 iters);

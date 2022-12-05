@@ -3,7 +3,7 @@ package rlu.sets.URCU;
 import java.util.concurrent.atomic.AtomicLong;
 import java.util.concurrent.atomic.AtomicLongArray;
 
-public class CoarseSetURCU<T> {
+public class CoarseSetURCU<T> implements RcuSetInterface<T> {
 
     private RcuNode<T> head;
     private static int MAX_THREADS = 128;
@@ -30,6 +30,7 @@ public class CoarseSetURCU<T> {
     }
 
 
+    @Override
     public boolean add(T item, RcuThread<T> ctx) {
         int key = item.hashCode();
         synchronized (this) {
@@ -56,6 +57,11 @@ public class CoarseSetURCU<T> {
 
     }
 
+    @Override
+    public boolean remove(T item, RcuThread<T> thread) {
+        return false;
+    }
+    @Override
     public boolean contains(T item, RcuThread<T> ctx) {
         int key = item.hashCode();
 

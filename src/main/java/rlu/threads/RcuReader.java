@@ -1,8 +1,6 @@
 package rlu.threads;
 
-import rlu.sets.RluSets.RluSetInterface;
-import rlu.sets.RluSets.RluThread;
-import rlu.sets.URCU.CoarseSetURCU;
+import rlu.sets.URCU.RcuSetInterface;
 import rlu.sets.URCU.RcuThread;
 
 import java.util.Random;
@@ -11,12 +9,12 @@ import java.util.concurrent.ThreadLocalRandom;
 public class RcuReader<T> extends Thread {
 
     private RcuThread<T> thread;
-    private CoarseSetURCU<T> set;
+    private RcuSetInterface<T> set;
     private int id;
     private long elapsed;
     private int iter;
 
-    public RcuReader(CoarseSetURCU<T> set, RcuThread<T> thread, int iter) {
+    public RcuReader(RcuSetInterface<T> set, RcuThread<T> thread, int iter) {
         this.thread = thread;
         this.iter = iter;
         this.set = set;
@@ -30,8 +28,8 @@ public class RcuReader<T> extends Thread {
         long start = System.currentTimeMillis();
 
         for (int i = 0; i < iter; i++) {
-            item = rand.nextInt(100);
-//            item = 3;
+//            item = rand.nextInt(10);
+            item = 3;
             System.out.println("Reader Iteration: " + item + set.contains((T)Integer.valueOf(item), thread));
 //            set.contains((T) Integer.valueOf(item), thread);
 

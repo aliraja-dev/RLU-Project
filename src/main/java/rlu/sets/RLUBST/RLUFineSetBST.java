@@ -36,7 +36,6 @@ public class RLUFineSetBST<T extends Comparable<T>> implements Sorted<T> {
         ctx.isWriter = true;
         globalThreads[(int) Thread.currentThread().getId()] = ctx;
 
-
         mainLock.lock();
         if (root == null) {
             this.root = new RLUBSTNode<>(item);
@@ -49,7 +48,6 @@ public class RLUFineSetBST<T extends Comparable<T>> implements Sorted<T> {
         curr.lock();
         mainLock.unlock();
         boolean result = insert(node, curr, null, ctx);
-
         return result;
 
 }

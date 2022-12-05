@@ -1,8 +1,6 @@
 package rlu.threads;
 
-import rlu.sets.RluSets.RluSetInterface;
-import rlu.sets.RluSets.RluThread;
-import rlu.sets.URCU.CoarseSetURCU;
+import rlu.sets.URCU.RcuSetInterface;
 import rlu.sets.URCU.RcuThread;
 
 import java.util.Random;
@@ -10,12 +8,12 @@ import java.util.concurrent.ThreadLocalRandom;
 
 public class RcuWriter<T> extends Thread{
     private RcuThread<T> thread;
-    private CoarseSetURCU<T> set;
+    private RcuSetInterface<T> set;
     private int id;
     private long elapsed;
     private int iter;
 
-    public RcuWriter(CoarseSetURCU<T> set, RcuThread<T> thread, int iter) {
+    public RcuWriter(RcuSetInterface<T> set, RcuThread<T> thread, int iter) {
         this.thread = thread;
         this.iter = iter;
         this.set = set;

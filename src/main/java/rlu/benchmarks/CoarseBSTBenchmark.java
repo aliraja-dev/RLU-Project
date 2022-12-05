@@ -6,6 +6,7 @@ import org.openjdk.jmh.runner.RunnerException;
 import org.openjdk.jmh.runner.options.Options;
 import org.openjdk.jmh.runner.options.OptionsBuilder;
 import rlu.sets.ComparisonSets.CoarseBST;
+import rlu.sets.RLUBST.RluThread;
 
 import java.util.Random;
 import java.util.concurrent.ThreadLocalRandom;
@@ -17,7 +18,7 @@ import java.util.concurrent.TimeUnit;
 @Warmup(iterations = 2, time = 100, timeUnit = TimeUnit.MILLISECONDS)
 @Measurement(iterations = 1, time = 100, timeUnit = TimeUnit.MILLISECONDS)
 @Fork(1)
-public class CoarseBSTBenchmark {
+public class CoarseBSTBenchmark<T> {
     @State(Scope.Group)
     public static class MyState {
         public CoarseBST<Integer> set;
@@ -26,7 +27,7 @@ public class CoarseBSTBenchmark {
 
         @Setup(Level.Iteration)
         public void doSetup() {
-            set = new CoarseBST<>();
+            set = new CoarseBST<>(16);
         }
 
         @TearDown(Level.Iteration)

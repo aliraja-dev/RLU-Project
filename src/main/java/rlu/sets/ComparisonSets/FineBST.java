@@ -23,7 +23,7 @@ public class FineBST<T extends Comparable<T>> implements ComparableSet<T> {
     }
 
     @Override
-    public boolean add(T item) {
+    public boolean add(T item, Threads<T> ctx) {
 
         if (item == null) {
             return true;
@@ -91,7 +91,7 @@ public class FineBST<T extends Comparable<T>> implements ComparableSet<T> {
     }
 
     @Override
-    public boolean remove(T item) {
+    public boolean remove(T item, Threads<T> ctx) {
         return true;
     }
 
@@ -113,7 +113,7 @@ public class FineBST<T extends Comparable<T>> implements ComparableSet<T> {
     }
 
     @Override
-    public boolean contains(T item) {
+    public boolean contains(T item, Threads<T> ctx) {
 
         Node<T> curr = root;
         Node<T> parent = null;
@@ -143,6 +143,7 @@ public class FineBST<T extends Comparable<T>> implements ComparableSet<T> {
 
         return false;
     }
+
 
     private static class Node<T extends Comparable<T>> {
         T item;
