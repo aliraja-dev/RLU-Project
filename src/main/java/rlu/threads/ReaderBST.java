@@ -43,7 +43,7 @@ public class ReaderBST<T extends Comparable<T>> extends Thread {
 
         for (int i = 0; i < iter; i++) {
             item = rand.nextInt(20);
-            item = 5;
+//            item = 5;
             System.out.println("Reader Iteration: " + item + set.contains((T) Integer.valueOf(item), thread));
 
         }

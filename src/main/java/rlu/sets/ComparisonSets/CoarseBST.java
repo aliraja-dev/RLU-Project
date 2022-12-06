@@ -101,31 +101,33 @@ public class CoarseBST <T extends Comparable<T>> implements ComparisonSet<T> {
         Node<T> curr = root;
         Node<T> pred = root;
 
-        if(curr == null)
-        {
-            return false;
-        }
-
-        while (curr != null) {
-
-            int compare = curr.item.compareTo(item);
-
-            if (compare > 0) {
-                pred = curr;
-                curr = curr.getLeft();
-            } else if (compare < 0) {
-                pred = curr;
-                curr = curr.getRight();
-            } else {
-                return true;
-            }
+        synchronized (this) {
 
             if (curr == null) {
-                break;
+                return false;
             }
-        }
 
-        return false;
+            while (curr != null) {
+
+                int compare = curr.item.compareTo(item);
+
+                if (compare > 0) {
+                    pred = curr;
+                    curr = curr.getLeft();
+                } else if (compare < 0) {
+                    pred = curr;
+                    curr = curr.getRight();
+                } else {
+                    return true;
+                }
+
+                if (curr == null) {
+                    break;
+                }
+            }
+
+            return false;
+        }
     }
 
     private static class Node<T extends Comparable<T>> {

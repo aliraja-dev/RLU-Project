@@ -27,19 +27,20 @@ public class FineSetURCU<T> implements RcuSetInterface<T>{
         head.next = new RcuNode<>(Integer.MAX_VALUE);
 //        MAX_THREADS = threads;
 //        threadCount = threads;
-        for (int i = 0; i < MAX_THREADS; i++) readersVersion.set(i, NOT_READING);
+        for (int i = 0; i < MAX_THREADS; i++)
+        {
+            readersVersion.set(i, NOT_READING);
+        }
     }
 
     @Override
     public boolean add(T item, RcuThread<T> ctx) {
         int key = item.hashCode();
-        head.lock();
         RcuNode<T> pred = head;
-
+        head.lock();
         try {
             RcuNode<T> curr = pred.next;
             curr.lock();
-
             try {
                 while (curr.key < key) {
                     pred.unlock();
@@ -71,34 +72,18 @@ public class FineSetURCU<T> implements RcuSetInterface<T>{
     @Override
     public boolean contains(T item, RcuThread<T> ctx) {
         int key = item.hashCode();
-//        long threadId = Thread.currentThread().getId();
         int tid = getTID();
         boolean result = false;
 
-        head.lock();
         RcuNode<T> pred = head;
-        try{
-            RcuNode<T> curr = pred.next;
-            curr.lock();
-            try{
-                rcu_read_lock(tid);
-                while (curr.key < key) {
-                    pred.unlock();
-                    pred = curr;
-                    curr = curr.next;
-                    curr.lock();
-                }
-                rcu_read_unlock(tid);
-//                result = ;
-                return key == curr.key;
+        RcuNode<T> curr = pred.next;
+        rcu_read_lock(tid);
+        while (curr.key < key) {
+            pred = curr;
+            curr = curr.next;
+        }
+        return rcu_read_unlock(tid, key, curr);
 
-            } finally {
-                curr.unlock();
-            }
-        }
-         finally {
-            pred.unlock();
-        }
     }
 
     public static int getTID() {
@@ -119,9 +104,12 @@ public class FineSetURCU<T> implements RcuSetInterface<T>{
 
     }
 
-    public void rcu_read_unlock(final int tid) {
+    public boolean rcu_read_unlock(final int tid, int key, RcuNode<T> curr ) {
 
+        boolean result = key == curr.key;
         readersVersion.set(tid, NOT_READING);
+        return result;
+
     }
 
     void synchronize_rcu(RcuNode<T> pred, T newItem, RcuNode<T> next) {
@@ -135,8 +123,9 @@ public class FineSetURCU<T> implements RcuSetInterface<T>{
 //                System.out.println("Pending reader: "+i+"##################");
             };// spin
         }
-        pred.next = newNode;
-
+//        synchronized (this) {
+            pred.next = newNode;
+//        }
     }
 
 }

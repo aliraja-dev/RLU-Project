@@ -42,64 +42,58 @@ public class RLUFineSetBST<T extends Comparable<T>> implements Sorted<T> {
             mainLock.unlock();
             return true;
         }
+        else {
+            RLUBSTNode<T> node = new RLUBSTNode<>(item);
+            RLUBSTNode<T> curr = root;
+            RLUBSTNode<T> newParent = null;
 
-        RLUBSTNode<T> node = new RLUBSTNode<>(item);
-        RLUBSTNode<T> curr = root;
-        curr.lock();
-        mainLock.unlock();
-        boolean result = insert(node, curr, null, ctx);
-        return result;
+            if (curr == null || node == null)
+                return false;
 
+            curr.lock();
+            mainLock.unlock();
+
+            try {
+                while (true) {
+                    newParent = curr;
+                    //Insert node to left if node<current node
+                    if (node.compareTo(curr) < 0) {
+                        if (curr.getLeft() == null) {
+                            RLUlogic(node, curr, ctx, 0);
+                            newParent.setLeft(ctx.nodeBSTLeft);
+                            setParentNode(newParent.getLeft(), newParent);
+                            commit_write();
+                            ctx.wClock = Integer.MAX_VALUE;
+                            return true;
+                        } else {
+                            curr = curr.getLeft();
+                            curr.lock();
+                            newParent.unlock();
+                        }
+                    }
+                    //Insert node to right if node>current node
+                    else if (node.compareTo(curr) > 0) {
+                        if (curr.getRight() == null) {
+                            RLUlogic(node, curr, ctx, 1);
+                            commit_write();
+                            newParent.setRight(ctx.nodeBSTRight);
+                            setParentNode(newParent.getRight(), newParent);
+                            ctx.wClock = Integer.MAX_VALUE;
+                            return true;
+                        } else {
+                            curr = curr.getRight();
+                            curr.lock();
+                            newParent.unlock();
+                        }
+                    } else {
+                        return false;
+                    }
+                }
+            } finally{
+                newParent.unlock();
+            }
+        }
 }
-    private boolean insert(RLUBSTNode<T> addNode, RLUBSTNode<T> curr, RLUBSTNode<T> parent, RluThread<T> ctx) {
-        RLUBSTNode<T> newParent = null;
-
-        if (curr == null || addNode == null)
-            return false;
-
-        newParent = curr;
-        //Insert node to left if node<current node
-        if (addNode.compareTo(curr) < 0) {
-            if (curr.getLeft() == null) {
-                RLUlogic(addNode, curr, ctx, 0);
-                newParent.setLeft(ctx.nodeBSTLeft);
-                setParentNode(newParent.getLeft(), newParent);
-                commit_write();
-                ctx.wClock = Integer.MAX_VALUE;
-                newParent.unlock();
-                return true;
-            } else {
-                curr = curr.getLeft();
-                curr.lock();
-                newParent.unlock();
-                return insert(addNode, curr, newParent, ctx);
-            }
-        }
-        //Insert node to right if node>current node
-        else if (addNode.compareTo(curr) > 0) {
-            if (curr.getRight() == null) {
-                RLUlogic(addNode, curr, ctx, 1);
-                commit_write();
-                newParent.setRight(ctx.nodeBSTRight);
-                setParentNode(newParent.getRight(), newParent);
-                ctx.wClock = Integer.MAX_VALUE;
-                newParent.unlock();
-                return true;
-            } else {
-                curr = curr.getRight();
-                curr.lock();
-                newParent.unlock();
-                return insert(addNode, curr, newParent, ctx);
-            }
-        }
-        else
-        {
-            curr.unlock();
-            return false;
-        }
-    }
-
-
     public void RLUlogic(RLUBSTNode<T> addNode, RLUBSTNode<T> curr, RluThread<T> ctx, int left_right)
     {
         if(left_right == 0) //leftnode = 0, rightnode = 1
@@ -135,7 +129,7 @@ public class RLUFineSetBST<T extends Comparable<T>> implements Sorted<T> {
         long threadId = Thread.currentThread().getId();
         globalThreads[(int) threadId] = ctx;
         RLUBSTNode<T> curr = root;
-        RLUBSTNode<T> parent = null;
+        RLUBSTNode<T> parent = curr;
         int compare = 0;
 
         if(curr == null)
@@ -143,37 +137,39 @@ public class RLUFineSetBST<T extends Comparable<T>> implements Sorted<T> {
             ctx.runCounter++;
             return false;
         }
+        else {
+                while (curr != null) {
 
-        while (curr != null) {
+                    compare = curr.item.compareTo(item);
+                    parent = curr;
 
-            compare = curr.item.compareTo(item);
+                    if (compare > 0) {
+                        curr = curr.getLeft();
+                        left_right = 0;
+                    } else if (compare < 0) {
+                        curr = curr.getRight();
+                        left_right = 1;
+                    } else {
+                        ctx.runCounter++;
+                        return true;
+                    }
 
-            if (compare > 0) {
-                parent = curr;
-                curr = curr.getLeft();
-                left_right = 0;
-            } else if (compare < 0) {
-                parent = curr;
-                curr = curr.getRight();
-                left_right = 1;
-            } else {
+                    if (curr == null) {
+                        curr = checkLock(item, parent, ctx, left_right);
+                        if(curr == null)
+                        {
+                            break;
+                        }
+                    }
+                }
+
                 ctx.runCounter++;
-                return true;
-            }
-
-            if (curr == null) {
-                curr = checkLock(item, parent, ctx, left_right);
-//
-            }
+                return false;
         }
-
-        ctx.runCounter++;
-        return false;
     }
 
     private RLUBSTNode<T> checkLock(T item, RLUBSTNode<T> curr, RluThread<T> ctx, int left_right)
     {
-//        long threadId = Thread.currentThread().getId();
 
         if (curr.isLocked()) {
 

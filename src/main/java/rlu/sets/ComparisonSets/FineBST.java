@@ -1,29 +1,15 @@
 package rlu.sets.ComparisonSets;
 
 import rlu.sets.RLUBST.RLUBSTNode;
-import rlu.sets.interfaces.ComparableSet;
-
-import java.util.concurrent.locks.Lock;
+import rlu.sets.interfaces.ComparisonSet;
 import java.util.concurrent.locks.ReentrantLock;
 
-public class FineBST<T extends Comparable<T>> implements ComparableSet<T> {
-    ReentrantLock mainLock;
+public class FineBST<T extends Comparable<T>> implements ComparisonSet<T> {
+    ReentrantLock mainLock = new ReentrantLock();
     private Node<T> root;
 
-    public FineBST() {
-
-        mainLock = new ReentrantLock();
-        this.root = null;
-    }
-
-    public FineBST(int threads) {
-
-        mainLock = new ReentrantLock();
-        this.root = null;
-    }
-
     @Override
-    public boolean add(T item, Threads<T> ctx) {
+    public boolean add(T item) {
 
         if (item == null) {
             return true;
@@ -35,54 +21,54 @@ public class FineBST<T extends Comparable<T>> implements ComparableSet<T> {
             mainLock.unlock();
             return true;
         }
-
-        Node<T> node = new Node<>(item);
-        Node<T> curr = root;
-        Node<T> parent = curr;
-        curr.lock();
-        mainLock.unlock();
-        boolean result = insert(node, curr, null);
-        return result;
-    }
-
-    private boolean insert(Node<T> addNode, Node<T> curr, Node<T> parent) {
-        Node<T> newParent = null;
-
-        if (curr == null || addNode == null)
-            return false;
-
-        newParent = curr;
-        //Insert node to left if node<current node
-        if (addNode.compareTo(curr) < 0) {
-            if (curr.getLeft() == null) {
-                newParent.setLeft(addNode);
-                setParentNode(newParent.getLeft(), newParent);
-                newParent.unlock();
-                return true;
-            } else {
-                curr = curr.getLeft();
-                curr.lock();
-                newParent.unlock();
-                return insert(addNode, curr, newParent);
-            }
-        }
-        //Insert node to right if node>current node
-        else if (addNode.compareTo(curr) > 0) {
-            if (curr.getRight() == null) {
-                newParent.setRight(addNode);
-                setParentNode(newParent.getRight(), newParent);
-                newParent.unlock();
-                return true;
-            } else {
-                curr = curr.getRight();
-                curr.lock();
-                newParent.unlock();
-                return insert(addNode, curr, newParent);
-            }
-        }
         else {
-            curr.unlock();
-            return false;
+
+            Node<T> node = new Node<>(item);
+            Node<T> curr = root;
+            Node<T> newParent = curr;
+            if (curr == null || node == null) {
+                return false;
+            }
+
+            curr.lock();
+            mainLock.unlock();
+            try {
+                while (true) {
+
+                    newParent = curr;
+                    //Insert node to left if node<current node
+                    if (node.compareTo(curr) < 0) {
+                        if (curr.getLeft() == null) {
+                            newParent.setLeft(node);
+                            setParentNode(newParent.getLeft(), newParent);
+//                        newParent.unlock();
+                            return true;
+                        } else {
+                            curr = curr.getLeft();
+                            curr.lock();
+                            newParent.unlock();
+                        }
+                    }
+                    //Insert node to right if node>current node
+                    else if (node.compareTo(curr) > 0) {
+                        if (curr.getRight() == null) {
+                            newParent.setRight(node);
+                            setParentNode(newParent.getRight(), newParent);
+//                        newParent.unlock();
+                            return true;
+                        } else {
+                            curr = curr.getRight();
+                            curr.lock();
+                            newParent.unlock();
+                        }
+                    } else {
+//                    newParent.unlock();
+                        return false;
+                    }
+                }
+            } finally {
+                newParent.unlock();
+            }
         }
     }
 
@@ -91,7 +77,7 @@ public class FineBST<T extends Comparable<T>> implements ComparableSet<T> {
     }
 
     @Override
-    public boolean remove(T item, Threads<T> ctx) {
+    public boolean remove(T item) {
         return true;
     }
 
@@ -113,35 +99,42 @@ public class FineBST<T extends Comparable<T>> implements ComparableSet<T> {
     }
 
     @Override
-    public boolean contains(T item, Threads<T> ctx) {
+    public boolean contains(T item) {
 
         Node<T> curr = root;
-        Node<T> parent = null;
+        Node<T> parent = curr;
+        int compare = 0;
 
-        if (curr == null) {
+        if(curr == null)
+        {
             return false;
         }
+        else {
+            curr.lock();
+            try {
+                while (curr != null) {
 
-        while (curr != null) {
+                    compare = curr.item.compareTo(item);
+                    parent = curr;
+                    if (compare > 0) {
+                        curr = curr.getLeft();
+                    } else if (compare < 0) {
+                        curr = curr.getRight();
+                    } else {
+                        return true;
+                    }
 
-            int compare = curr.item.compareTo(item);
-
-            if (compare > 0) {
-                parent = curr;
-                curr = curr.getLeft();
-            } else if (compare < 0) {
-                parent = curr;
-                curr = curr.getRight();
-            } else {
-                return true;
-            }
-
-            if (curr == null) {
-                break;
+                    if (curr == null) {
+                        return false;
+                    }
+                    curr.lock();
+                    parent.unlock();
+                }
+                return false;
+            } finally {
+                parent.unlock();
             }
         }
-
-        return false;
     }
 
 
@@ -150,7 +143,7 @@ public class FineBST<T extends Comparable<T>> implements ComparableSet<T> {
         private Node<T> left;
         private Node<T> right;
         private Node<T> parent;
-        public ReentrantLock lock;
+        public ReentrantLock lock = new ReentrantLock();
 
 
         public Node() {
@@ -224,5 +217,21 @@ public class FineBST<T extends Comparable<T>> implements ComparableSet<T> {
         public Node<T> getParent() {
             return parent;
         }
+    }
+
+    public void printTree()
+    {
+        printTree(root);
+    }
+
+    public void printTree(Node<T> node)
+    {
+        if(node == null)
+        {
+            return;
+        }
+        printTree(node.getLeft());
+        System.out.println(node.item.toString());
+        printTree(node.getRight());
     }
 }
