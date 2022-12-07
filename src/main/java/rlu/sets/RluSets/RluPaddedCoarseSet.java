@@ -92,9 +92,9 @@ public class RluPaddedCoarseSet<T> implements RluSetInterface<T> {
         do {
             priorReader = false;
             for (int i = 0; i < globalThreads.length; i++) {
-                if (globalThreads[i] != null && globalThreads[i].runCounter % 2 != 0
-                        && globalThreads[i].isWriter == false
-                        && globalThreads[i].lClock <= gClock.get()) {
+                if (globalThreads[i % padding] != null && globalThreads[i % padding].runCounter % 2 != 0
+                        && globalThreads[i % padding].isWriter == false
+                        && globalThreads[i % padding].lClock <= gClock.get()) {
                     priorReader = true;
                     break;
 
