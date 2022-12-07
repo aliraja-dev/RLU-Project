@@ -1,0 +1,4 @@
+package rlu.benchmarks.jmh_generated;
+public class RluMultiObjectSetBenchmark_ThreadState_jmhType extends RluMultiObjectSetBenchmark_ThreadState_jmhType_B3 {
+}
+

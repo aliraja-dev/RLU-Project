@@ -5,9 +5,6 @@ import org.openjdk.jmh.runner.Runner;
 import org.openjdk.jmh.runner.RunnerException;
 import org.openjdk.jmh.runner.options.Options;
 import org.openjdk.jmh.runner.options.OptionsBuilder;
-import rlu.sets.RLUBST.RLUFineSetBST;
-import rlu.sets.RLUBST.RluThread;
-import rlu.sets.URCU.CoarseSetURCU;
 import rlu.sets.URCU.FineSetURCU;
 import rlu.sets.URCU.RcuThread;
 
@@ -367,82 +364,6 @@ public class URCUFGSetBenchmark<T> {
     @Group("g32for80")
     @GroupThreads(7)
     public void write32With80PercentContains(GlobalState gState, ThreadState<T> tState) {
-        gState.set.add(gState.item, tState.thread);
-    }
-
-    /**
-     * For 40 threads -20% Updates- Throughput
-     *
-     * @param state
-     */
-    @Benchmark
-    @Group("g40for20")
-    @GroupThreads(8)
-    public void read40With20PercentContains(GlobalState gState, ThreadState<T> tState) {
-        gState.set.contains(gState.item, tState.thread);
-    }
-
-    @Benchmark
-    @Group("g40for20")
-    @GroupThreads(32)
-    public void write40With20PercentContains(GlobalState gState, ThreadState<T> tState) {
-        gState.set.add(gState.item, tState.thread);
-    }
-
-    /**
-     * For 40 threads -40% Updates- Throughput
-     *
-     * @param state
-     */
-    @Benchmark
-    @Group("g40for40")
-    @GroupThreads(16)
-    public void read40With40PercentContains(GlobalState gState, ThreadState<T> tState) {
-        gState.set.contains(gState.item, tState.thread);
-    }
-
-    @Benchmark
-    @Group("g40for40")
-    @GroupThreads(24)
-    public void write40With40PercentContains(GlobalState gState, ThreadState<T> tState) {
-        gState.set.add(gState.item, tState.thread);
-    }
-
-    /**
-     * For 40 threads -60% Updates- Throughput
-     *
-     * @param state
-     */
-    @Benchmark
-    @Group("g40for60")
-    @GroupThreads(24)
-    public void read40With60PercentContains(GlobalState gState, ThreadState<T> tState) {
-        gState.set.contains(gState.item, tState.thread);
-    }
-
-    @Benchmark
-    @Group("g40for60")
-    @GroupThreads(16)
-    public void write40With60PercentContains(GlobalState gState, ThreadState<T> tState) {
-        gState.set.add(gState.item, tState.thread);
-    }
-
-    /**
-     * For 40 threads -80% Updates- Throughput
-     *
-     * @param state
-     */
-    @Benchmark
-    @Group("g40for80")
-    @GroupThreads(32)
-    public void read40With80PercentContains(GlobalState gState, ThreadState<T> tState) {
-        gState.set.contains(gState.item, tState.thread);
-    }
-
-    @Benchmark
-    @Group("g40for80")
-    @GroupThreads(8)
-    public void write40With80PercentContains(GlobalState gState, ThreadState<T> tState) {
         gState.set.add(gState.item, tState.thread);
     }
 

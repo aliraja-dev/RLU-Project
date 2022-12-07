@@ -1,0 +1,4 @@
+package rlu.benchmarks.jmh_generated;
+public class RluFineSetBSTBenchmark_ThreadState_jmhType extends RluFineSetBSTBenchmark_ThreadState_jmhType_B3 {
+}
+
