@@ -1,4 +1,0 @@
-package rlu.benchmarks.jmh_generated;
-public class RluMultiObjectSetBenchmark_GlobalState_jmhType extends RluMultiObjectSetBenchmark_GlobalState_jmhType_B3 {
-}
-
