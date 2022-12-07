@@ -57,6 +57,82 @@ public class FineSetBenchmark {
     }
 
     /**
+     * For 8 threads - 20% Updates-Throughput
+     *
+     * @param state
+     */
+    @Benchmark
+    @Group("g8for20")
+    @GroupThreads(2)
+    public void read8With20PercentContains(MyState state) {
+        state.set.contains(state.item);
+    }
+
+    @Benchmark
+    @Group("g8for20")
+    @GroupThreads(6)
+    public void write8With20PercentContains(MyState state) {
+        state.set.add(state.item);
+    }
+
+    /**
+     * For 8 threads - 40% Updates-Throughput
+     *
+     * @param state
+     */
+    @Benchmark
+    @Group("g8for40")
+    @GroupThreads(3)
+    public void read8With40PercentContains(MyState state) {
+        state.set.contains(state.item);
+    }
+
+    @Benchmark
+    @Group("g8for40")
+    @GroupThreads(5)
+    public void write8With40PercentContains(MyState state) {
+        state.set.add(state.item);
+    }
+
+    /**
+     * For 8 threads - 60% Updates-Throughput
+     *
+     * @param state
+     */
+    @Benchmark
+    @Group("g8for60")
+    @GroupThreads(5)
+    public void read8With60PercentContains(MyState state) {
+        state.set.contains(state.item);
+    }
+
+    @Benchmark
+    @Group("g8for60")
+    @GroupThreads(3)
+    public void write8With60PercentContains(MyState state) {
+        state.set.add(state.item);
+    }
+
+    /**
+     * For 8 threads - 80% Updates-Throughput
+     *
+     * @param state
+     */
+    @Benchmark
+    @Group("g8for80")
+    @GroupThreads(6)
+    public void read8With80PercentContains(MyState state) {
+        state.set.contains(state.item);
+    }
+
+    @Benchmark
+    @Group("g8for80")
+    @GroupThreads(2)
+    public void write8With80PercentContains(MyState state) {
+        state.set.add(state.item);
+    }
+
+    /**
      * For 16 threads -20% Updates- Throughput
      *
      * @param state
@@ -133,62 +209,40 @@ public class FineSetBenchmark {
     }
 
     /**
-     * For 16 threads - 100% Updates- Throughput
+     * For 24 threads -20% Updates- Throughput
      *
      * @param state
      */
     @Benchmark
-    @Group("g16for100")
-    @GroupThreads(16)
-    public void read16With100PercentContains(MyState state) {
-        state.set.contains(state.item);
-    }
-
-    @Benchmark
-    @Group("g16for100")
-    @GroupThreads(0)
-    public void write16With100PercentContains(MyState state) {
-        state.set.add(state.item);
-    }
-
-//------------------------------------------------------------------------------------------------------------------------------------
-//------------------------------------------------------------------------------------------------------------------------------------
-
-    /**
-     * For 4 threads -60% Updates- Throughput
-     *
-     * @param state
-     */
-    @Benchmark
-    @Group("g4for60")
-    @GroupThreads(2)
-    public void read4With60PercentContains(MyState state) {
-        state.set.contains(state.item);
-    }
-
-    @Benchmark
-    @Group("g4for60")
-    @GroupThreads(2)
-    public void write4With60PercentContains(MyState state) {
-        state.set.add(state.item);
-    }
-
-    /**
-     * For 8 threads - 60% Updates-Throughput
-     *
-     * @param state
-     */
-    @Benchmark
-    @Group("g8for60")
+    @Group("g24for20")
     @GroupThreads(5)
-    public void read8With60PercentContains(MyState state) {
+    public void read24With20PercentContains(MyState state) {
         state.set.contains(state.item);
     }
 
     @Benchmark
-    @Group("g8for60")
-    @GroupThreads(3)
-    public void write8With60PercentContains(MyState state) {
+    @Group("g24for20")
+    @GroupThreads(19)
+    public void write24With20PercentContains(MyState state) {
+        state.set.add(state.item);
+    }
+
+    /**
+     * For 24 threads -40% Updates- Throughput
+     *
+     * @param state
+     */
+    @Benchmark
+    @Group("g24for40")
+    @GroupThreads(10)
+    public void read24With40PercentContains(MyState state) {
+        state.set.contains(state.item);
+    }
+
+    @Benchmark
+    @Group("g24for40")
+    @GroupThreads(14)
+    public void write24With40PercentContains(MyState state) {
         state.set.add(state.item);
     }
 
@@ -212,6 +266,63 @@ public class FineSetBenchmark {
     }
 
     /**
+     * For 24 threads -80% Updates- Throughput
+     *
+     * @param state
+     */
+    @Benchmark
+    @Group("g24for80")
+    @GroupThreads(19)
+    public void read24With80PercentContains(MyState state) {
+        state.set.contains(state.item);
+    }
+
+    @Benchmark
+    @Group("g24for80")
+    @GroupThreads(5)
+    public void write24With80PercentContains(MyState state) {
+        state.set.add(state.item);
+    }
+
+    /**
+     * For 32 threads -20% Updates- Throughput
+     *
+     * @param state
+     */
+    @Benchmark
+    @Group("g32for20")
+    @GroupThreads(6)
+    public void read32With20PercentContains(MyState state) {
+        state.set.contains(state.item);
+    }
+
+    @Benchmark
+    @Group("g32for20")
+    @GroupThreads(26)
+    public void write32With20PercentContains(MyState state) {
+        state.set.add(state.item);
+    }
+
+    /**
+     * For 32 threads -40% Updates- Throughput
+     *
+     * @param state
+     */
+    @Benchmark
+    @Group("g32for40")
+    @GroupThreads(13)
+    public void read32With40PercentContains(MyState state) {
+        state.set.contains(state.item);
+    }
+
+    @Benchmark
+    @Group("g32for40")
+    @GroupThreads(19)
+    public void write32With40PercentContains(MyState state) {
+        state.set.add(state.item);
+    }
+
+    /**
      * For 32 threads -60% Updates- Throughput
      *
      * @param state
@@ -227,6 +338,63 @@ public class FineSetBenchmark {
     @Group("g32for60")
     @GroupThreads(13)
     public void write32With60PercentContains(MyState state) {
+        state.set.add(state.item);
+    }
+
+    /**
+     * For 32 threads -80% Updates- Throughput
+     *
+     * @param state
+     */
+    @Benchmark
+    @Group("g32for80")
+    @GroupThreads(26)
+    public void read32With80PercentContains(MyState state) {
+        state.set.contains(state.item);
+    }
+
+    @Benchmark
+    @Group("g32for80")
+    @GroupThreads(7)
+    public void write32With80PercentContains(MyState state) {
+        state.set.add(state.item);
+    }
+
+    /**
+     * For 40 threads -20% Updates- Throughput
+     *
+     * @param state
+     */
+    @Benchmark
+    @Group("g40for20")
+    @GroupThreads(8)
+    public void read40With20PercentContains(MyState state) {
+        state.set.contains(state.item);
+    }
+
+    @Benchmark
+    @Group("g40for20")
+    @GroupThreads(32)
+    public void write40With20PercentContains(MyState state) {
+        state.set.add(state.item);
+    }
+
+    /**
+     * For 40 threads -40% Updates- Throughput
+     *
+     * @param state
+     */
+    @Benchmark
+    @Group("g40for40")
+    @GroupThreads(16)
+    public void read40With40PercentContains(MyState state) {
+        state.set.contains(state.item);
+    }
+
+    @Benchmark
+    @Group("g40for40")
+    @GroupThreads(24)
+    public void write40With40PercentContains(MyState state) {
         state.set.add(state.item);
     }
 
@@ -249,6 +417,24 @@ public class FineSetBenchmark {
         state.set.add(state.item);
     }
 
+    /**
+     * For 40 threads -80% Updates- Throughput
+     *
+     * @param state
+     */
+    @Benchmark
+    @Group("g40for80")
+    @GroupThreads(32)
+    public void read40With80PercentContains(MyState state) {
+        state.set.contains(state.item);
+    }
+
+    @Benchmark
+    @Group("g40for80")
+    @GroupThreads(8)
+    public void write40With80PercentContains(MyState state) {
+        state.set.add(state.item);
+    }
 
     public static void main(String[] args) throws RunnerException {
         Options opt = new OptionsBuilder()

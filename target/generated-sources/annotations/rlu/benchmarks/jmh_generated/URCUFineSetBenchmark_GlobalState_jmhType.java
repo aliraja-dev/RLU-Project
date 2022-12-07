@@ -1,4 +1,0 @@
-package rlu.benchmarks.jmh_generated;
-public class URCUFineSetBenchmark_GlobalState_jmhType extends URCUFineSetBenchmark_GlobalState_jmhType_B3 {
-}
-

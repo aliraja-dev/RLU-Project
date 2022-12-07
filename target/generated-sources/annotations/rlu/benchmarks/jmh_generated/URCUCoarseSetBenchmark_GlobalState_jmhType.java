@@ -1,4 +1,0 @@
-package rlu.benchmarks.jmh_generated;
-public class URCUCoarseSetBenchmark_GlobalState_jmhType extends URCUCoarseSetBenchmark_GlobalState_jmhType_B3 {
-}
-
