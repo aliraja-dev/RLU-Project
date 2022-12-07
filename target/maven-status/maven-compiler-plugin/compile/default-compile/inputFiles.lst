@@ -1,4 +1,3 @@
-/Users/ali/cs5510/Group-Project-5510/RLU-Project-DEC7/RLU-Project/src/main/java/rlu/benchmarks/RluFineSetBSTBenchmark.java
 /Users/ali/cs5510/Group-Project-5510/RLU-Project-DEC7/RLU-Project/src/main/java/rlu/threads/ReaderThread.java
 /Users/ali/cs5510/Group-Project-5510/RLU-Project-DEC7/RLU-Project/src/main/java/rlu/sets/URCU/RcuSetInterface.java
 /Users/ali/cs5510/Group-Project-5510/RLU-Project-DEC7/RLU-Project/src/main/java/rlu/benchmarks/RluCGPaddedSetBenchmark.java
@@ -9,8 +8,8 @@
 /Users/ali/cs5510/Group-Project-5510/RLU-Project-DEC7/RLU-Project/src/main/java/rlu/benchmarks/CoarseSetBenchmark.java
 /Users/ali/cs5510/Group-Project-5510/RLU-Project-DEC7/RLU-Project/src/main/java/rlu/sets/URCU/RcuThread.java
 /Users/ali/cs5510/Group-Project-5510/RLU-Project-DEC7/RLU-Project/src/main/java/rlu/benchmarks/RluMultiObjectSetBenchmark.java
+/Users/ali/cs5510/Group-Project-5510/RLU-Project-DEC7/RLU-Project/src/main/java/rlu/benchmarks/RluCoarseBSTBenchmark.java
 /Users/ali/cs5510/Group-Project-5510/RLU-Project-DEC7/RLU-Project/src/main/java/rlu/Runners/FineRunner.java
-/Users/ali/cs5510/Group-Project-5510/RLU-Project-DEC7/RLU-Project/src/main/java/rlu/benchmarks/RluCoarseSetBSTBenchmark.java
 /Users/ali/cs5510/Group-Project-5510/RLU-Project-DEC7/RLU-Project/src/main/java/rlu/sets/RLUBST/RLUFineSetBST.java
 /Users/ali/cs5510/Group-Project-5510/RLU-Project-DEC7/RLU-Project/src/main/java/rlu/sets/RLUBST/HeaderBST.java
 /Users/ali/cs5510/Group-Project-5510/RLU-Project-DEC7/RLU-Project/src/main/java/rlu/sets/URCU/RcuNode.java
@@ -45,6 +44,7 @@
 /Users/ali/cs5510/Group-Project-5510/RLU-Project-DEC7/RLU-Project/src/main/java/rlu/threads/WriterThread.java
 /Users/ali/cs5510/Group-Project-5510/RLU-Project-DEC7/RLU-Project/src/main/java/rlu/threads/WriterBST.java
 /Users/ali/cs5510/Group-Project-5510/RLU-Project-DEC7/RLU-Project/src/main/java/rlu/sets/RLUBST/RLUBSTNode.java
+/Users/ali/cs5510/Group-Project-5510/RLU-Project-DEC7/RLU-Project/src/main/java/rlu/benchmarks/RluFineBSTBenchmark.java
 /Users/ali/cs5510/Group-Project-5510/RLU-Project-DEC7/RLU-Project/src/main/java/rlu/sets/RluSets/RluCoarseSet.java
 /Users/ali/cs5510/Group-Project-5510/RLU-Project-DEC7/RLU-Project/src/main/java/rlu/sets/interfaces/ComparisonSet.java
 /Users/ali/cs5510/Group-Project-5510/RLU-Project-DEC7/RLU-Project/src/main/java/rlu/sets/interfaces/Set.java

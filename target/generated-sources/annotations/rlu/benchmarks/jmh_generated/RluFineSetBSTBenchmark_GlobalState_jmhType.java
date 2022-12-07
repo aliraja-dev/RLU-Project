@@ -1,4 +1,0 @@
-package rlu.benchmarks.jmh_generated;
-public class RluFineSetBSTBenchmark_GlobalState_jmhType extends RluFineSetBSTBenchmark_GlobalState_jmhType_B3 {
-}
-
