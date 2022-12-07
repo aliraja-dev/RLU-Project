@@ -17,8 +17,7 @@ import java.util.concurrent.TimeUnit;
 @Warmup(iterations = 2, time = 100, timeUnit = TimeUnit.MILLISECONDS)
 @Measurement(iterations = 1, time = 100, timeUnit = TimeUnit.MILLISECONDS)
 @Fork(1)
-public class FineBSTBenchmark {
-
+public class FineBSTBenchmark<T> {
     @State(Scope.Group)
     public static class MyState {
         public FineBST<Integer> set;
@@ -27,7 +26,7 @@ public class FineBSTBenchmark {
 
         @Setup(Level.Iteration)
         public void doSetup() {
-            set = new FineBST<>();
+            set = new FineBST<>(16);
         }
 
         @TearDown(Level.Iteration)
@@ -40,152 +39,203 @@ public class FineBSTBenchmark {
             Random rand = ThreadLocalRandom.current();
             item = rand.nextInt(UPPER_BOUND);
         }
+
+        @Setup(Level.Iteration)
+        public void doThreadSetup() {
+            // Add all the threads to the global threads array
+        }
     }
 
     /**
-     * For 4 threads -25% Updates- Throughput
+     * For 16 threads -20% Updates- Throughput
      *
      * @param state
      */
     @Benchmark
-    @Group("g4for25")
+    @Group("g16for20")
     @GroupThreads(4)
-    public void read4With25PercentContains(FineBSTBenchmark.MyState state) {state.set.contains(state.item);}
-    @Benchmark
-    @Group("g4for25")
-    @GroupThreads(6)
-    public void write4With25PercentContains(FineBSTBenchmark.MyState state) {state.set.add(state.item);}
-
-    /**
-     * For 8 threads - 25% Updates-Throughput
-     *
-     * @param state
-     */
-    @Benchmark
-    @Group("g8for25")
-    @GroupThreads(4)
-    public void read8With25PercentContains(FineBSTBenchmark.MyState state) {
+    public void read16With20PercentContains(FineBSTBenchmark.MyState state) {
         state.set.contains(state.item);
     }
 
     @Benchmark
-    @Group("g8for25")
-    @GroupThreads(6)
-    public void write8With25PercentContains(FineBSTBenchmark.MyState state) {
+    @Group("g16for20")
+    @GroupThreads(12)
+    public void write16With20PercentContains(FineBSTBenchmark.MyState state) {
         state.set.add(state.item);
     }
 
     /**
-     * For 12 threads -25% Updates- Throughput
+     * For 16 threads - 40% Updates-Throughput
      *
      * @param state
      */
     @Benchmark
-    @Group("g12for25")
-    @GroupThreads(4)
-    public void read12With25PercentContains(FineBSTBenchmark.MyState state) {
+    @Group("g16for40")
+    @GroupThreads(6)
+    public void read16With40PercentContains(FineBSTBenchmark.MyState state) {
         state.set.contains(state.item);
     }
 
     @Benchmark
-    @Group("g12for25")
-    @GroupThreads(6)
-    public void write12With25PercentContains(FineBSTBenchmark.MyState state) {
+    @Group("g16for40")
+    @GroupThreads(12)
+    public void write16With40PercentContains(FineBSTBenchmark.MyState state) {
         state.set.add(state.item);
     }
 
     /**
-     * For 16 threads -25% Updates- Throughput
+     * For 16 threads -60% Updates- Throughput
      *
      * @param state
      */
     @Benchmark
-    @Group("g16for25")
-    @GroupThreads(4)
-    public void read16With25PercentContains(FineBSTBenchmark.MyState state) {
+    @Group("g16for60")
+    @GroupThreads(10)
+    public void read16With60PercentContains(FineBSTBenchmark.MyState state) {
         state.set.contains(state.item);
     }
 
     @Benchmark
-    @Group("g16for25")
+    @Group("g16for60")
     @GroupThreads(6)
-    public void write16With25PercentContains(FineBSTBenchmark.MyState state) {
+    public void write16With60PercentContains(FineBSTBenchmark.MyState state) {
         state.set.add(state.item);
     }
 
     /**
-     * For 4 threads - 50% Updates- Throughput
+     * For 16 threads -80% Updates- Throughput
      *
      * @param state
      */
     @Benchmark
-    @Group("g4for50")
-    @GroupThreads(4)
-    public void read4With50PercentContains(FineBSTBenchmark.MyState state) {
+    @Group("g16for80")
+    @GroupThreads(13)
+    public void read16With80PercentContains(FineBSTBenchmark.MyState state) {
         state.set.contains(state.item);
     }
 
     @Benchmark
-    @Group("g4for50")
-    @GroupThreads(6)
-    public void write4With50PercentContains(FineBSTBenchmark.MyState state) {
+    @Group("g16for80")
+    @GroupThreads(3)
+    public void write16With80PercentContains(FineBSTBenchmark.MyState state) {
         state.set.add(state.item);
     }
 
     /**
-     * For 8 threads -50% Updates- Throughput
+     * For 16 threads - 100% Updates- Throughput
      *
      * @param state
      */
     @Benchmark
-    @Group("g8for50")
-    @GroupThreads(4)
-    public void read8With50PercentContains(FineBSTBenchmark.MyState state) {
+    @Group("g16for100")
+    @GroupThreads(16)
+    public void read16With100PercentContains(FineBSTBenchmark.MyState state) {
         state.set.contains(state.item);
     }
 
     @Benchmark
-    @Group("g8for50")
-    @GroupThreads(6)
-    public void write8With50PercentContains(FineBSTBenchmark.MyState state) {
+    @Group("g16for100")
+    @GroupThreads(0)
+    public void write16With100PercentContains(FineBSTBenchmark.MyState state) {
+        state.set.add(state.item);
+    }
+
+//------------------------------------------------------------------------------------------------------------------------------------
+//------------------------------------------------------------------------------------------------------------------------------------
+
+    /**
+     * For 4 threads -60% Updates- Throughput
+     *
+     * @param state
+     */
+    @Benchmark
+    @Group("g4for60")
+    @GroupThreads(2)
+    public void read4With60PercentContains(FineBSTBenchmark.MyState state) {
+        state.set.contains(state.item);
+    }
+
+    @Benchmark
+    @Group("g4for60")
+    @GroupThreads(2)
+    public void write4With60PercentContains(FineBSTBenchmark.MyState state) {
         state.set.add(state.item);
     }
 
     /**
-     * For 12 threads -50% Updates- Throughput
+     * For 8 threads - 60% Updates-Throughput
      *
      * @param state
      */
     @Benchmark
-    @Group("g12for50")
-    @GroupThreads(4)
-    public void read12With50PercentContains(FineBSTBenchmark.MyState state) {
+    @Group("g8for60")
+    @GroupThreads(5)
+    public void read8With60PercentContains(FineBSTBenchmark.MyState state) {
         state.set.contains(state.item);
     }
 
     @Benchmark
-    @Group("g12for50")
-    @GroupThreads(6)
-    public void write12With50PercentContains(FineBSTBenchmark.MyState state) {
+    @Group("g8for60")
+    @GroupThreads(3)
+    public void write8With60PercentContains(FineBSTBenchmark.MyState state) {
         state.set.add(state.item);
     }
 
     /**
-     * For 16 threads -50% Updates- Throughput
+     * For 24 threads -60% Updates- Throughput
      *
      * @param state
      */
     @Benchmark
-    @Group("g16for50")
-    @GroupThreads(4)
-    public void read16With50PercentContains(FineBSTBenchmark.MyState state) {
+    @Group("g24for60")
+    @GroupThreads(14)
+    public void read24With60PercentContains(FineBSTBenchmark.MyState state) {
         state.set.contains(state.item);
     }
 
     @Benchmark
-    @Group("g16for50")
-    @GroupThreads(6)
-    public void write16With50PercentContains(FineBSTBenchmark.MyState state) {
+    @Group("g24for60")
+    @GroupThreads(10)
+    public void write24With60PercentContains(FineBSTBenchmark.MyState state) {
+        state.set.add(state.item);
+    }
+
+    /**
+     * For 32 threads -60% Updates- Throughput
+     *
+     * @param state
+     */
+    @Benchmark
+    @Group("g32for60")
+    @GroupThreads(19)
+    public void read32With60PercentContains(FineBSTBenchmark.MyState state) {
+        state.set.contains(state.item);
+    }
+
+    @Benchmark
+    @Group("g32for60")
+    @GroupThreads(13)
+    public void write32With60PercentContains(FineBSTBenchmark.MyState state) {
+        state.set.add(state.item);
+    }
+
+    /**
+     * For 40 threads -60% Updates- Throughput
+     *
+     * @param state
+     */
+    @Benchmark
+    @Group("g40for60")
+    @GroupThreads(24)
+    public void read40With60PercentContains(FineBSTBenchmark.MyState state) {
+        state.set.contains(state.item);
+    }
+
+    @Benchmark
+    @Group("g40for60")
+    @GroupThreads(16)
+    public void write40With60PercentContains(FineBSTBenchmark.MyState state) {
         state.set.add(state.item);
     }
 

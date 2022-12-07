@@ -9,7 +9,6 @@ public class RLUBSTNode<T extends Comparable<T>> implements Comparable<RLUBSTNod
     RLUBSTNode<T> node;
     // to store header information
      HeaderBST<T> header;
-    // private boolean locked;
     public T item;
     private RLUBSTNode<T> left;
     private RLUBSTNode<T> right;

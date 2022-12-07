@@ -24,8 +24,6 @@ public class CoarseSetURCU<T> implements RcuSetInterface<T> {
     public CoarseSetURCU(int threads) {
         head = new RcuNode<>(Integer.MIN_VALUE);
         head.next = new RcuNode<>(Integer.MAX_VALUE);
-        MAX_THREADS = threads;
-//        threadCount = threads;
         for (int i = 0; i < MAX_THREADS; i++) readersVersion.set(i, NOT_READING);
     }
 
@@ -48,8 +46,6 @@ public class CoarseSetURCU<T> implements RcuSetInterface<T> {
                 return false;
             }
 
-//            RcuNode<T> node = new RcuNode<>(item, curr);
-//            pred.next = node;   ///should take effect after synchronize_rcu
             synchronize_rcu(pred, item, curr);
 
             return true;
@@ -65,7 +61,6 @@ public class CoarseSetURCU<T> implements RcuSetInterface<T> {
     public boolean contains(T item, RcuThread<T> ctx) {
         int key = item.hashCode();
 
-        long threadId = Thread.currentThread().getId();
         int tid = getTID();
 
         rcu_read_lock(tid);
@@ -78,10 +73,7 @@ public class CoarseSetURCU<T> implements RcuSetInterface<T> {
             curr = curr.next;
         }
 
-        boolean result = key == curr.key;
-
-        rcu_read_unlock(tid);
-        return result;
+        return rcu_read_unlock(tid, key, curr);
 
     }
 
@@ -102,10 +94,12 @@ public class CoarseSetURCU<T> implements RcuSetInterface<T> {
 
     }
 
+    public boolean rcu_read_unlock(final int tid, int key, RcuNode<T> curr ) {
 
-    public void rcu_read_unlock(final int tid) {
-
+        boolean result = key == curr.key;
         readersVersion.set(tid, NOT_READING);
+        return result;
+
     }
 
     void synchronize_rcu(RcuNode<T> pred, T newItem, RcuNode<T> next) {

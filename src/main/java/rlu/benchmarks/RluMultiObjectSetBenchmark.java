@@ -76,156 +76,195 @@ public class RluMultiObjectSetBenchmark<T> {
             // nothing yet
         }
     }
-
     /**
-     * For 4 threads -25% Updates- Throughput
-     * 
-     * @param State
+     * For 16 threads -20% Updates- Throughput
+     *
+     * @param state
      */
     @Benchmark
-    @Group("g4for25")
+    @Group("g16for20")
     @GroupThreads(4)
-    public void read4With25PercentContains(GlobalState gState, ThreadState<T> tState) {
+    public void read16With20PercentContains(GlobalState gState, ThreadState<T> tState) {
         gState.set.contains(gState.item, tState.thread);
     }
 
     @Benchmark
-    @Group("g4for25")
-    @GroupThreads(6)
-    public void write4With25PercentContains(GlobalState gState, ThreadState<T> tState) {
+    @Group("g16for20")
+    @GroupThreads(12)
+    public void write16With20PercentContains(GlobalState gState, ThreadState<T> tState) {
         gState.set.add(gState.item, tState.thread);
     }
 
     /**
-     * For 8 threads - 25% Updates-Throughput
-     * 
-     * @param State
+     * For 16 threads - 40% Updates-Throughput
+     *
+     * @param state
      */
     @Benchmark
-    @Group("g8for25")
-    @GroupThreads(4)
-    public void read8With25PercentContains(GlobalState gState, ThreadState<T> tState) {
+    @Group("g16for40")
+    @GroupThreads(6)
+    public void read16With40PercentContains(GlobalState gState, ThreadState<T> tState) {
         gState.set.contains(gState.item, tState.thread);
     }
 
     @Benchmark
-    @Group("g8for25")
-    @GroupThreads(6)
-    public void write8With25PercentContains(GlobalState gState, ThreadState<T> tState) {
+    @Group("g16for40")
+    @GroupThreads(12)
+    public void write16With40PercentContains(GlobalState gState, ThreadState<T> tState) {
         gState.set.add(gState.item, tState.thread);
     }
 
     /**
-     * For 12 threads -25% Updates- Throughput
-     * 
-     * @param State
+     * For 16 threads -60% Updates- Throughput
+     *
+     * @param state
      */
     @Benchmark
-    @Group("g12for25")
-    @GroupThreads(4)
-    public void read12With25PercentContains(GlobalState gState, ThreadState<T> tState) {
+    @Group("g16for60")
+    @GroupThreads(10)
+    public void read16With60PercentContains(GlobalState gState, ThreadState<T> tState) {
         gState.set.contains(gState.item, tState.thread);
     }
 
     @Benchmark
-    @Group("g12for25")
+    @Group("g16for60")
     @GroupThreads(6)
-    public void write12With25PercentContains(GlobalState gState, ThreadState<T> tState) {
+    public void write16With60PercentContains(GlobalState gState, ThreadState<T> tState) {
         gState.set.add(gState.item, tState.thread);
     }
 
     /**
-     * For 16 threads -25% Updates- Throughput
-     * 
-     * @param State
+     * For 16 threads -80% Updates- Throughput
+     *
+     * @param state
      */
     @Benchmark
-    @Group("g16for25")
-    @GroupThreads(4)
-    public void read16With25PercentContains(GlobalState gState, ThreadState<T> tState) {
+    @Group("g16for80")
+    @GroupThreads(13)
+    public void read16With80PercentContains(GlobalState gState, ThreadState<T> tState) {
         gState.set.contains(gState.item, tState.thread);
     }
 
     @Benchmark
-    @Group("g16for25")
-    @GroupThreads(6)
-    public void write16With25PercentContains(GlobalState gState, ThreadState<T> tState) {
+    @Group("g16for80")
+    @GroupThreads(3)
+    public void write16With80PercentContains(GlobalState gState, ThreadState<T> tState) {
         gState.set.add(gState.item, tState.thread);
     }
 
     /**
-     * For 4 threads - 50% Updates- Throughput
-     * 
-     * @param State
+     * For 16 threads - 100% Updates- Throughput
+     *
+     * @param state
      */
     @Benchmark
-    @Group("g4for50")
-    @GroupThreads(4)
-    public void read4With50PercentContains(GlobalState gState, ThreadState<T> tState) {
+    @Group("g16for100")
+    @GroupThreads(16)
+    public void read16With100PercentContains(GlobalState gState, ThreadState<T> tState) {
         gState.set.contains(gState.item, tState.thread);
     }
 
     @Benchmark
-    @Group("g4for50")
-    @GroupThreads(6)
-    public void write4With50PercentContains(GlobalState gState, ThreadState<T> tState) {
+    @Group("g16for100")
+    @GroupThreads(0)
+    public void write16With100PercentContains(GlobalState gState, ThreadState<T> tState) {
+        gState.set.add(gState.item, tState.thread);
+    }
+//------------------------------------------------------------------------------------------------------------------------------------
+//------------------------------------------------------------------------------------------------------------------------------------
+
+    /**
+     * For 4 threads -60% Updates- Throughput
+     *
+     * @param state
+     */
+    @Benchmark
+    @Group("g4for60")
+    @GroupThreads(2)
+    public void read4With60PercentContains(GlobalState gState, ThreadState<T> tState) {
+        gState.set.add(gState.item, tState.thread);
+    }
+
+    @Benchmark
+    @Group("g4for60")
+    @GroupThreads(2)
+    public void write4With60PercentContains(GlobalState gState, ThreadState<T> tState) {
         gState.set.add(gState.item, tState.thread);
     }
 
     /**
-     * For 8 threads -50% Updates- Throughput
-     * 
-     * @param State
+     * For 8 threads - 60% Updates-Throughput
+     *
+     * @param state
      */
     @Benchmark
-    @Group("g8for50")
-    @GroupThreads(4)
-    public void read8With50PercentContains(GlobalState gState, ThreadState<T> tState) {
-        gState.set.contains(gState.item, tState.thread);
+    @Group("g8for60")
+    @GroupThreads(5)
+    public void read8With60PercentContains(GlobalState gState, ThreadState<T> tState) {
+        gState.set.add(gState.item, tState.thread);
     }
 
     @Benchmark
-    @Group("g8for50")
-    @GroupThreads(6)
-    public void write8With50PercentContains(GlobalState gState, ThreadState<T> tState) {
+    @Group("g8for60")
+    @GroupThreads(3)
+    public void write8With60PercentContains(GlobalState gState, ThreadState<T> tState) {
         gState.set.add(gState.item, tState.thread);
     }
 
     /**
-     * For 12 threads -50% Updates- Throughput
-     * 
-     * @param State
+     * For 24 threads -60% Updates- Throughput
+     *
+     * @param state
      */
     @Benchmark
-    @Group("g12for50")
-    @GroupThreads(4)
-    public void read12With50PercentContains(GlobalState gState, ThreadState<T> tState) {
-        gState.set.contains(gState.item, tState.thread);
+    @Group("g24for60")
+    @GroupThreads(14)
+    public void read24With60PercentContains(GlobalState gState, ThreadState<T> tState) {
+        gState.set.add(gState.item, tState.thread);
     }
 
     @Benchmark
-    @Group("g12for50")
-    @GroupThreads(6)
-    public void write12With50PercentContains(GlobalState gState, ThreadState<T> tState) {
+    @Group("g24for60")
+    @GroupThreads(10)
+    public void write24With60PercentContains(GlobalState gState, ThreadState<T> tState) {
         gState.set.add(gState.item, tState.thread);
     }
 
     /**
-     * For 16 threads -50% Updates- Throughput
-     * 
-     * @param State
+     * For 32 threads -60% Updates- Throughput
+     *
+     * @param state
      */
     @Benchmark
-    @Group("g16for50")
-    @GroupThreads(4)
-    public void read16With50PercentContains(GlobalState gState, ThreadState<T> tState) {
-        gState.set.contains(gState.item, tState.thread);
+    @Group("g32for60")
+    @GroupThreads(19)
+    public void read32With60PercentContains(GlobalState gState, ThreadState<T> tState) {
+        gState.set.add(gState.item, tState.thread);
     }
 
     @Benchmark
-    @Group("g16for50")
-    @GroupThreads(6)
-    public void write16With50PercentContains(GlobalState gState, ThreadState<T> tState) {
+    @Group("g32for60")
+    @GroupThreads(13)
+    public void write32With60PercentContains(GlobalState gState, ThreadState<T> tState) {
+        gState.set.add(gState.item, tState.thread);
+    }
+
+    /**
+     * For 40 threads -60% Updates- Throughput
+     *
+     * @param state
+     */
+    @Benchmark
+    @Group("g40for60")
+    @GroupThreads(24)
+    public void read40With60PercentContains(GlobalState gState, ThreadState<T> tState) {
+        gState.set.add(gState.item, tState.thread);
+    }
+
+    @Benchmark
+    @Group("g40for60")
+    @GroupThreads(16)
+    public void write40With60PercentContains(GlobalState gState, ThreadState<T> tState) {
         gState.set.add(gState.item, tState.thread);
     }
 

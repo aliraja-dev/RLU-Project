@@ -7,7 +7,13 @@ import java.util.concurrent.locks.ReentrantLock;
 public class FineBST<T extends Comparable<T>> implements ComparisonSet<T> {
     ReentrantLock mainLock = new ReentrantLock();
     private Node<T> root;
+    public FineBST() {
+        this.root = null;
+    }
 
+    public FineBST(int threads) {
+        this.root = null;
+    }
     @Override
     public boolean add(T item) {
 

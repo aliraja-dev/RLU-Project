@@ -11,19 +11,12 @@ public class ReaderBST<T extends Comparable<T>> extends Thread {
     private static int ID_GEN = 0;
 
     private RluThread<T> thread;
-//    private RLUCoarseSetBST<T> set;
 
     private Sorted<T> set;
     private int id;
     private long elapsed;
     private int iter;
 
-//    public ReaderBST(RLUCoarseSetBST<T> set, RluThread<T> thread, int iter) {
-//        id = ID_GEN++;
-//        this.thread = thread;
-//        this.iter = iter;
-//        this.set = set;
-//    }
     public ReaderBST(Sorted<T> set, RluThread<T> thread, int iter) {
         id = ID_GEN++;
         this.thread = thread;

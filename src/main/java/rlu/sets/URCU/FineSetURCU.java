@@ -25,8 +25,6 @@ public class FineSetURCU<T> implements RcuSetInterface<T>{
     public FineSetURCU(int threads) {
         head = new RcuNode<>(Integer.MIN_VALUE);
         head.next = new RcuNode<>(Integer.MAX_VALUE);
-//        MAX_THREADS = threads;
-//        threadCount = threads;
         for (int i = 0; i < MAX_THREADS; i++)
         {
             readersVersion.set(i, NOT_READING);
@@ -52,8 +50,7 @@ public class FineSetURCU<T> implements RcuSetInterface<T>{
                 if (curr.key == key) {
                     return false;
                 }
-                //            RcuNode<T> node = new RcuNode<>(item, curr);
-                //            pred.next = node;
+
                 synchronize_rcu(pred, item, curr);
                 return true;
             } finally {
@@ -73,7 +70,6 @@ public class FineSetURCU<T> implements RcuSetInterface<T>{
     public boolean contains(T item, RcuThread<T> ctx) {
         int key = item.hashCode();
         int tid = getTID();
-        boolean result = false;
 
         RcuNode<T> pred = head;
         RcuNode<T> curr = pred.next;
@@ -98,7 +94,6 @@ public class FineSetURCU<T> implements RcuSetInterface<T>{
         final long nrv = reclaimerVersion.get(); // check again
 
         if (rv != nrv) {
-//            System.out.println("Done: "+tid);
             readersVersion.lazySet(tid, nrv);
         }
 
@@ -123,9 +118,7 @@ public class FineSetURCU<T> implements RcuSetInterface<T>{
 //                System.out.println("Pending reader: "+i+"##################");
             };// spin
         }
-//        synchronized (this) {
             pred.next = newNode;
-//        }
     }
 
 }
