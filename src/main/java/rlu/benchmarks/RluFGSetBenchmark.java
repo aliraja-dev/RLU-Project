@@ -19,7 +19,7 @@ import org.openjdk.jmh.runner.RunnerException;
 import org.openjdk.jmh.runner.options.Options;
 import org.openjdk.jmh.runner.options.OptionsBuilder;
 
-import rlu.sets.RluSets.RluFineSet;
+import rlu.sets.RluSets.SingleObjRluFineSet;
 import rlu.sets.RluSets.RluSetInterface;
 import rlu.sets.RluSets.RluThread;
 
@@ -31,7 +31,7 @@ import java.util.concurrent.TimeUnit;
 @BenchmarkMode(Mode.Throughput)
 @OutputTimeUnit(TimeUnit.MILLISECONDS)
 @Warmup(iterations = 2, time = 100, timeUnit = TimeUnit.MILLISECONDS)
-@Measurement(iterations = 1, time = 100, timeUnit = TimeUnit.MILLISECONDS)
+@Measurement(iterations = 5, time = 100, timeUnit = TimeUnit.MILLISECONDS)
 @Fork(1)
 public class RluFGSetBenchmark<T> {
 
@@ -43,7 +43,7 @@ public class RluFGSetBenchmark<T> {
 
         @Setup(Level.Iteration)
         public void doSetup() {
-            set = new RluFineSet<Integer>();
+            set = new SingleObjRluFineSet<Integer>();
         }
 
         @TearDown(Level.Iteration)

@@ -1,6 +1,6 @@
 package rlu.Runners;
 
-import rlu.sets.RluSets.RluFineSet;
+import rlu.sets.RluSets.SingleObjRluFineSet;
 import rlu.sets.RluSets.RluThread;
 import rlu.threads.ReaderThread;
 import rlu.threads.WriterThread;
@@ -12,7 +12,7 @@ public class FineRunner<T> {
     }
 
     private static void runThreads(int writers, int readers, int iters) throws Exception {
-        RluFineSet<Integer> set = new RluFineSet<>();
+        SingleObjRluFineSet<Integer> set = new SingleObjRluFineSet<>();
 
         WriterThread<Integer> writerThread1 = new WriterThread<>(set, new RluThread<Integer>(),
                 iters);

@@ -19,7 +19,7 @@ import org.openjdk.jmh.runner.RunnerException;
 import org.openjdk.jmh.runner.options.Options;
 import org.openjdk.jmh.runner.options.OptionsBuilder;
 
-import rlu.sets.RluSets.RluMultiObjCoarseSet;
+import rlu.sets.RluSets.MultiObjRluCoarseSet;
 import rlu.sets.RluSets.RluThread;
 
 import java.util.Random;
@@ -30,19 +30,19 @@ import java.util.concurrent.TimeUnit;
 @BenchmarkMode(Mode.Throughput)
 @OutputTimeUnit(TimeUnit.MILLISECONDS)
 @Warmup(iterations = 2, time = 100, timeUnit = TimeUnit.MILLISECONDS)
-@Measurement(iterations = 1, time = 100, timeUnit = TimeUnit.MILLISECONDS)
+@Measurement(iterations = 5, time = 100, timeUnit = TimeUnit.MILLISECONDS)
 @Fork(1)
 public class RluMultiObjectSetBenchmark<T> {
 
     @State(Scope.Group)
     public static class GlobalState {
-        public RluMultiObjCoarseSet<Integer> set;
+        public MultiObjRluCoarseSet<Integer> set;
         public int UPPER_BOUND = 100;
         public int item;
 
         @Setup(Level.Iteration)
         public void doSetup() {
-            set = new RluMultiObjCoarseSet<Integer>();
+            set = new MultiObjRluCoarseSet<Integer>();
         }
 
         @TearDown(Level.Iteration)

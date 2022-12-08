@@ -59,7 +59,6 @@ rlu/benchmarks/URCUCGSetBenchmark$ThreadState.class
 rlu/benchmarks/jmh_generated/LockFreeSetBenchmark_g8for60_jmhTest.class
 rlu/benchmarks/jmh_generated/RluFGSetBenchmark_GlobalState_jmhType_B1.class
 rlu/benchmarks/jmh_generated/URCUCGSetBenchmark_GlobalState_jmhType_B2.class
-rlu/sets/RluSets/RluFineSet.class
 rlu/benchmarks/RluMultiObjectSetBenchmark.class
 META-INF/BenchmarkList
 rlu/benchmarks/RluFGSetBenchmark.class
@@ -96,6 +95,7 @@ rlu/benchmarks/jmh_generated/RluCGPaddedSetBenchmark_g8for20_jmhTest.class
 rlu/benchmarks/jmh_generated/RluCGSetBenchmark_g32for60_jmhTest.class
 rlu/sets/RLUBST/HeaderBST.class
 rlu/benchmarks/jmh_generated/URCUCGSetBenchmark_g32for40_jmhTest.class
+rlu/sets/RluSets/SingleObjRluCoarseSet.class
 rlu/benchmarks/jmh_generated/CoarseBSTBenchmark_g24for20_jmhTest.class
 rlu/benchmarks/jmh_generated/RluCGPaddedSetBenchmark_g8for60_jmhTest.class
 rlu/benchmarks/jmh_generated/URCUFGSetBenchmark_jmhType_B1.class
@@ -167,7 +167,6 @@ rlu/benchmarks/jmh_generated/RluCoarseBSTBenchmark_g24for40_jmhTest.class
 rlu/benchmarks/jmh_generated/FineBSTBenchmark_MyState_jmhType_B3.class
 rlu/benchmarks/jmh_generated/URCUCGSetBenchmark_g16for60_jmhTest.class
 rlu/benchmarks/jmh_generated/RluCGSetBenchmark_g8for40_jmhTest.class
-rlu/sets/RluSets/RluPaddedCoarseSet.class
 rlu/benchmarks/jmh_generated/URCUFGSetBenchmark_g32for80_jmhTest.class
 rlu/benchmarks/jmh_generated/URCUCGSetBenchmark_jmhType_B2.class
 rlu/benchmarks/jmh_generated/RluFineBSTBenchmark_g16for40_jmhTest.class
@@ -249,6 +248,7 @@ rlu/benchmarks/jmh_generated/RluFGSetBenchmark_jmhType_B1.class
 rlu/benchmarks/jmh_generated/RluCoarseBSTBenchmark_g32for60_jmhTest.class
 rlu/benchmarks/jmh_generated/CoarseBSTBenchmark_g32for60_jmhTest.class
 rlu/benchmarks/jmh_generated/FineSetBenchmark_g24for20_jmhTest.class
+rlu/sets/RluSets/SingleObjRluPaddedCoarseSet.class
 rlu/benchmarks/RluMultiObjectSetBenchmark$ThreadState.class
 rlu/benchmarks/jmh_generated/RluFineBSTBenchmark_g8for80_jmhTest.class
 rlu/benchmarks/jmh_generated/RluCGPaddedSetBenchmark_ThreadState_jmhType.class
@@ -292,7 +292,6 @@ rlu/benchmarks/jmh_generated/RluCGSetBenchmark_GlobalState_jmhType_B2.class
 rlu/benchmarks/jmh_generated/RluMultiObjectSetBenchmark_ThreadState_jmhType_B2.class
 rlu/benchmarks/jmh_generated/RluFGSetBenchmark_GlobalState_jmhType.class
 rlu/benchmarks/jmh_generated/FineSetBenchmark_g24for60_jmhTest.class
-rlu/sets/RluSets/RluCoarseSet.class
 rlu/benchmarks/jmh_generated/RluCGPaddedSetBenchmark_g16for80_jmhTest.class
 rlu/benchmarks/jmh_generated/LockFreeSetBenchmark_g24for80_jmhTest.class
 rlu/benchmarks/jmh_generated/RluFGSetBenchmark_GlobalState_jmhType_B2.class
@@ -311,6 +310,7 @@ rlu/benchmarks/jmh_generated/LockFreeSetBenchmark_g32for60_jmhTest.class
 rlu/benchmarks/jmh_generated/CoarseBSTBenchmark_jmhType.class
 rlu/benchmarks/jmh_generated/URCUCGSetBenchmark_g24for60_jmhTest.class
 rlu/benchmarks/jmh_generated/RluFGSetBenchmark_ThreadState_jmhType_B2.class
+rlu/sets/RluSets/MultiObjRluCoarseSet.class
 rlu/benchmarks/jmh_generated/LockFreeSetBenchmark_g24for40_jmhTest.class
 rlu/benchmarks/jmh_generated/FineSetBenchmark_g8for60_jmhTest.class
 rlu/benchmarks/jmh_generated/CoarseBSTBenchmark_jmhType_B1.class
@@ -343,6 +343,7 @@ rlu/benchmarks/jmh_generated/URCUFGSetBenchmark_g32for40_jmhTest.class
 rlu/benchmarks/jmh_generated/LockFreeSetBenchmark_MyState_jmhType_B3.class
 rlu/benchmarks/jmh_generated/RluFGSetBenchmark_g32for60_jmhTest.class
 rlu/benchmarks/jmh_generated/FineBSTBenchmark_MyState_jmhType.class
+rlu/sets/RluSets/SingleObjRluFineSet.class
 rlu/sets/URCU/CoarseSetURCU.class
 rlu/benchmarks/jmh_generated/RluCGSetBenchmark_g24for80_jmhTest.class
 rlu/benchmarks/jmh_generated/RluFineBSTBenchmark_g16for80_jmhTest.class
@@ -403,7 +404,6 @@ rlu/benchmarks/jmh_generated/RluCGSetBenchmark_g8for80_jmhTest.class
 rlu/benchmarks/URCUFGSetBenchmark$GlobalState.class
 rlu/benchmarks/RluMultiObjectSetBenchmark$GlobalState.class
 rlu/benchmarks/jmh_generated/RluCoarseBSTBenchmark_jmhType_B1.class
-rlu/sets/RluSets/RluMultiObjCoarseSet.class
 rlu/benchmarks/jmh_generated/RluCGPaddedSetBenchmark_jmhType_B1.class
 rlu/benchmarks/URCUCGSetBenchmark$GlobalState.class
 rlu/benchmarks/CoarseSetBenchmark.class

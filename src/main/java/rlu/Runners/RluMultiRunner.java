@@ -1,6 +1,6 @@
 package rlu.Runners;
 
-import rlu.sets.RluSets.RluMultiObjCoarseSet;
+import rlu.sets.RluSets.MultiObjRluCoarseSet;
 import rlu.sets.RluSets.RluThread;
 import rlu.threads.MultiWriterThread;
 import rlu.threads.ReaderThread;
@@ -11,7 +11,7 @@ public class RluMultiRunner {
     }
 
     private static void runThreads(int writers, int readers, int iters) throws Exception {
-        RluMultiObjCoarseSet<Integer> set = new RluMultiObjCoarseSet<>();
+        MultiObjRluCoarseSet<Integer> set = new MultiObjRluCoarseSet<>();
 
         MultiWriterThread<Integer> writerThread1 = new MultiWriterThread<>(set, new RluThread<Integer>(),
                 iters);

@@ -3,15 +3,15 @@ package rlu.sets.RluSets;
 import java.lang.reflect.Array;
 import java.util.concurrent.atomic.AtomicInteger;
 
-public class RluPaddedCoarseSet<T> implements RluSetInterface<T> {
+public class SingleObjRluFineSet<T> implements RluSetInterface<T> {
 
     AtomicInteger gClock; // Global clock shared by all threads
-    RluThread<T>[] globalThreads; // To identify Active threads
-    int padding;
+    RluThread<T>[] globalThreads; // Holds Thread Instances
+
     private RluNode<T> head;
 
     @SuppressWarnings("unchecked")
-    public RluPaddedCoarseSet() {
+    public SingleObjRluFineSet() {
         gClock = new AtomicInteger(0);
         globalThreads = (RluThread<T>[]) Array.newInstance(RluThread.class, 100);
         head = new RluNode<T>(Integer.MIN_VALUE);
@@ -19,61 +19,68 @@ public class RluPaddedCoarseSet<T> implements RluSetInterface<T> {
     }
 
     @SuppressWarnings("unchecked")
-    public RluPaddedCoarseSet(int threads) {
+    public SingleObjRluFineSet(int threads) {
         gClock = new AtomicInteger(0);
-        globalThreads = (RluThread<T>[]) Array.newInstance(RluThread.class, 100);
+        globalThreads = (RluThread<T>[]) Array.newInstance(RluThread.class, threads);
         head = new RluNode<>(Integer.MIN_VALUE);
         head.next = new RluNode<>(Integer.MAX_VALUE);
-        padding = threads;
     }
 
+    @Override
     public boolean add(T item, RluThread<T> ctx) {
         int key = item.hashCode();
-        synchronized (this) {
-            ctx.lClock = gClock.get();
-            ctx.isWriter = true;
-            globalThreads[(int) Thread.currentThread().getId() % padding] = ctx;
-            RluNode<T> pred = head;
+        ctx.lClock = gClock.get();
+        ctx.isWriter = true;
+        globalThreads[(int) Thread.currentThread().getId()] = ctx;
+        head.lock();
+        RluNode<T> pred = head;
+        try {
             RluNode<T> curr = pred.next;
-
-            while (curr.key < key) {
-                pred = curr;
-                curr = curr.next;
+            curr.lock();
+            try {
+                while (curr.key < key) {
+                    pred.unlock();
+                    pred = curr;
+                    curr = curr.next;
+                    curr.lock();
+                }
+                if (key == curr.key) {
+                    return false;
+                }
+                RluNode<T> node = new RluNode<>(item, curr);
+                ctx.node = node;
+                curr.header = new Header<T>(Thread.currentThread().getId());
+                ctx.runCounter++;
+                ctx.wClock = gClock.get() + 1;
+                gClock.getAndIncrement();
+                waitForOldReadersToFinishReading();
+                pred.next = ctx.node;
+                ctx.wClock = Integer.MAX_VALUE;
+                return true;
+            } finally {
+                curr.unlock();
             }
-            if (key == curr.key) {
-                return false;
-            }
-            RluNode<T> node = new RluNode<>(item, curr);
-            ctx.node = node;
-            curr.header = new Header<T>(Thread.currentThread().getId());
-            ctx.runCounter++;
-            ctx.wClock = gClock.get() + 1;
-            gClock.getAndIncrement();
-            waitForOldReadersToFinishReading();
-            pred.next = ctx.node;
-            ctx.wClock = Integer.MAX_VALUE;
-            return true;
+        } finally {
+            pred.unlock();
         }
-
     }
 
+    @Override
     public boolean contains(T item, RluThread<T> ctx) {
         int key = item.hashCode();
         ctx.lClock = gClock.get();
         ctx.runCounter++;
-        // register yourself as an active thread
         long threadId = Thread.currentThread().getId();
-        globalThreads[(int) threadId % padding] = ctx;
+        globalThreads[(int) threadId] = ctx;
         RluNode<T> pred = head;
         RluNode<T> curr = pred.next;
         while (curr.key < key) {
             pred = curr;
             curr = curr.next;
         }
-
         if (curr.isLocked()) {
-            if (ctx.lClock >= globalThreads[(int) curr.header.threadId % padding].wClock) {
-                RluNode<T> stolenCurrNode = globalThreads[(int) curr.header.threadId % padding].node;
+            if (ctx.lClock >= globalThreads[(int) curr.header.threadId].wClock) {
+                RluNode<T> stolenCurrNode = globalThreads[(int) curr.header.threadId].node;
                 ctx.runCounter++;
                 System.out.println("\n***Stolen Key: " + stolenCurrNode.key + " from thread: "
                         + curr.header.threadId + " by thread: " + threadId);
@@ -92,12 +99,11 @@ public class RluPaddedCoarseSet<T> implements RluSetInterface<T> {
         do {
             priorReader = false;
             for (int i = 0; i < globalThreads.length; i++) {
-                if (globalThreads[i % padding] != null && globalThreads[i % padding].runCounter % 2 != 0
-                        && globalThreads[i % padding].isWriter == false
-                        && globalThreads[i % padding].lClock <= gClock.get()) {
+                if (globalThreads[i] != null && globalThreads[i].runCounter % 2 != 0
+                        && globalThreads[i].isWriter == false
+                        && globalThreads[i].lClock <= gClock.get()) {
                     priorReader = true;
                     break;
-
                 }
             }
         } while (priorReader);

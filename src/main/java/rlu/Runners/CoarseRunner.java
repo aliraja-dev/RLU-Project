@@ -1,6 +1,6 @@
 package rlu.Runners;
 
-import rlu.sets.RluSets.RluCoarseSet;
+import rlu.sets.RluSets.SingleObjRluCoarseSet;
 import rlu.sets.RluSets.RluThread;
 import rlu.threads.ReaderThread;
 import rlu.threads.WriterThread;
@@ -12,7 +12,7 @@ public class CoarseRunner<T> {
     }
 
     private static void runThreads(int writers, int readers, int iters) throws Exception {
-        RluCoarseSet<Integer> set = new RluCoarseSet<>();
+        SingleObjRluCoarseSet<Integer> set = new SingleObjRluCoarseSet<>();
 
         WriterThread<Integer> writerThread1 = new WriterThread<>(set, new RluThread<Integer>(),
                 iters);

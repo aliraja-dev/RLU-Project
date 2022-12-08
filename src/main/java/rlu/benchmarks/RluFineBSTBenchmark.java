@@ -16,7 +16,7 @@ import java.util.concurrent.TimeUnit;
 @BenchmarkMode(Mode.Throughput)
 @OutputTimeUnit(TimeUnit.MILLISECONDS)
 @Warmup(iterations = 2, time = 100, timeUnit = TimeUnit.MILLISECONDS)
-@Measurement(iterations = 1, time = 100, timeUnit = TimeUnit.MILLISECONDS)
+@Measurement(iterations = 5, time = 100, timeUnit = TimeUnit.MILLISECONDS)
 @Fork(1)
 public class RluFineBSTBenchmark<T> {
 
