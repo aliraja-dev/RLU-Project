@@ -1,7 +1,5 @@
 # RLU Modified User Space Managed Memory Implementation
 
-## How to run
-
 There are two ways to run the rlu and non rlu based implementations. One is to run the 13 different benchmarks that use JMH to report results and are precompiled into benchmarks.jar and can be run altogether or one by one by the benchmark class name, provided below.
 
 ### How to run the Benchmarks
